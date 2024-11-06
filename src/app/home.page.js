@@ -1,6 +1,30 @@
-import React from "react";
+"use client";
+import CardBlog from "@/components/cards/CardBlog";
+import React, { useRef, useState } from "react";
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { dataBlogPosts, dataReviews } from "./utils/constant";
+import CardReview from "@/components/cards/CardReview";
+import { useRouter } from "next/navigation";
 
 const HomePage = () => {
+  const router = useRouter();
+  const swiperRefReview = useRef();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndexReview, setActiveIndexReview] = useState(0);
+  const [swiperInstance, setSwiperInstance] = useState(null);
+  const [swiperInstanceReview, setSwiperInstanceReview] = useState(null);
+  const slidesPerView = 4;
+  const slidesPerViewReview = 3;
+  const totalSlides = Math.ceil(dataBlogPosts.length / slidesPerView);
+  const totalSlidesReview = Math.ceil(dataReviews.length / slidesPerViewReview);
+
   return (
     <div>
       <div className="bg-[#ECEDF0] h-[90vh] overflow-hidden">
@@ -12,18 +36,20 @@ const HomePage = () => {
             </h1>
 
             <ul className="flex items-center gap-6 mt-6">
-              <li className="text-[13px] 2xl:text-[15px] font-bold cursor-pointer border-b-2 relative  w-fit px-6 py-3 before:contet-[''] before:w-full before:h-[1.5px] before:bg-[linear-gradient(89.98deg,#D8003E_0.02%,#3F8EFF_99.98%)] before:absolute before:left-0 before:bottom-0 after:contet-[''] after:w-full after:h-[5px] after:bg-[linear-gradient(89.98deg,#D8003E_0.02%,#3F8EFF_99.98%)] after:absolute after:left-0 after:bottom-0 after:blur-[10px]">
-                Pet Owner
-              </li>
-              <li className="text-[13px] 2xl:text-[15px] font-bold cursor-pointer border-b-2  w-fit px-6 py-3">
-                Veterinarian
-              </li>
-              <li className="text-[13px] 2xl:text-[15px] font-bold cursor-pointer border-b-2  w-fit px-6 py-3">
-                Technician
-              </li>
-              <li className="text-[13px] 2xl:text-[15px] font-bold cursor-pointer border-b-2  w-fit px-6 py-3">
-                Hospital
-              </li>
+              {[
+                { link: "pet-owner", name: "Pet Owner" },
+                { link: "veterinarian", name: "Veterinarian" },
+                { link: "technician", name: "Technician" },
+                { link: "hospital", name: "Hospital" },
+              ].map((tabName) => (
+                <li
+                  key={tabName.name}
+                  onClick={() => router.push(`/${tabName.link}`)}
+                  className={`text-[13px] 2xl:text-[15px] font-bold cursor-pointer border-b-2 relative w-fit px-6 py-3 hover:before:content-[""] hover:before:w-full hover:before:h-[1.5px] hover:before:bg-[linear-gradient(89.98deg,#D8003E_0.02%,#3F8EFF_99.98%)] hover:before:absolute hover:before:left-0 hover:before:bottom-0 hover:after:content-[""] hover:after:w-full hover:after:h-[5px] hover:after:bg-[linear-gradient(89.98deg,#D8003E_0.02%,#3F8EFF_99.98%)] hover:after:absolute hover:after:left-0 hover:after:bottom-0 hover:after:blur-[10px]`}
+                >
+                  {tabName.name}
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -160,94 +186,64 @@ const HomePage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-4 gap-6 mt-8">
-          <div className="overflow-hidden rounded-2xl w-full relative">
-            <img
-              src="/assets/images/image_blog_1.png"
-              className="w-full object-cover"
+        {/* <div className="grid grid-cols-4 gap-6 mt-8">
+          {blogPosts.map((post, index) => (
+            <CardBlog
+              key={index}
+              imageSrc={post.imageSrc}
+              title={post.title}
+              description={post.description}
+              date={post.date}
+              actionClassName={(index + 1) % 2 === 0 && "!mt-16"}
             />
+          ))}
+        </div> */}
 
-            <div className="absolute inset-0 w-full h-full bg-[linear-gradient(180deg,rgba(24,59,86,0.0001)_0%,#282828_100%)] flex flex-col justify-end p-5 2xl:p-8 text-white">
-              <h6 className="text-[22px] 2xl:text-[26px] font-bold">
-                How Vets Can Keep...
-              </h6>
-              <p className="text-sm 2xl:text-base leading-[1.8] mt-1">
-                Do you know the average length of a relationship between a pet
-                owner and a vet?
-              </p>
+        <Swiper
+          className="mt-8"
+          spaceBetween={24}
+          slidesPerView={slidesPerView}
+          slidesPerGroup={slidesPerView}
+          onSwiper={(swiper) => setSwiperInstance(swiper)} // Set swiper instance
+          onSlideChange={(swiper) => {
+            console.log(
+              "swiper.activeIndex / slidesPerView",
+              swiper.activeIndex / slidesPerView
+            );
 
-              <div className="w-full flex items-center justify-between mt-10">
-                <button>Read More</button>
-                <span>02 May-2024</span>
-              </div>
-            </div>
-          </div>
-          <div className="overflow-hidden rounded-2xl w-full relative">
+            setActiveIndex(swiper.activeIndex / slidesPerView);
+          }} // Update active slide index
+        >
+          {dataBlogPosts.map((post, index) => (
+            <SwiperSlide key={index}>
+              <CardBlog
+                imageSrc={post.imageSrc}
+                title={post.title}
+                description={post.description}
+                date={post.date}
+                actionClassName={(index + 1) % 2 === 0 ? "!mt-16" : ""}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        <div className="flex items-center gap-2 mx-auto w-fit mt-12">
+          {[...Array(totalSlides)].map((_, index) => (
             <img
-              src="/assets/images/image_blog_2.png"
-              className="w-full object-cover"
+              key={index}
+              src="/assets/icons/icon-star-rounded.svg"
+              onClick={() => {
+                swiperInstance.slideTo(index * slidesPerView); // Slide to the clicked pagination dot
+                setActiveIndex(index); // Update active index
+              }}
+              className={`max-w-[14px] cursor-pointer ${
+                index === activeIndex ? "opacity-100" : "opacity-20"
+              }`}
             />
-
-            <div className="absolute inset-0 w-full h-full bg-[linear-gradient(180deg,rgba(24,59,86,0.0001)_0%,#282828_100%)] flex flex-col justify-end p-5 2xl:p-8 text-white">
-              <h6 className="text-[22px] 2xl:text-[26px] font-bold">
-                How Vets Can Keep...
-              </h6>
-              <p className="text-sm 2xl:text-base leading-[1.8] mt-1">
-                Do you know the average length of a relationship between a pet
-                owner.
-              </p>
-
-              <div className="w-full flex items-center justify-between mt-16">
-                <button>Read More</button>
-                <span>02 May-2024</span>
-              </div>
-            </div>
-          </div>
-          <div className="overflow-hidden rounded-2xl w-full relative">
-            <img
-              src="/assets/images/image_blog_3.png"
-              className="w-full object-cover"
-            />
-
-            <div className="absolute inset-0 w-full h-full bg-[linear-gradient(180deg,rgba(24,59,86,0.0001)_0%,#282828_100%)] flex flex-col justify-end p-5 2xl:p-8 text-white">
-              <h6 className="text-[22px] 2xl:text-[26px] font-bold">
-                How Vets Can Keep...
-              </h6>
-              <p className="text-sm 2xl:text-base leading-[1.8] mt-1">
-                Do you know the average length of a relationship between a pet
-                owner and a vet?
-              </p>
-
-              <div className="w-full flex items-center justify-between mt-10">
-                <button>Read More</button>
-                <span>02 May-2024</span>
-              </div>
-            </div>
-          </div>
-          <div className="overflow-hidden rounded-2xl w-full relative">
-            <img
-              src="/assets/images/image_blog_4.png"
-              className="w-full object-cover"
-            />
-
-            <div className="absolute inset-0 w-full h-full bg-[linear-gradient(180deg,rgba(24,59,86,0.0001)_0%,#282828_100%)] flex flex-col justify-end p-5 2xl:p-8 text-white">
-              <h6 className="text-[22px] 2xl:text-[26px] font-bold">
-                How Vets Can Keep...
-              </h6>
-              <p className="text-sm 2xl:text-base leading-[1.8] mt-1">
-                Do you know the average length of a relationship between a pet
-                owner.
-              </p>
-
-              <div className="w-full flex items-center justify-between mt-16">
-                <button>Read More</button>
-                <span>02 May-2024</span>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        <div className="flex items-center gap-2 2xl:gap-3 mx-auto w-fit mt-12">
+        {/* <div className="flex items-center gap-2 2xl:gap-3 mx-auto w-fit mt-12">
           <img
             src="/assets/icons/icon-star-rounded.svg"
             className="max-w-[14px] 2xl:max-w-[28px] cursor-default"
@@ -264,7 +260,7 @@ const HomePage = () => {
             src="/assets/icons/icon-star-rounded.svg"
             className="max-w-[14px] 2xl:max-w-[28px] cursor-default opacity-20"
           />
-        </div>
+        </div> */}
       </div>
       {/* end blogs */}
 
@@ -276,14 +272,24 @@ const HomePage = () => {
             Users success stories
           </h2>
           <div className="flex items-center gap-3">
-            <button className="px-3 p-1 font-semibold text-base 2xl:text-lg flex items-center border-[1.5px] border-[#282828] rounded-md  opacity-50">
+            <button
+              className={`px-3 p-1 font-semibold text-base 2xl:text-lg flex items-center border-[1.5px] border-[#282828] rounded-md ${
+                activeIndexReview === 0 && "opacity-50"
+              }`}
+              onClick={() => swiperRefReview.current.swiper.slidePrev()}
+            >
               <img
                 src="/assets/icons/icon-arrow-right-red.svg"
                 className="max-w-[20px] 2xl:max-w-[24px] mr-1 rotate-180"
               />{" "}
               Previous
             </button>
-            <button className="px-3 p-1 font-semibold text-base 2xl:text-lg flex items-center border-[1.5px] border-[#282828] rounded-md ">
+            <button
+              className={`px-3 p-1 font-semibold text-base 2xl:text-lg flex items-center border-[1.5px] border-[#282828] rounded-md ${
+                activeIndexReview === totalSlidesReview - 1 && "opacity-50"
+              }`}
+              onClick={() => swiperRefReview.current.swiper.slideNext()}
+            >
               Next
               <img
                 src="/assets/icons/icon-arrow-right-red.svg"
@@ -293,151 +299,59 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-6 mt-8">
-          <div className="w-full border-[1.25px] border-[#243A8E26] rounded-xl p-6 2xl:p-10">
-            <div className="flex items-start justify-between">
-              <img
-                src="/assets/avatars/avatar_1.png"
-                className="max-w-[55px] 2xl:max-w-[70px] rounded-xl"
+        <Swiper
+          ref={swiperRefReview}
+          className="mt-8"
+          spaceBetween={24}
+          slidesPerView={slidesPerViewReview}
+          slidesPerGroup={slidesPerViewReview}
+          onSwiper={(swiper) => setSwiperInstanceReview(swiper)} // Set swiper instance
+          onSlideChange={(swiper) => {
+            console.log("HAII", swiper);
+
+            setActiveIndexReview(swiper.activeIndex / slidesPerViewReview);
+          }} // Update active slide index
+        >
+          {dataReviews.map((review, index) => (
+            <SwiperSlide key={index}>
+              <CardReview
+                key={index}
+                avatar={review.avatar}
+                name={review.name}
+                rating={review.rating}
+                description={review.description}
+                className={"min-h-[280px] 2xl:min-h-[300px]"}
               />
-              <div className="flex items-center 2xl:gap-1 w-fit">
-                <img
-                  src="/assets/icons/icon-star.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star-half.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star-empty.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-              </div>
-            </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
-            <h4 className="text-lg font-semibold 2xl:text-xl my-4">
-              Floyd Miles
-            </h4>
-            <p className="text-xs 2xl:text-sm text-[#636363] font-medium leading-[1.6]">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint. Velit officia consequat duis enim velit mollit.
-              <br />
-              Exercitation veniam consequat sunt nostrud amet. Amet minim mollit
-              non deserunt ullamco est sit aliqua dolor do amet sint. Velit
-              officia consequat duis enim velit mollit. Exercitation veniam
-              consequat sunt nostrud amet.
-            </p>
-          </div>
-          <div className="w-full border-[1.25px] border-[#243A8E26] rounded-xl p-6 2xl:p-10">
-            <div className="flex items-start justify-between">
-              <img
-                src="/assets/avatars/avatar_2.png"
-                className="max-w-[55px] 2xl:max-w-[70px] rounded-xl"
-              />
-              <div className="flex items-center 2xl:gap-1 w-fit">
-                <img
-                  src="/assets/icons/icon-star.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star-empty.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-              </div>
-            </div>
+        {/* <div className="grid grid-cols-3 gap-6 mt-8">
+          {dataReviews.map((review, index) => (
+            <CardReview
+              key={index}
+              avatar={review.avatar}
+              name={review.name}
+              rating={review.rating}
+              description={review.description}
+            />
+          ))}
+        </div> */}
 
-            <h4 className="text-lg font-semibold 2xl:text-xl my-4">
-              Ronald Richards
-            </h4>
-            <p className="text-xs 2xl:text-sm text-[#636363] font-medium leading-[1.6]">
-              ullamco est sit aliqua dolor do amet sint. Velit officia consequat
-              duis enim velit mollit. Exercitation veniam consequat sunt nostrud
-              amet.
-            </p>
-          </div>
-          <div className="w-full border-[1.25px] border-[#243A8E26] rounded-xl p-6 2xl:p-10">
-            <div className="flex items-start justify-between">
-              <img
-                src="/assets/avatars/avatar_3.png"
-                className="max-w-[55px] 2xl:max-w-[70px] rounded-xl"
-              />
-              <div className="flex items-center 2xl:gap-1 w-fit">
-                <img
-                  src="/assets/icons/icon-star.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star-half.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-                <img
-                  src="/assets/icons/icon-star-empty.svg"
-                  className="max-w-[20px] 2xl:max-w-[28px]"
-                />
-              </div>
-            </div>
-
-            <h4 className="text-lg font-semibold 2xl:text-xl my-4">
-              Savannah Nguyen
-            </h4>
-            <p className="text-xs 2xl:text-sm text-[#636363] font-medium leading-[1.6]">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint. Velit officia consequat duis enim velit mollit.
-              <br />
-              Exercitation veniam consequat sunt nostrud amet. Amet minim mollit
-              non deserunt ullamco est sit aliqua dolor do amet sint. Velit
-              officia consequat duis enim velit mollit. Exercitation veniam
-              consequat sunt nostrud amet.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 2xl:gap-3 mx-auto w-fit mt-12">
-          <img
-            src="/assets/icons/icon-star-rounded.svg"
-            className="max-w-[14px] 2xl:max-w-[28px] cursor-default"
-          />
-          <img
-            src="/assets/icons/icon-star-rounded.svg"
-            className="max-w-[14px] 2xl:max-w-[28px] cursor-default opacity-20"
-          />
-          <img
-            src="/assets/icons/icon-star-rounded.svg"
-            className="max-w-[14px] 2xl:max-w-[28px] cursor-default opacity-20"
-          />
-          <img
-            src="/assets/icons/icon-star-rounded.svg"
-            className="max-w-[14px] 2xl:max-w-[28px] cursor-default opacity-20"
-          />
+        <div className="flex items-center gap-2 mx-auto w-fit mt-12">
+          {[...Array(totalSlidesReview)].map((_, index) => (
+            <img
+              key={index}
+              src="/assets/icons/icon-star-rounded.svg"
+              onClick={() => {
+                swiperInstanceReview.slideTo(index * slidesPerViewReview); // Slide to the clicked pagination dot
+                setActiveIndexReview(index); // Update active index
+              }}
+              className={`max-w-[14px] cursor-pointer ${
+                index === activeIndexReview ? "opacity-100" : "opacity-20"
+              }`}
+            />
+          ))}
         </div>
       </div>
       {/* end success stories */}
