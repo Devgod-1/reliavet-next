@@ -14,7 +14,7 @@ const PetOwnerPage = () => {
         <div className="container flex flex-col items-center mx-auto pt-8 2xl:pt-12 justify-between h-full">
           <div className="flex flex-col items-center p-10 pb-0">
             <h1 className="font-bold leading-[1.1] text-[54px] 2xl:text-[68px] text-center">
-              Your Pet's Health, Just a Click Away
+              Your Pet&apos;s Health, Just a Click Away
             </h1>
 
             <span className="text-base 2xl:text-lg text-[#636363] text-center mt-6">
