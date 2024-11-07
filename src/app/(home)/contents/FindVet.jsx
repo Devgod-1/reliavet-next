@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const FindVet = () => {
   return (
-    <section className="container flex  justify-between mx-auto py-32 relative">
+    <section className="container flex lg:flex-row flex-col justify-center lg:justify-between max-lg:gap-5 items-center mx-auto sm:py-32 py-10  max-sm:px-10 relative">
       <Image
         src="/assets/images/paw.svg"
         alt=""
@@ -11,7 +11,7 @@ const FindVet = () => {
         height={70}
       />
       <div className="w-full max-w-[600px] flex flex-col justify-between">
-        <h2 className="text-[32px] 2xl:text-[36px] font-bold leading-[1.1]">
+        <h2 className="2xl:text-[55px] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[50px]font-medium leading-[48px]">
           Find the Best Care for Your <br />
           Pet with Trusted Veterinarians
         </h2>

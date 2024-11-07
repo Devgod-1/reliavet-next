@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const CardBlog = ({
@@ -10,7 +11,7 @@ const CardBlog = ({
 }) => {
   return (
     <div className={`overflow-hidden rounded-2xl w-full relative ${className}`}>
-      <img src={imageSrc} className="w-full object-cover" alt={title} />
+      <Image src={imageSrc} className="w-full object-cover" alt={title} width={505} height={365} />
 
       <div className="absolute inset-0 w-full h-full bg-[linear-gradient(180deg,rgba(24,59,86,0.0001)_0%,#282828_100%)] flex flex-col justify-end p-5 2xl:p-8 text-white">
         <h6 className="text-[22px] 2xl:text-[26px] font-bold">{title}</h6>

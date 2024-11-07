@@ -3,8 +3,8 @@ import Image from "next/image";
 const JoinVet = () => {
   return (
     <section>
-      <div className="flex flex-col-reverse lg:flex-row">
-        <div className="w-full lg:max-w-[50%] relative">
+      <div className="flex flex-col-reverse xl:flex-row">
+        <div className="w-full h-full xl:max-w-[50%] relative">
           <Image
             src="/assets/images/image_practice_1.png"
             alt="practice"
@@ -14,7 +14,7 @@ const JoinVet = () => {
             height={450}
           />
         </div>
-        <div className="w-full flex flex-col justify-center space-y-8 bg-[linear-gradient(213.61deg,#243A8E_10.73%,#5774CD_38.22%,#B13A66_72.38%,#DE1E33_89.27%)] p-20">
+        <div className="w-full flex flex-col justify-center space-y-8 bg-[linear-gradient(213.61deg,#243A8E_10.73%,#5774CD_38.22%,#B13A66_72.38%,#DE1E33_89.27%)] p-20 max-xl:px-10">
           <span className="bg-red-primary rounded-full w-fit p-2 px-3 flex items-center text-white text-xs 2xl:text-sm pr-8">
             <Image
               src="/assets/icons/icon-wave.svg"

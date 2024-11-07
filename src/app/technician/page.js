@@ -6,9 +6,7 @@ import TechnicianPage from "./technician.page";
 const Technician = () => {
   return (
     <div>
-      <Navbar />
       <TechnicianPage />
-      <Footer />
     </div>
   );
 };

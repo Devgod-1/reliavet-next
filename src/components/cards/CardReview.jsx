@@ -1,7 +1,7 @@
+import Image from "next/image";
 import React from "react";
 
 const CardReview = ({ avatar, name, rating, description, className }) => {
-  // Generate stars based on the rating
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 !== 0;
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
@@ -11,36 +11,44 @@ const CardReview = ({ avatar, name, rating, description, className }) => {
       className={`w-full border-[1.25px] border-[#243A8E26] rounded-xl p-6 2xl:p-10 ${className}`}
     >
       <div className="flex items-start justify-between">
-        <img
+        <Image
           src={avatar}
           alt={`${name}'s Avatar`}
           className="max-w-[55px] 2xl:max-w-[70px] rounded-xl"
+          width={70}
+          height={70}
         />
         <div className="flex items-center 2xl:gap-1 w-fit">
           {/* Full stars */}
           {[...Array(fullStars)].map((_, index) => (
-            <img
+            <Image
               key={`full-${index}`}
               src="/assets/icons/icon-star.svg"
               className="max-w-[20px] 2xl:max-w-[28px]"
               alt="Full Star"
+              width={28}
+              height={28}
             />
           ))}
           {/* Half star if necessary */}
           {hasHalfStar && (
-            <img
+            <Image
               src="/assets/icons/icon-star-half.svg"
               className="max-w-[20px] 2xl:max-w-[28px]"
               alt="Half Star"
+              width={28}
+              height={28}
             />
           )}
           {/* Empty stars */}
           {[...Array(emptyStars)].map((_, index) => (
-            <img
+            <Image
               key={`empty-${index}`}
               src="/assets/icons/icon-star-empty.svg"
               className="max-w-[20px] 2xl:max-w-[28px]"
               alt="Empty Star"
+              width={28}
+              height={28}
             />
           ))}
         </div>

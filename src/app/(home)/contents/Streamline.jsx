@@ -2,18 +2,18 @@ import Image from "next/image";
 
 const Streamline = () => {
   return (
-    <section className="mt-28 relative">
+    <section className="mt-28 relative max-md:p-10">
       <Image
         src="/assets/images/paw.svg"
         alt="Paw Background"
         className="absolute left-[45%] top-[-8.5rem] z-[-1]"
         width={100}
-        height={100}
+        height={120}
       />
-      <div className="container relative py-32 mx-auto before:content-[''] before:absolute before:right-[100%] before:w-[600px] before:h-[500px] before:bg-red-primary before:rounded-full before:blur-[250px] before:z-[-1] before:opacity-60 after:content-[''] after:absolute after:left-[100%] after:w-[600px] after:h-[500px] after:bg-primary after:rounded-full after:blur-[250px] after:z-[-1] after:top-[50%] after:translate-y-[-50%] after:opacity-60">
-        <div className="w-full flex rounded-[5rem] overflow-hidden bg-black text-white">
-          <div className="w-full p-20">
-            <h2 className="text-[32px] 2xl:text-[36px] font-bold leading-[1.1] text-white !mt-4">
+      <div className="container relative md:py-32 mx-auto before:content-[''] before:absolute before:right-[100%] before:w-[600px] before:h-[500px] before:bg-red-primary before:rounded-full before:blur-[250px] before:z-[-1] before:opacity-60 after:content-[''] after:absolute after:left-[100%] after:w-[600px] after:h-[500px] after:bg-primary after:rounded-full after:blur-[250px] after:z-[-1] after:top-[50%] after:translate-y-[-50%] after:opacity-60">
+        <div className="w-full flex md:flex-row flex-col rounded-[5rem] overflow-hidden bg-black text-white">
+          <div className="w-full md:p-20 px-10 py-5">
+            <h2 className="2xl:text-[36px] xl:text-[32px] lg:text-[28px] md:text-[24px] text-[20px] font-semibold leading-[1.1] text-white !mt-4">
               Streamline Operations <br />
               and Enhance Patient Care
             </h2>
@@ -31,9 +31,9 @@ const Streamline = () => {
           <Image
             src="/assets/images/image_streamline_1.png"
             alt="Streamline Operations"
-            className="w-full max-w-[50%] object-cover"
-            width={600}  // Set the width of the image
-            height={400} // Set the height of the image (adjust as needed)
+            className="w-full md:max-w-[50%] object-cover"
+            width={600}
+            height={400}
           />
         </div>
       </div>

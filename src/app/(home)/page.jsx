@@ -1,19 +1,13 @@
-"use client";
-import React from "react";
-
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import Hero from "./contents/Hero";
 import FindVet from "./contents/FindVet";
 import JoinVet from "./contents/JoinVet";
 import Streamline from "./contents/Streamline";
-import Blog from "./contents/Blog";
+import Blog from "@/components/Blog";
 import Stories from "./contents/Stories";
 
-const HomePage = () => {
+const Home = () => {
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <Hero />
       <FindVet />
       <JoinVet />
@@ -24,4 +18,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;

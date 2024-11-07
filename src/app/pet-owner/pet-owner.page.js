@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 
 const PetOwnerPage = () => {
@@ -13,7 +14,7 @@ const PetOwnerPage = () => {
       >
         <div className="container flex flex-col items-center mx-auto pt-8 2xl:pt-12 justify-between h-full">
           <div className="flex flex-col items-center p-10 pb-0">
-            <h1 className="font-bold leading-[1.1] text-[54px] 2xl:text-[68px] text-center">
+            <h1 className="font-bold leading-[1.1] text-[30px] sm:text-[35px] md:text-[40px] lg:text-[45px] xl:text-[54px] 2xl:text-[68px] text-center">
               Your Pet&apos;s Health, Just a Click Away
             </h1>
 
@@ -27,8 +28,11 @@ const PetOwnerPage = () => {
           </div>
 
           <div className="flex items-center gap-12 relative">
-            <img
+            <Image
               src="/assets/images/hero_pet.png"
+              alt=""
+              width={400}
+              height={600}              
               className="w-full max-w-[350px] 2xl:max-w-[400px] relative z-[2]"
             />
           </div>

@@ -2,12 +2,12 @@ import Image from "next/image";
 
 const ContactUs = () => {
   return (
-    <section>
+    <section className="w-full">
       <div className="bg-[linear-gradient(215.82deg,#243A8E_18.23%,#496FFF_81.77%)]">
-        <div className="container mx-auto text-white py-14 flex gap-20">
+        <div className="container mx-auto text-white py-14 flex max-md:flex-col max-md:px-5 gap-20">
           <div className="w-full mt-12">
             <div>
-              <h4 className="text-[54px] 2xl:text-[68px] font-bold">
+              <h4 className="text-[27px] md:text-[35px] lg:text-[40px] xl:text-[48px] 2xl:text-[55px] font-bold">
                 Contact us{" "}
               </h4>
               <span className="text-base 2xl:text-lg">
@@ -38,9 +38,8 @@ const ContactUs = () => {
               </div>
             </div>
           </div>
-          {/*  */}
-          <div className="w-full bg-white/5 border border-white/50 rounded-3xl p-7  2xl:p-10">
-            <h4 className="text-[32px] 2xl:text-[40px] leading-[1.3] font-bold">
+          <div className="w-full bg-white/5 border border-white/50 rounded-3xl p-7 2xl:p-10">
+            <h4 className="text-[24px] lg:text-[28px] xl:text-[32px] 2xl:text-[40px] leading-[1.3] font-bold">
               Have a question?{" "}
               <span className="block font-semibold">Get in touch.</span>
             </h4>
@@ -64,15 +63,15 @@ const ContactUs = () => {
               />
             </div>
 
-            <button className="text-[28px] 2xl:text-[36px] font-bold bg-black w-full py-4 rounded-xl mt-10">
+            <button className="text-[24px] lg:text-[28px] xl:text-[32px] 2xl:text-[36px] font-bold bg-black w-full py-4 rounded-xl mt-10">
               Submit
             </button>
           </div>
         </div>
       </div>
       <div className="bg-[#243A8E33]">
-        <div className="py-6 2xl:py-10 container mx-auto flex items-center justify-between">
-          <h4 className="text-[32px] 2xl:text-[40px] leading-[1.3] font-bold">
+        <div className="py-6 2xl:py-10 container mx-auto flex max-md:flex-col max-md:px-5 items-center justify-between">
+          <h4 className="max-sm:text-[25px] text-[30px] 2xl:text-[40px] leading-[1.3] font-bold">
             Subscribe to Newsletter
           </h4>
 
