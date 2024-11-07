@@ -6,7 +6,6 @@ const Footer = () => {
   return (
     <div className="bg-[#ECEEF2]">
       <div className="container mx-auto flex max-lg:flex-col max-lg:px-10 max-lg:gap-5 items-center pt-24">
-        {/*  */}
         <div className="w-full">
           <Image
             src="/assets/logos/logo_2.png"
@@ -21,7 +20,6 @@ const Footer = () => {
             Carolina.
           </p>
         </div>
-        {/*  */}
         <div className="w-full flex justify-between max-[500px]:flex-col max-[500px]:items-center max-[500px]:gap-5">
           <div className="w-fit max-md:hidden">
             <h4 className="text-[24px] 2xl:text-[28px] font-bold">Menu</h4>

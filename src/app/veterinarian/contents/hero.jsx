@@ -32,8 +32,8 @@ const Hero = () => {
           <Image
             src="/assets/images/hero_vet.png"
             alt=""
-            width={450}
-            height={600}
+            width={600}
+            height={800}
             className="w-full max-w-[400px] 2xl:max-w-[450px] relative z-[2]"
           />
         </div>

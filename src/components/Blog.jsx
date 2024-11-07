@@ -13,7 +13,7 @@ const Blog = () => {
   const totalSlides = Math.ceil(dataBlogPosts.length / 4); // Adjust based on default slides per view
 
   return (
-    <section className="container mx-auto py-32 max-sm:px-7">
+    <section className="container mx-auto py-8 sm:py-16 md:py-24 lg:py-32 max-sm:px-7">
       <div>
         <h2 className="font-semibold leading-[48px] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[48px] 2xl:text-[55px]">
           Our Blogs
