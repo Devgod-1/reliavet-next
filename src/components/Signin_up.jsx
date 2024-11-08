@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const SignInUp = () => {
+const SignInUp = ({reg, note, video}) => {
   return (
     <section>
       <div className="flex flex-col-reverse xl:flex-row">
@@ -35,7 +35,7 @@ const SignInUp = () => {
                   bg-[url(/assets/images/01.png)] bg-contain bg-no-repeat
                   "
                 >
-                  Easy Registration
+                  {reg}
                 </div>
               </div>
               <div className="w-[25%] flex gap-5 flex-col">
@@ -56,7 +56,7 @@ const SignInUp = () => {
                   bg-[url(/assets/images/02.png)] bg-contain bg-no-repeat
                   "
                 >
-                  Add your Details
+                  {note}
                 </div>
               </div>
               <div className="w-[25%] flex gap-5 flex-col">
@@ -77,7 +77,7 @@ const SignInUp = () => {
                   bg-[url(/assets/images/03.png)] bg-contain bg-no-repeat
                   "
                 >
-                  Start Connecting With Clients
+                  {video}
                 </div>
               </div>
             </div>
