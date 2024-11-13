@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const Navbar = () => {
   const router = useRouter();
@@ -35,9 +36,9 @@ const Navbar = () => {
           <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
             Find HOSPITAL
           </li>
-          <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
+          <Link href={'/about-us'} className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
             about uS
-          </li>
+          </Link>
         </ul>
         <div>
           <button className="text-xs 2xl:text-sm px-6 font-medium">
@@ -67,9 +68,8 @@ const Navbar = () => {
         </div>
 
         <div
-          className={`${
-            menu ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-          } transition-all duration-500 ease-in-out overflow-hidden`}
+          className={`${menu ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+            } transition-all duration-500 ease-in-out overflow-hidden`}
         >
           <ul className="flex flex-col gap-5 items-center uppercase px-4 text-white py-5 pt-10">
             <li
@@ -84,9 +84,9 @@ const Navbar = () => {
             <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
               Find HOSPITAL
             </li>
-            <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
+            <Link href={'/about-us'} className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
               about uS
-            </li>
+            </Link>
             <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
               <button className="text-xs 2xl:text-sm py-1 px-6 font-medium cursor-pointer">
                 Log In

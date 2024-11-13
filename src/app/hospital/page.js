@@ -1,10 +1,13 @@
-import React from "react";
-import HospitalPage from "./hospital.page";
+import Blog from "@/components/Blog";
+import Connect from "./contents/Connect";
+import Hero from "./contents/Hero";
 
 const Hospital = () => {
   return (
     <div>
-      <HospitalPage />
+      <Hero />
+      <Connect />
+      <Blog />
     </div>
   );
 };
