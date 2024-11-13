@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef, useState } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const FindHospitalCard = () => {
@@ -102,7 +101,7 @@ const FindHospital = () => {
           >
             Suggested Based on your location
           </h1>
-          <LoadScript>
+          {/* <LoadScript>
             <GoogleMap
               mapContainerStyle={{
                 width: "100%",
@@ -113,7 +112,8 @@ const FindHospital = () => {
             >
               <Marker position={center} />
             </GoogleMap>
-          </LoadScript>
+          </LoadScript> */}
+          <iframe className="rounded-xl" width="100%" height="400px" frameBorder="0" marginHeight="0" marginWidth="0" title="map" scrolling="yes" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=%C4%B0zmir+(My%20Business%20Name)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"></iframe>
         </div>
         <div>
           <Swiper
