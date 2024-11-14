@@ -30,12 +30,12 @@ const Navbar = () => {
           >
             Home
           </li>
-          <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
+          <Link href={'/find-vet'} className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
             Find Vet
-          </li>
-          <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
+          </Link>
+          <Link href={'/find-hospital'} className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
             Find HOSPITAL
-          </li>
+          </Link>
           <Link href={'/about-us'} className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
             about uS
           </Link>

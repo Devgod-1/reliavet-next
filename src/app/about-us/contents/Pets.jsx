@@ -12,7 +12,7 @@ export default function Pets() {
     const [swiperInstanceReview, setSwiperInstanceReview] = useState(null);
 
     return (
-        <div className='container mx-auto relative mb-20'>
+        <div className='container mx-auto relative mb-20 px-[2rem] md:p-0'>
             <Swiper
                 ref={swiperRefReview}
                 spaceBetween={50}

@@ -2,7 +2,11 @@ import Image from "next/image";
 
 export default function Hero() {
     return (
-        <div className="flex flex-col items-center gap-y-8 bg-[#ECEDF0] 2xl:h-[90vh] justify-center relative py-14">
+        <div
+            style={{
+                background: "url('/assets/images/kuttar_chap.png')",
+                backgroundSize: "100%",
+            }} className="flex flex-col items-center gap-y-8 bg-[#ECEDF0] 2xl:h-[90vh] justify-center relative py-14">
             <Image src='/assets/images/Group67.png' className="absolute md:left-[6%] lg:md:left-[12%] top-[20%] hidden md:block" alt="hero" width={160} height={265} />
             <Image src='/assets/images/Group68.png' className="absolute md:right-[6%] lg:md:right-[12%] top-[20%] hidden md:block" alt="hero" width={160} height={265} />
             <h1 className="font-bold leading-[1.1] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[50px] 2xl:text-[68px]">About Us</h1>

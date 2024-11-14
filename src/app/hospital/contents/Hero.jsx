@@ -3,10 +3,11 @@ export default function Hero() {
     return (
         <div>
             <div
-                className="bg-[#ECEDF0] h-[90vh] overflow-hidden "
+                className="bg-[#ECEDF0] h-[70vh] md:h-[90vh] overflow-hidden "
                 style={{
                     background: "url('/assets/images/bg-hero.png')",
-                    backgroundSize: "100%",
+                    backgroundSize: "cover",
+                    backgroundRepeat: 'no-repeat'
                 }}
             >
                 <div className="container flex flex-col items-center mx-auto pt-8 2xl:pt-12 justify-between h-full">

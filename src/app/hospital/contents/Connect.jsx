@@ -9,12 +9,15 @@ export default function Connect() {
                 </h1>
                 <p className="w-full py-5 md:w-3/5">ReliaVet helps you build strong relationships with pet owners, providing easy access to telemedicine services, follow-up tools, and a portal for client communication. Offer clients convenient ways to stay connected to their pet’s health and care.</p>
             </div>
-            <div className="flex">
+            <div className="flex flex-col md:flex-row relative">
                 <div>
                     <Image src='/assets/images/connect_dog.png' width={830} height={620} alt="dog_playing" />
                 </div>
                 <div className="flex flex-col justify-center mx-auto">
                     <div className="border px-28 py-20 rounded-3xl bg-[#ECEDF0]">
+                        <div className="absolute -top-[60%] -right-[20%]">
+                            <Image src='/assets/images/hospital_blob.png' width={1500} height={954} alt="dog_playing" />
+                        </div>
                         <h1 className="text-3xl font-bold mb-5">Engagement Features:</h1>
                         <ul className="list-disc w-full">
                             <li>Telemedicine Options: &quot;Provide remote consultations for added convenience and accessibility.&quot;</li>
