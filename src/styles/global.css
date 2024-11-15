@@ -26,4 +26,7 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+  .backdrop-custom-blur {
+    backdrop-filter: blur(61px);
+  }
 }
