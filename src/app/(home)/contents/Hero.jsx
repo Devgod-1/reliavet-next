@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 const Hero = () => {
   const router = useRouter();
   return (
-    <section className="bg-[#ECEDF0] 2xl:h-[calc(100vh-80px)] xl:h-[calc(100vh-80px)] lg:h-[80vh] h-[60vh] overflow-hidden">
+    <section className="bg-[#ECEDF0] 2xl:h-[calc(100vh-80px)] xl:h-[calc(100vh-80px)] lg:h-[70vh] h-[60vh] overflow-hidden">
       <div className="container flex flex-col items-center mx-auto pt-8 2xl:pt-12 justify-between h-full">
         <div className="flex flex-col items-center p-10 text-center">
           <h1 className="font-bold leading-[1.1] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[50px] 2xl:text-[68px]">
@@ -44,7 +44,7 @@ const Hero = () => {
             <h4 className="font-bold 2xl:text-[32px] xl:text-[26px] lg:text-[20px] sm:text-[18px] text-[16px] sm:text-nowrap text-center">
               Find the Best Care for Your Pet <br className="hidden lg:block"/> with Trusted Veterinarians
             </h4>
-            <button className="bg-gradient-to-r from-[#D8003E] to-[#3F8EFF] p-4 py-6 2xl:p-6 2xl:py-8 w-full text-white max-w-[200px] 2xl:max-w-[250px] text-sm font-bold rounded-lg mt-8 mx-auto">
+            <button className="bg-gradient-to-r from-[#D8003E] to-[#3F8EFF] p-4 py-6 2xl:p-6 2xl:py-8 w-full text-white max-w-[200px] 2xl:max-w-[250px] text-sm font-bold rounded-lg mt-8 mx-auto hover:from-[#3F8EFF] hover:to-[#D8003E] transition-all hover:shadow-lg">
               Get Started
             </button>
           </div>
