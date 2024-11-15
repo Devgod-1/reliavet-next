@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation";
 const Hero = () => {
   const router = useRouter();
   return (
-    <section className="bg-[#ECEDF0] 2xl:h-[90vh] xl:h-[90vh] lg:h-[80vh] h-[60vh] overflow-hidden">
+    <section className="bg-[#ECEDF0] 2xl:h-[calc(100vh-80px)] xl:h-[calc(100vh-80px)] lg:h-[70vh] h-[60vh] overflow-hidden">
       <div className="container flex flex-col items-center mx-auto pt-8 2xl:pt-12 justify-between h-full">
         <div className="flex flex-col items-center p-10 text-center">
           <h1 className="font-bold leading-[1.1] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[50px] 2xl:text-[68px]">
-            Your Trusted Partner in Pet Care <br />
+            Your Trusted Partner in Pet Care <br className="hidden lg:block" />
             Tailored Solutions for Every Role
           </h1>
 
@@ -35,16 +35,16 @@ const Hero = () => {
         <div className="flex items-center gap-12 relative after:absolute after:content-[''] after:w-[800px] after:h-[800px] after:rounded-full after:bg-primary after:blur-[300px] after:top-[calc(100%-18rem)] after:left-[-10rem] after:opacity-70 after:z-[1]">
           <Image
             src="/assets/images/hero_section_1.png"
-            className="sm:w-full !w-[70%] relative max-sm:absolute z-[2] max-sm:-bottom-0 max-sm:-left-[35%]"
+            className="sm:w-full !w-[70%] relative max-sm:absolute z-[2] max-sm:-bottom-0 max-sm:-left-[35%] hidden lg:block"
             alt="hero"
             width={600}
             height={420}
           />
-          <div className="w-full flex flex-col items-end justify-center max-sm:mb-20 relative z-[2]">
+          <div className="w-full flex flex-col items-end pb-4 justify-center relative z-[2]">
             <h4 className="font-bold 2xl:text-[32px] xl:text-[26px] lg:text-[20px] sm:text-[18px] text-[16px] sm:text-nowrap text-center">
-              Find the Best Care for Your Pet <br /> with Trusted Veterinarians
+              Find the Best Care for Your Pet <br className="hidden lg:block"/> with Trusted Veterinarians
             </h4>
-            <button className="bg-gradient-to-r from-[#D8003E] to-[#3F8EFF] p-4 py-6 2xl:p-6 2xl:py-8 w-full text-white max-w-[200px] 2xl:max-w-[250px] text-sm font-bold rounded-lg mt-8 mx-auto">
+            <button className="bg-gradient-to-r from-[#D8003E] to-[#3F8EFF] p-4 py-6 2xl:p-6 2xl:py-8 w-full text-white max-w-[200px] 2xl:max-w-[250px] text-sm font-bold rounded-lg mt-8 mx-auto hover:from-[#3F8EFF] hover:to-[#D8003E] transition-all hover:shadow-lg">
               Get Started
             </button>
           </div>

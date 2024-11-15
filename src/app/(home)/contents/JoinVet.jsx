@@ -30,13 +30,7 @@ const JoinVet = () => {
             Easy-to-Use Tools
           </h2>
           <p className="text-sm 2xl:text-base !leading-[2] block text-white !mt-8">
-            ReliaVet connects pet owners with a network of trusted veterinarians
-            dedicated to providing top-quality care for pets. Our platform makes
-            it easy to find a nearby veterinarian or hospital, with features
-            like location-based searches, profiles of qualified vets, and
-            telemedicine options for added convenience. With ReliaVet, you can
-            feel confident that your pet is in good hands, whether they need a
-            routine checkup, a specialist, or emergency care.
+            ReliaVet connects pet owners with a network of trusted veterinarians dedicated to providing top-quality care for pets. Our platform makes it easy to find a nearby veterinarian or hospital, with features like location-based searches, profiles of qualified vets, and telemedicine options for added convenience. With ReliaVet, you can feel confident that your pet is in good hands, whether they need a routine checkup, a specialist, or emergency care.
           </p>
           <button className="bg-transparent p-6 py-4 2xl:p-7 2xl:py-5 w-fit text-white max-w-[300px] !mt-12 text-sm 2xl:text-base border border-white font-bold rounded-lg">
             Join as vet
