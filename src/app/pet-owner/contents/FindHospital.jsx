@@ -4,9 +4,15 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const FindHospitalCard = () => {
+export const FindHospitalCard = () => {
   return (
-    <div className="bg-[#EDF3FF] flex-1 rounded-2xl p-10 relative before:content-[url('/assets/images/Vector.png')] before:absolute before:right-7 before:top-5 before:w-1 before:h-1">
+    <div className="bg-[#EDF3FF] flex-1 rounded-2xl p-5 py-8 relative ">
+      <button className="absolute top-5 right-5">
+        <img
+          src="/assets/icons/icon-arrow-top-right.svg"
+          className="max-w-[12px] 2xl:max-w-[14px]"
+        />
+      </button>
       <div className="flex flex-col items-center justify-center">
         <div className="bg-[url(/assets/images/hospital.png)] bg-no-repeat bg-contain w-full h-[100px] bg-center"></div>
         <div className="mt-5 text-center">
@@ -14,40 +20,18 @@ const FindHospitalCard = () => {
           <br />
           <small className="text-[#636363]">New york</small>
         </div>
-        <div className="flex gap-[2px]">
-          <Image
-            alt="*"
-            src={"/assets/icons/Star_red.png"}
-            width={20}
-            height={20}
-          />
-          <Image
-            alt="*"
-            src={"/assets/icons/Star_red.png"}
-            width={20}
-            height={20}
-          />
-          <Image
-            alt="*"
-            src={"/assets/icons/Star_red.png"}
-            width={20}
-            height={20}
-          />
-          <Image
-            alt="*"
-            src={"/assets/icons/Star_red.png"}
-            width={20}
-            height={20}
-          />
-          <Image
-            alt="*"
-            src={"/assets/icons/Star_red_opacity.png"}
-            width={20}
-            height={20}
-          />
+        <div className="flex items-center my-1">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <img
+              key={index}
+              src="/assets/icons/icon-star-red.svg"
+              className={index < 4 ? "" : "opacity-40"}
+              alt="Star"
+            />
+          ))}
         </div>
-        <button className="box-border text-center p-[12px] px-[32px] gap-[5px] isolate w-[90%] mx-auto mt-5 bg-[rgba(255,255,255,0.6)] border border-[#ACACAC] rounded-[9px]">
-          <span className="text-[#243a82]">View Vets,Techs</span>
+        <button className="w-full bg-white font-bold text-xs 2xl:text-sm text-[#243a82] p-5 border border-[#ACACAC] rounded-[9px] !mt-6">
+          View Vets,Techs
         </button>
       </div>
     </div>
@@ -66,39 +50,31 @@ const FindHospital = () => {
   return (
     <section className="container px-10 mx-auto">
       <div>
-        <div
-          className="text-[55px] font-semibold leading-[55.55px]
-            sm:text-[50px] sm:leading-[55px]
-            md:text-[55px] md:leading-[55.55px]
-            lg:text-[60px] lg:leading-[60px]
-            w-full text-center my-20"
-        >
-          Find a Trusted Veterinarian Near You
+        <div className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-semibold text-center my-20">
+          Find the Pet Hospital of Your choice
         </div>
         <div className="flex flex-col my-5">
-          <label htmlFor="search" className="pl-3 mb-2 flex gap-2">
+          <label
+            htmlFor="search"
+            className="pl-3 mb-2 flex gap-2 text-xs lg:text-sm text-[#636363]"
+          >
             <Image
-              alt="location icon"
+              alt="l"
               width={20}
               height={20}
-              src={"/assets/images/typcn_location.png"}
+              className=""
+              src={"/assets/icons/icon-location.svg"}
             />
             Choose Location:
           </label>
           <input
-            className="rounded-3xl bg-[#ECEEF2] sm:w-[400px] text-xl px-5 py-1 focus:outline-none border border-[#C4C4C4]"
+            className="rounded-3xl bg-[#ECEEF2] sm:w-[400px] px-6 lg:px-8 py-2 lg:py-3 focus:outline-none border border-[#C4C4C4] text-xs 2xl:text-sm"
             id="search"
-            placeholder="Enter your location"
+            defaultValue={"Alaska"}
           />
         </div>
         <div>
-          <h1
-            className="text-[36px] font-semibold leading-[36.36px] text-left
-              sm:text-[32px] sm:leading-[34px]
-              md:text-[36px] md:leading-[36.36px]
-              lg:text-[40px] lg:leading-[42px]
-              py-5"
-          >
+          <h1 className="2xl:text-[36px] text-[24px] lg:text-[32px] font-semibold leading-[1.4] lg:leading-[1.1] mt-10 mb-10">
             Suggested Based on your location
           </h1>
           {/* <LoadScript>
@@ -113,7 +89,17 @@ const FindHospital = () => {
               <Marker position={center} />
             </GoogleMap>
           </LoadScript> */}
-          <iframe className="rounded-xl" width="100%" height="400px" frameBorder="0" marginHeight="0" marginWidth="0" title="map" scrolling="yes" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=%C4%B0zmir+(My%20Business%20Name)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"></iframe>
+          <iframe
+            className="rounded-xl"
+            width="100%"
+            height="400px"
+            frameBorder="0"
+            marginHeight="0"
+            marginWidth="0"
+            title="map"
+            scrolling="yes"
+            src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=%C4%B0zmir+(My%20Business%20Name)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"
+          ></iframe>
         </div>
         <div>
           <Swiper
@@ -135,7 +121,7 @@ const FindHospital = () => {
                 spaceBetween: 15,
               },
               1024: {
-                slidesPerView: 3,
+                slidesPerView: 4,
                 spaceBetween: 20,
               },
               1440: {
@@ -158,8 +144,12 @@ const FindHospital = () => {
             </SwiperSlide>
           </Swiper>
           <div className="flex items-center justify-center">
-            <button className="bg-bgPrimaryGradientRed2 md:my-6 my-3 2xl:mt-10 p-4 2xl:p-8 2xl:py-10 w-full text-white max-w-[300px] 2xl:max-w-[350px] text-xl 2xl:text-2xl font-bold rounded-lg">
-              See More <b>&rarr;</b>
+            <button className="bg-bgPrimaryGradientRed2 flex items-center justify-center md:my-6 my-3 2xl:mt-10 p-8 py-5 2xl:p-8 2xl:py-6 w-fit text-white text-sm lg:text-sm 2xl:text-base font-bold rounded-lg">
+              See More{" "}
+              <img
+                src="/assets/icons/icon-arrow-right-big.svg"
+                className="max-w-[24px] ml-2"
+              />
             </button>
           </div>
         </div>

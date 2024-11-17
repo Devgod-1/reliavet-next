@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useRef, useState } from "react";
 import Image from "next/image";
@@ -16,8 +16,8 @@ const Stories = () => {
   return (
     <section className="container mx-auto pb-32 max-sm:px-7">
       <div className="w-full flex items-center justify-between mt-4">
-        <h2 className="font-medium leading-[48px] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[48px] 2xl:text-[55px]">
-          Users&lsquo; success stories
+        <h2 className="font-semibold leading-[1.4] lg:leading-[1.1] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[48px] 2xl:text-[55px]">
+          Users success stories
         </h2>
         <div className="flex items-center gap-3 max-sm:hidden">
           <button

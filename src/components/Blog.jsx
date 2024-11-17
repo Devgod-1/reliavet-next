@@ -15,23 +15,25 @@ const Blog = () => {
   return (
     <section className="container mx-auto py-8 sm:py-16 md:py-24 lg:py-32 max-sm:px-7">
       <div>
-        <h2 className="font-semibold leading-[48px] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[48px] 2xl:text-[55px]">
+        <h2 className="font-semibold leading-[48px] text-[28px] md:text-[35px] lg:text-[40px] xl:text-[48px] 2xl:text-[55px]">
           Our Blogs
         </h2>
-        <p className="text-sm 2xl:text-base leading-[1.8] mt-5 text-[#636363]">
+        <p className="text-xs lg:text-sm 2xl:text-base !leading-[1.8] mt-5 text-[#636363]">
           Stay informed and empowered with our educational blog, designed to
-          help pet owners like you <br />
+          help pet owners like you <br className="hidden lg:block" />
           take the best care of your furry companions.
         </p>
       </div>
 
       <Swiper
         ref={swiperRef}
-        className="mt-8 px-10"
+        className="mt-8"
         spaceBetween={24}
         slidesPerGroupAuto
         onSwiper={(swiper) => setSwiperInstance(swiper)}
-        onSlideChange={(swiper) => setActiveIndex(Math.floor(swiper.activeIndex / 4))}
+        onSlideChange={(swiper) =>
+          setActiveIndex(Math.floor(swiper.activeIndex / 4))
+        }
         breakpoints={{
           320: {
             slidesPerView: 1,
@@ -42,7 +44,7 @@ const Blog = () => {
             spaceBetween: 15,
           },
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 4,
             spaceBetween: 20,
           },
           1440: {
