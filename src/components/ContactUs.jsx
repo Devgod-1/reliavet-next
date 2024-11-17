@@ -1,9 +1,17 @@
+"use client";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const ContactUs = () => {
+  const pathname = usePathname();
+
   return (
     <section className="w-full">
-      <div className="bg-[linear-gradient(215.82deg,#243A8E_18.23%,#496FFF_81.77%)]">
+      <div
+        className={`bg-[linear-gradient(215.82deg,#243A8E_18.23%,#496FFF_81.77%)] ${
+          pathname === "/contact-us" && "hidden"
+        }`}
+      >
         <div className="container mx-auto text-white py-14 flex max-md:flex-col max-md:px-5 gap-20">
           <div className="w-full lg:mt-12">
             <div>
