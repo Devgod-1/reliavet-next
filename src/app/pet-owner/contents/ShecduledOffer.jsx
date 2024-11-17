@@ -28,7 +28,7 @@ const ScheduledOffer = ({ className }) => {
           </div>
           <div className="text-xs !leading-[1.7] 2xl:text-sm text-[#636363] lg:max-w-[300px] text-center">
             If you feel your pet is having a life-threatening emergency, instant
-            telemedicine is recommended only as a tool to help save your pet's
+            telemedicine is recommended only as a tool to help save your pet&apos;s
             life while you transport your pet to an emergency veterinary
             facility.
           </div>
@@ -45,7 +45,7 @@ const ScheduledOffer = ({ className }) => {
             video connection to a veterinarian to quickly assess your pet. If
             you believe your pet is sick or having an emergency, instant
             telemedicine will give you immediate guidance and triage advice to
-            help save your pet's life.
+            help save your pet&apos;s life.
           </div>
         </div>
       </div>

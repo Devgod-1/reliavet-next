@@ -25,7 +25,7 @@ const InstantServiceOffer = ({ className }) => {
           <div className="text-xs !leading-[1.7] 2xl:text-sm text-[#636363] max-w-[300px] text-center">
             Using instant telemedicine, a veterinarian may be limited in what
             illnesses he or she can treat. During initial triage, suggestions
-            will be given to help improve the outcome of your pet's health;
+            will be given to help improve the outcome of your pet&apos;s health;
             however, certain medications cannot be prescribed without a
             pre-existing veterinary client-patient relationship.
           </div>
@@ -39,7 +39,7 @@ const InstantServiceOffer = ({ className }) => {
           </div>
           <div className="text-xs !leading-[1.7] 2xl:text-sm text-[#636363] max-w-[300px] text-center">
             If you feel your pet is having a life-threatening emergency, instant
-            telemedicine is recommended only as a tool to help save your pet's
+            telemedicine is recommended only as a tool to help save your pet&apos;s
             life while you transport your pet to an emergency veterinary
             facility.
           </div>
@@ -56,7 +56,7 @@ const InstantServiceOffer = ({ className }) => {
             video connection to a veterinarian to quickly assess your pet. If
             you believe your pet is sick or having an emergency, instant
             telemedicine will give you immediate guidance and triage advice to
-            help save your pet's life.
+            help save your pet&apos;s life.
           </div>
         </div>
       </div>
