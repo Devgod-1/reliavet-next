@@ -204,7 +204,7 @@ const ContactUs = () => {
               />
             </div>
 
-            <button className="text-[20px] lg:text-[28px] xl:text-[32px] 2xl:text-[36px] font-bold bg-black w-full py-4 rounded-xl mt-10">
+            <button className="transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl text-[20px] lg:text-[28px] xl:text-[32px] 2xl:text-[36px] font-bold bg-black w-full py-4 rounded-xl mt-10">
               Submit
             </button>
           </div>
