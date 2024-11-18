@@ -1,4 +1,12 @@
+"use client";
+import { useEffect } from "react";
+
 export default function page() {
+  useEffect(() => {
+    // Scroll to the top of the page when the component is mounted
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="mb-10 px-[2rem] md:p-0 py-30 max-lg:pt-[13rem]">
       <img

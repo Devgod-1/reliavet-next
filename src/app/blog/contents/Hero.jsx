@@ -2,8 +2,10 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { useRouter } from "next/navigation";
 
 export default function Hero() {
+  const router = useRouter();
   // Refs for animation targets
   const headerRef = useRef(null);
   const descriptionRef = useRef(null);
@@ -85,7 +87,10 @@ export default function Hero() {
               <span className="inline-block px-3 py-1 text-xs font-bold text-[#243A8E] bg-[#243A8E]/5  rounded-full">
                 FEATURED
               </span>
-              <h2 className="text-base lg:text-xl 2xl:text-2xl font-bold leading-tight tracking-tight text-gray-900">
+              <h2
+                className="text-base lg:text-xl 2xl:text-2xl font-bold leading-tight tracking-tight text-gray-900 cursor-pointer"
+                onClick={() => router.push("/blog/123")}
+              >
                 How to Maximize your Pet Hospital&apos;s Success with Virtual
                 Vet Appointments
               </h2>

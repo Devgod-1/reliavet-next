@@ -1,8 +1,14 @@
 "use client";
 import { FindVeterinarianCard } from "@/app/pet-owner/contents/FindVeterinarian";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect } from "react";
 
 export default function page() {
+  useEffect(() => {
+    // Scroll to the top of the page when the component is mounted
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="max-lg:pt-[16rem]">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10 px-[2rem] md:p-0">

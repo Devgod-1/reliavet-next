@@ -6,6 +6,7 @@ import TeleadviceOffer from "./TeleadviceOffer";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
 
 const TelemedicineHeader = () => {
   return (
@@ -122,6 +123,7 @@ const TelemedicineFeatureSection = () => {
 };
 
 const Services = () => {
+  const router = useRouter();
   // Refs for elements to animate
   const sectionRef = useRef(null);
   const cardFormRef = useRef(null);
@@ -196,7 +198,10 @@ const Services = () => {
           </h1>
           <TelemedicineFeatureSection />
           <div className="py-5 flex items-center justify-center">
-            <button className="bg-bgPrimaryGradient mt-6 2xl:mt-10 p-4 py-6 2xl:p-8 2xl:py-10 w-full text-white max-w-[300px] 2xl:max-w-[350px] text-xl 2xl:text-2xl font-bold rounded-lg">
+            <button
+              className="bg-bgPrimaryGradient mt-6 2xl:mt-10 p-4 py-6 2xl:p-8 2xl:py-10 w-full text-white max-w-[300px] 2xl:max-w-[350px] text-xl 2xl:text-2xl font-bold rounded-lg transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl"
+              onClick={() => router.push("/find-vet")}
+            >
               Get Started
             </button>
           </div>

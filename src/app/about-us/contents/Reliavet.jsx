@@ -3,10 +3,12 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Reliavet() {
+  const router = useRouter();
   const imageRef = useRef(null);
   const textRef = useRef(null);
   const buttonRef = useRef(null);
@@ -96,7 +98,8 @@ export default function Reliavet() {
         </p>
         <button
           ref={buttonRef}
-          className="w-full max-w-[230px] font-bold border rounded-lg py-6 my-10 text-lg lg:text-xl 2xl:text-2xl"
+          onClick={() => router.push("/find-vet")}
+          className="hover:bg-white hover:text-black transition-all w-full max-w-[230px] font-bold border rounded-lg py-6 my-10 text-lg lg:text-xl 2xl:text-2xl"
         >
           Get Started
         </button>

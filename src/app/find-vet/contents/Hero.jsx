@@ -2,10 +2,11 @@ import Filters from "./Filters";
 
 export default function Hero() {
   return (
-    <div
+    <section
       style={{
         background: "url('/assets/images/kuttar_chap.png')",
-        backgroundSize: "100%",
+        backgroundSize: "cover",
+        backgroundColor: "#ECEDF0",
       }}
       className="flex flex-col items-center gap-y-8 bg-[#ECEDF0] h-[90vh] 2xl:h-[75vh] justify-center py-14 mb-48 px-[2rem] md:p-0 relative"
     >
@@ -35,6 +36,6 @@ export default function Hero() {
       <div className="absolute -bottom-[50vh] lg:-bottom-[10vh] w-full px-[2rem] md:p-0">
         <Filters />
       </div>
-    </div>
+    </section>
   );
 }

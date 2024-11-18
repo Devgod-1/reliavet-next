@@ -82,7 +82,7 @@ export default function Promo() {
 
   return (
     <div
-      className="bg-[#ECEEF2] py-20"
+      className="bg-[#ECEEF2] py-20 overflow-x-hidden"
       style={{
         background: "url('/assets/images/bg-promo.png')",
         backgroundSize: "cover",
