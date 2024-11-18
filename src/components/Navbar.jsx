@@ -14,7 +14,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-primary w-full md:py-5 py-4 sticky top-0 z-[21] overflow-hidden transition-transform">
+    <div className="bg-primary w-full md:py-5 py-4 sticky top-0 z-[22] overflow-hidden transition-transform ">
       <div className="max-md:hidden w-full container mx-auto flex items-center justify-between text-white h-full my-auto">
         <Image
           src="/assets/logos/main_logo.png"
@@ -49,12 +49,34 @@ const Navbar = () => {
           >
             about uS
           </Link>
+          <Link
+            href={"/blog"}
+            className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
+          >
+            Blog
+          </Link>
         </ul>
         <div>
-          <button className="text-xs 2xl:text-sm px-6 font-medium">
+          <button
+            className="text-xs 2xl:text-sm px-6 font-medium"
+            onClick={() =>
+              window.open(
+                "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
+                "_blank"
+              )
+            }
+          >
             Log In
           </button>
-          <button className="text-xs 2xl:text-sm bg-red-primary p-3 px-6 rounded-lg font-medium">
+          <button
+            className="text-xs 2xl:text-sm bg-red-primary p-3 px-6 rounded-lg font-medium"
+            onClick={() =>
+              window.open(
+                "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
+                "_blank"
+              )
+            }
+          >
             Sign Up
           </button>
         </div>
@@ -80,24 +102,30 @@ const Navbar = () => {
         <div
           className={`${
             menu ? "clip-open" : "clip-close"
-          } transition-all duration-500 ease-in-out overflow-hidden fixed w-full h-[100vh] bg-primary`}
+          } transition-all duration-500 ease-in-out top-0 overflow-hidden fixed w-full h-[100vh] bg-primary/50 backdrop-blur-[20px] z-[-1]`}
           style={{
             clipPath: menu
-              ? "circle(150% at 90% -10%)"
+              ? "circle(150% at 90% -5%)"
               : "circle(0% at 90% -20%)",
           }}
         >
-          <ul className="flex h-full justify-center mt-[-2rem] flex-col gap-8 items-center uppercase px-4 text-white py-5 pt-10">
+          <ul className="flex h-full justify-center flex-col gap-8 items-center uppercase px-4 text-white font-bold py-5 pt-10">
             <li
               className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
               onClick={() => router.push("/")}
             >
               Home
             </li>
-            <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
+            <li
+              className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
+              onClick={() => router.push("/find-vet")}
+            >
               Find Vet
             </li>
-            <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
+            <li
+              className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
+              onClick={() => router.push("/find-hospital")}
+            >
               Find HOSPITAL
             </li>
             <Link
@@ -106,11 +134,33 @@ const Navbar = () => {
             >
               about uS
             </Link>
+            <Link
+              href={"/blog"}
+              className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
+            >
+              Blog
+            </Link>
             <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
-              <button className="text-xs 2xl:text-sm py-1 px-6 font-medium cursor-pointer">
+              <button
+                className="text-xs 2xl:text-sm py-1 px-6 font-medium cursor-pointer"
+                onClick={() =>
+                  window.open(
+                    "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
+                    "_blank"
+                  )
+                }
+              >
                 Log In
               </button>
-              <button className="text-xs 2xl:text-sm bg-red-primary p-3 px-6 rounded-lg font-medium">
+              <button
+                className="text-xs 2xl:text-sm bg-red-primary p-3 px-6 rounded-lg font-medium"
+                onClick={() =>
+                  window.open(
+                    "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
+                    "_blank"
+                  )
+                }
+              >
                 Sign Up
               </button>
             </li>

@@ -7,7 +7,7 @@ import SignInUp from "../../components/Signin_up";
 
 const Veterinarian = () => {
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <Hero />
       <Telemedicine />
       <Reliavet

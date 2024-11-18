@@ -6,6 +6,10 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* html {
+  overflow-x: hidden;
+} */
+
 :root {
   --primary-color: #243a8e;
   --red-color-primary: #de1e33;
@@ -54,5 +58,11 @@
   }
   .backdrop-custom-blur {
     backdrop-filter: blur(61px);
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    padding-inline: 4em;
   }
 }

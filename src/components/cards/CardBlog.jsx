@@ -1,4 +1,6 @@
+"use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const CardBlog = ({
@@ -9,8 +11,12 @@ const CardBlog = ({
   className = "",
   actionClassName,
 }) => {
+  const router = useRouter();
   return (
-    <div className={`overflow-hidden rounded-2xl w-full relative ${className}`}>
+    <div
+      className={`overflow-hidden rounded-2xl w-full relative ${className} cursor-pointer`}
+      onClick={() => router.push("/blog/123")}
+    >
       <Image
         src={imageSrc}
         className="w-full object-cover"

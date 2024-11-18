@@ -4,7 +4,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bg-[#ECEEF2]">
+    <div className="bg-[#ECEEF2] overflow-x-hidden">
       <div className="container mx-auto flex max-lg:flex-col max-lg:px-10 max-lg:gap-5 items-center pt-24">
         <div className="w-full">
           <Image
@@ -31,25 +31,25 @@ const Footer = () => {
                 Home
               </Link>
               <Link
-                href={"/"}
+                href={"/pet-owner"}
                 className="text-[11px] lg:text-[13px] 2xl:text-[15px] font-medium"
               >
                 Pet Owner
               </Link>
               <Link
-                href={"/"}
+                href={"/veterinarian"}
                 className="text-[11px] lg:text-[13px] 2xl:text-[15px] font-medium"
               >
                 Veterinarian
               </Link>
               <Link
-                href={"/"}
+                href={"/hospital"}
                 className="text-[11px] lg:text-[13px] 2xl:text-[15px] font-medium"
               >
                 Hospital
               </Link>
               <Link
-                href={"/"}
+                href={"/technician"}
                 className="text-[11px] lg:text-[13px] 2xl:text-[15px] font-medium"
               >
                 Technician
@@ -61,25 +61,25 @@ const Footer = () => {
                 Services
               </Link>
               <Link
-                href={"/"}
+                href={"/blog"}
                 className="text-[11px] lg:text-[13px] 2xl:text-[15px] font-medium"
               >
                 Blog
               </Link>
               <Link
-                href={"/"}
+                href={"/about-us"}
                 className="text-[11px] lg:text-[13px] 2xl:text-[15px] font-medium"
               >
                 About us
               </Link>
               <Link
-                href={"/"}
+                href={"/contact-us"}
                 className="text-[11px] lg:text-[13px] 2xl:text-[15px] font-medium"
               >
                 Contact us
               </Link>
               <Link
-                href={"/"}
+                href={"/find-vet"}
                 className="text-[11px] lg:text-[13px] 2xl:text-[15px] font-medium"
               >
                 Find Vet
@@ -153,12 +153,18 @@ const Footer = () => {
       <div className="container mx-auto py-10 flex  flex-col lg:flex-row max-lg:space-y-6 items-center justify-between mt-20 border-t border-t-[#243A8E66] sm:text-sm 2xl:text-base text-xs">
         <span className="text-[#282828]">Copyright Dotcreativemarket</span>
         <div className="w-full lg:max-w-[400px] flex items-center">
-          <span className="flex w-full text-[#282828] max-md:text-center max-md:block">
+          <Link
+            href={"/terms-of-use"}
+            className="flex w-full text-[#282828] max-md:text-center max-md:block"
+          >
             Terms of Use
-          </span>
-          <span className="flex w-full text-[#282828] max-md:text-center max-md:block">
+          </Link>
+          <Link
+            href={"/privacy-policy"}
+            className="flex w-full text-[#282828] max-md:text-center max-md:block"
+          >
             Privacy Policy
-          </span>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,9 +1,12 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Filters() {
+  const pathname = usePathname();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("technicians");
 
   return (
@@ -52,8 +55,19 @@ export default function Filters() {
               </div>
             </div>
           </div>
-          <button className="text-xs 2xl:text-sm bg-red-primary p-4 px-6 rounded-lg font-semibold text-white w-full max-w-[150px]">
-            Clear Filters
+          <button
+            className="text-xs 2xl:text-sm bg-red-primary p-4 px-6 rounded-lg font-semibold text-white w-full max-w-[150px]"
+            onClick={() => {
+              if (!pathname.includes("/find-hospital/search-hospitals/")) {
+                router.push("/find-hospital/search-hospitals/test");
+              } else {
+                router.push("/find-hospital/search-hospitals");
+              }
+            }}
+          >
+            {pathname.includes("/find-hospital/search-hospitals/")
+              ? "Clear Filter"
+              : "Search"}
           </button>
         </div>
       </div>

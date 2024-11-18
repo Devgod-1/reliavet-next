@@ -1,12 +1,58 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const TelemedicineHeader = () => {
+  const headerRef = useRef(null);
+  const subtextRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(
+      headerRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      subtextRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: subtextRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
+
   return (
-    <div className="z-[2] flex flex-col  items-center w-full">
+    <div ref={headerRef} className="z-[2] flex flex-col items-center w-full">
       <h2 className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-bold text-center">
         Expand Your Practice with Telemedicine
       </h2>
-      <div className="font-semibold text-sm lg:text-base 2xl:text-lg max-w-[800px] text-center mt-4">
+      <div
+        ref={subtextRef}
+        className="font-semibold text-sm lg:text-base 2xl:text-lg max-w-[800px] text-center mt-4"
+      >
         ReliaVet allows you to seamlessly integrate telemedicine into your
         practice, giving you the flexibility to connect with clients remotely.
         From routine consultations to follow-up care, provide a convenient,
@@ -18,8 +64,30 @@ const TelemedicineHeader = () => {
 };
 
 const FeatureCard = ({ imageSrc, title, description }) => {
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(
+      cardRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: cardRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
+
   return (
-    <div className="md:w-1/3 flex flex-col gap-4 items-center justify-center">
+    <div
+      ref={cardRef}
+      className="md:w-1/3 flex flex-col gap-4 items-center justify-center"
+    >
       <Image src={imageSrc} alt="" width={60} height={60} />
       <div className="text-base lg:text-lg 2xl:text-xl font-semibold text-center">
         {title}
@@ -54,8 +122,27 @@ const TelemedicineFeatureSection = () => {
 };
 
 const Telemedicine = () => {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(
+      sectionRef.current,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 1.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       className="
       relative overflow-hidden
       before:content-[''] before:absolute before:right-[90%] before:w-[600px] before:bottom-[0%]
@@ -64,17 +151,17 @@ const Telemedicine = () => {
       after:bg-primary after:rounded-full after:blur-[250px] after:z-[-1] after:bottom-[0%] after:translate-y-[-10%] after:opacity-60
     "
     >
-      <div className="container mx-auto py-8 sm:py-12 md:py-16 lg:py-24 max-sm:px-10 ">
-        <div className="flex flex-col lg:flex-row  py-8 sm:py-12 md:py-16 lg:py-24 relative">
+      <div className="container mx-auto py-8 sm:py-12 md:py-16 lg:py-24 max-sm:px-10">
+        <div className="flex flex-col lg:flex-row py-8 sm:py-12 md:py-16 lg:py-24 relative">
           <img
             alt="left"
             className="max-sm:absolute max-lg:w-[100px] w-full max-w-[150px] h-[250px] max-lg:h-[unset] left-0 bottom-[10px] z-[1]"
-            src={"/assets/images/Group67.png"}
+            src="/assets/images/Group67.png"
           />
           <TelemedicineHeader />
           <img
-            alt="left"
-            src={"/assets/images/Group68.png"}
+            alt="right"
+            src="/assets/images/Group68.png"
             className="max-sm:absolute max-lg:w-[100px] w-full max-w-[150px] h-[250px] max-lg:h-[unset] right-0 bottom-[10px] z-[1]"
           />
           <div className="w-[200px] h-[165px] lg:hidden"></div>
