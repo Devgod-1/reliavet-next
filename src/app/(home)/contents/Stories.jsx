@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CardReview from "@/components/cards/CardReview";
 import { dataReviews } from "@/utils/constant";
-import gsap from "gsap"; // Import GSAP
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -20,52 +20,51 @@ const Stories = () => {
   const cardsRef = useRef([]);
   const buttonPrevRef = useRef(null);
   const buttonNextRef = useRef(null);
-  const totalSlidesReview = Math.ceil(dataReviews.length / 3); // Adjust based on default slides per view
+  const totalSlidesReview = Math.ceil(dataReviews.length / 3);
 
   useEffect(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 80%", // Trigger when section is 80% into view
-        toggleActions: "play none none none", // Play on enter only
+        start: "top 80%",
+        toggleActions: "play none none none",
       },
-      defaults: { duration: 1, ease: "power3.out" },
+      defaults: { duration: 0.5, ease: "power2.out" }, // Reduced duration for faster animations
     });
-    // GSAP animation for scaling
+
+    // GSAP animation for title and description
     tl.fromTo(
       titleRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 1, delay: 0.15, ease: "back.out(1.7)" }
+      { opacity: 1, duration: 0.5, ease: "power2.out" }
     );
 
     tl.fromTo(
       descriptionRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 1, delay: 0.2, ease: "back.out(1.7)" }
+      { opacity: 1, duration: 0.5, ease: "power2.out" }
     );
 
+    // GSAP animation for buttons
     tl.fromTo(
       buttonPrevRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 1, delay: 0.25, ease: "back.out(1.7)" }
+      { opacity: 1, duration: 0.4, ease: "power2.out" }
     );
 
     tl.fromTo(
       buttonNextRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 1, delay: 0.3, ease: "back.out(1.7)" }
+      { opacity: 1, duration: 0.4, ease: "power2.out" }
     );
 
-    // GSAP animation for blog cards (with delay for each card)
+    // GSAP animation for cards
     cardsRef.current.forEach((card, index) => {
       tl.fromTo(
         card,
         { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.25,
-          ease: "back.out(1.7)",
-        }
+        { opacity: 1, duration: 0.3, ease: "power2.out" },
+        `-=${0.15 * index}` // Reduced delay for each card
       );
     });
 
@@ -144,7 +143,7 @@ const Stories = () => {
             spaceBetween: 20,
           },
           1440: {
-            slidesPerView: 4,
+            slidesPerView: 3,
             spaceBetween: 24,
           },
         }}
@@ -156,7 +155,7 @@ const Stories = () => {
               name={review.name}
               rating={review.rating}
               description={review.description}
-              className="min-h-[280px] 2xl:min-h-[300px]"
+              className="min-h-[280px] 2xl:min-h-[350px]"
               ref={(el) => (cardsRef.current[index] = el)}
             />
           </SwiperSlide>
@@ -169,7 +168,7 @@ const Stories = () => {
             key={index}
             src="/assets/icons/icon-star-rounded.svg"
             onClick={() => {
-              swiperInstanceReview.slideTo(index * 3); // Adjust based on default slides per view
+              swiperInstanceReview.slideTo(index * 3);
               setActiveIndexReview(index);
             }}
             alt=""

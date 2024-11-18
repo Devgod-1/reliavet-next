@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import DialogViewVet from "@/components/dialogs/DialogViewVet";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export const FindVeterinarianCard = ({
@@ -72,16 +74,91 @@ export const FindVeterinarianCard = ({
 };
 
 const FindVeterinarian = () => {
-  const swiperRef = useRef();
-  const [swiperInstance, setSwiperInstance] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const subTitleRef = useRef(null);
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    // Create the animation when the section scrolls into view
+    const section = sectionRef.current;
+    // Animate the title
+    gsap.fromTo(
+      titleRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      subTitleRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.2,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    // Animate the form
+    gsap.fromTo(
+      formRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.3, // Add a slight delay for a staggered effect
+        scrollTrigger: {
+          trigger: section,
+          start: "top 75%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    // Animate the cards
+    gsap.fromTo(
+      section.querySelectorAll(".vet-card"),
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 70%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
+
   return (
-    <section className="container px-10 mx-auto">
+    <section ref={sectionRef} className="container px-10 mx-auto">
       <div>
-        <div className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-semibold text-center my-20">
+        <div
+          className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-semibold text-center my-20"
+          ref={titleRef}
+        >
           Find a Trusted Veterinarian Near You
         </div>
-        <div className="flex flex-col my-5">
+        <div className="flex flex-col my-5" ref={formRef}>
           <label
             htmlFor="search"
             className="pl-3 mb-2 flex gap-2 text-xs lg:text-sm text-[#636363]"
@@ -102,18 +179,16 @@ const FindVeterinarian = () => {
           />
         </div>
         <div>
-          <h1 className="2xl:text-[36px] text-[24px] lg:text-[32px] font-semibold leading-[1.4] lg:leading-[1.1] mt-10">
+          <h1
+            className="2xl:text-[36px] text-[24px] lg:text-[32px] font-semibold leading-[1.4] lg:leading-[1.1] mt-10"
+            ref={subTitleRef}
+          >
             Suggested Based on your location
           </h1>
           <Swiper
-            ref={swiperRef}
             className="flex gap-7 mb-10 mt-5"
             spaceBetween={24}
             slidesPerGroupAuto
-            onSwiper={(swiper) => setSwiperInstance(swiper)}
-            onSlideChange={(swiper) =>
-              setActiveIndex(Math.floor(swiper.activeIndex / 4))
-            }
             breakpoints={{
               320: {
                 slidesPerView: 1,
@@ -133,7 +208,7 @@ const FindVeterinarian = () => {
               },
             }}
           >
-            <SwiperSlide>
+            <SwiperSlide className="vet-card">
               <FindVeterinarianCard
                 name={"By Mark B."}
                 state={"Alaska"}
@@ -143,7 +218,7 @@ const FindVeterinarian = () => {
                 profileImage={"/assets/images/vet.png"}
               />
             </SwiperSlide>
-            <SwiperSlide>
+            <SwiperSlide className="vet-card">
               <FindVeterinarianCard
                 name={"By Mark B."}
                 state={"Alaska"}
@@ -153,7 +228,7 @@ const FindVeterinarian = () => {
                 profileImage={"/assets/images/vet.png"}
               />
             </SwiperSlide>
-            <SwiperSlide>
+            <SwiperSlide className="vet-card">
               <FindVeterinarianCard
                 name={"By Mark B."}
                 state={"Alaska"}
@@ -163,7 +238,7 @@ const FindVeterinarian = () => {
                 profileImage={"/assets/images/vet.png"}
               />
             </SwiperSlide>
-            <SwiperSlide>
+            <SwiperSlide className="vet-card">
               <FindVeterinarianCard
                 name={"By Mark B."}
                 state={"Alaska"}
