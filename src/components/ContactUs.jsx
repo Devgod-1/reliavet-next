@@ -16,59 +16,112 @@ const ContactUs = () => {
   const descriptionRef = useRef(null);
   const contactRef = useRef(null);
   const formRef = useRef(null);
-  const buttonRef = useRef(null);
   const subscribeTitleRef = useRef(null);
   const newsletterRef = useRef(null);
 
   useEffect(() => {
-    // GSAP timeline for animations with ScrollTrigger
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%", // Trigger when section is 80% in view
-        toggleActions: "play none none none",
-      },
-      defaults: { duration: 1, ease: "power3.out" },
-    });
-
-    // Fade in title and description
-    tl.fromTo(
+    // GSAP animations without using timeline
+    gsap.fromTo(
       titleRef.current,
       { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 1 }
-    )
-      .fromTo(
-        descriptionRef.current,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1 }
-      )
-      .fromTo(
-        contactRef.current,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1 }
-      )
-      .fromTo(
-        formRef.current,
-        { scale: 0, opacity: 0, y: 50 },
-        { scale: 1, opacity: 1, y: 0, duration: 1 }
-      );
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.5,
+        ease: "power2.out", // Add ease for smoother transition
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
 
-    // // Animate submit button
-    // tl.fromTo(
-    //   buttonRef.current,
-    //   { opacity: 0, scale: 0.8 },
-    //   { opacity: 1, scale: 1, duration: 0.5 }
-    // );
+    gsap.fromTo(
+      descriptionRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
 
-    // Animate subscribe section
-    tl.fromTo(
+    gsap.fromTo(
+      contactRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      formRef.current,
+      { scale: 0, opacity: 0, y: 50 },
+      {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
       subscribeTitleRef.current,
       { opacity: 0, x: -50 },
-      { opacity: 1, x: 0, duration: 0.5 }
-    ).fromTo(
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        ease: "power2.out",
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
       newsletterRef.current,
       { opacity: 0, x: 50 },
-      { opacity: 1, x: 0, duration: 0.5 }
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        ease: "power2.out",
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
     );
 
     return () => {
@@ -90,15 +143,14 @@ const ContactUs = () => {
                 className="text-[28px] md:text-[35px] lg:text-[40px] xl:text-[48px] 2xl:text-[55px] font-bold"
                 ref={titleRef}
               >
-                Contact us{" "}
+                Contact us
               </h4>
               <span
-                className="text-xs lg:text-base 2xl:text-lg"
+                className="text-xs lg:text-base 2xl:text-lg block"
                 ref={descriptionRef}
               >
-                Have questions or need assistance? Our dedicated support{" "}
-                <br className="hidden lg:block" /> team is here to help you make
-                the most of ReliaVet.
+                Have questions or need assistance? Our dedicated support team is
+                here to help you make the most of ReliaVet.
               </span>
             </div>
             <div className="space-y-2 mt-6 lg:mt-12" ref={contactRef}>
@@ -152,7 +204,7 @@ const ContactUs = () => {
               />
             </div>
 
-            <button className="text-[20px] lg:text-[28px] xl:text-[32px] 2xl:text-[36px] font-bold bg-black w-full py-4 rounded-xl mt-10">
+            <button className="transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl text-[20px] lg:text-[28px] xl:text-[32px] 2xl:text-[36px] font-bold bg-black w-full py-4 rounded-xl mt-10">
               Submit
             </button>
           </div>

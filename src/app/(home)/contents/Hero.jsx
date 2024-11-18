@@ -105,7 +105,8 @@ const Hero = () => {
             </h4>
             <button
               ref={buttonRef}
-              className="bg-bgPrimaryGradientRed p-4 px-8 lg:p-4 lg:py-6 2xl:p-6 2xl:py-8 w-fit lg:w-full text-white lg:max-w-[200px] 2xl:max-w-[250px] text-[10px] lg:text-sm 2xl:text-sm font-bold rounded-lg mt-8"
+              className="bg-bgPrimaryGradientRed transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl p-4 px-8 lg:p-4 lg:py-6 2xl:p-6 2xl:py-8 w-fit lg:w-full text-white lg:max-w-[200px] 2xl:max-w-[250px] text-[10px] lg:text-sm 2xl:text-sm font-bold rounded-lg mt-8"
+              onClick={() => router.push("/find-vet")}
             >
               Get Started
             </button>

@@ -4,10 +4,12 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Reliavet = ({ features = [], whyText = "" }) => {
+  const router = useRouter();
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const imageRefs = useRef([]);
@@ -180,7 +182,10 @@ const Reliavet = ({ features = [], whyText = "" }) => {
           our licensed veterinarians who will be happy to help!
         </div>
         <div className="flex items-center justify-center">
-          <button className="bg-bgPrimaryGradient mt-6 2xl:mt-10 p-4 py-6 2xl:p-8 2xl:py-10 w-full text-white max-w-[300px] 2xl:max-w-[350px] text-sm lg:text-xl 2xl:text-2xl font-bold rounded-lg">
+          <button
+            onClick={() => router.push("/find-vet")}
+            className="transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl bg-bgPrimaryGradient mt-6 2xl:mt-10 p-4 py-6 2xl:p-8 2xl:py-10 w-full text-white max-w-[300px] 2xl:max-w-[350px] text-sm lg:text-xl 2xl:text-2xl font-bold rounded-lg"
+          >
             Book an appointment
           </button>
         </div>

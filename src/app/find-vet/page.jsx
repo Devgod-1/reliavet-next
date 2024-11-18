@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 export default async function page() {
-    redirect('/find-vet/search-technicians');
+  redirect("/find-vet/search-technicians");
 }

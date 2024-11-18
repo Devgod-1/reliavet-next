@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -122,6 +123,7 @@ const TelemedicineFeatureSection = () => {
 };
 
 const Telemedicine = () => {
+  const router = useRouter();
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -173,7 +175,10 @@ const Telemedicine = () => {
             </h1>
             <TelemedicineFeatureSection />
             <div className="py-5 flex items-center justify-center">
-              <button className="bg-bgPrimaryGradient mt-6 2xl:mt-10 p-4 py-6 2xl:p-8 2xl:py-10 w-full text-white max-w-[300px] 2xl:max-w-[350px] text-xl 2xl:text-2xl font-bold rounded-lg">
+              <button
+                onClick={() => router.push("/find-vet")}
+                className="transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl bg-bgPrimaryGradient mt-6 2xl:mt-10 p-4 py-6 2xl:p-8 2xl:py-10 w-full text-white max-w-[300px] 2xl:max-w-[350px] text-xl 2xl:text-2xl font-bold rounded-lg"
+              >
                 Get Started
               </button>
             </div>

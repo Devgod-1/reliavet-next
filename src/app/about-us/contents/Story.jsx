@@ -4,10 +4,12 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Story() {
+  const router = useRouter();
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const paragraphRef = useRef(null);
@@ -117,7 +119,8 @@ export default function Story() {
         </p>
         <button
           ref={buttonRef}
-          className="px-3 py-4 lg:py-6 lg:px-8 rounded-full w-full lg:w-[500px] border mt-10 bg-[#ECEDF0] flex items-center justify-center gap-x-2 font-bold text-sm lg:text-lg 2xl:text-xl"
+          onClick={() => router.push("/find-vet")}
+          className="transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-lg px-3 py-4 lg:py-6 lg:px-8 rounded-full w-full lg:w-[500px] border mt-10 bg-[#ECEDF0] flex items-center justify-center gap-x-2 font-bold text-sm lg:text-lg 2xl:text-xl"
         >
           <img
             src="/assets/icons/icon-arrow-right.svg"

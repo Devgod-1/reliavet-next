@@ -4,10 +4,17 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import gsap from "gsap";
+import { useRouter } from "next/navigation";
+import DialogViewHospital from "@/components/dialogs/DialogViewHospital";
 
 export const FindHospitalCard = () => {
+  const [openDialog, setOpenDialog] = useState(null);
   return (
     <div className="bg-[#EDF3FF] flex-1 rounded-2xl p-5 py-8 relative ">
+      <DialogViewHospital
+        open={openDialog === "view"}
+        onClose={() => setOpenDialog(null)}
+      />
       <button className="absolute top-5 right-5">
         <img
           src="/assets/icons/icon-arrow-top-right.svg"
@@ -31,7 +38,10 @@ export const FindHospitalCard = () => {
             />
           ))}
         </div>
-        <button className="w-full bg-white font-bold text-xs 2xl:text-sm text-[#243a82] p-5 border border-[#ACACAC] rounded-[9px] !mt-6">
+        <button
+          onClick={() => setOpenDialog("view")}
+          className="w-full hover:!bg-[#243A8E] hover:!text-white bg-white font-bold text-xs 2xl:text-sm text-[#243a82] p-5 border border-[#ACACAC] rounded-[9px] !mt-6"
+        >
           View Vets,Techs
         </button>
       </div>
@@ -40,6 +50,7 @@ export const FindHospitalCard = () => {
 };
 
 const FindHospital = () => {
+  const router = useRouter();
   const swiperRef = useRef();
   const [swiperInstance, setSwiperInstance] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -262,7 +273,10 @@ const FindHospital = () => {
             </SwiperSlide>
           </Swiper>
           <div className="flex items-center justify-center" ref={buttonRef}>
-            <button className="bg-bgPrimaryGradientRed2 flex items-center justify-center md:my-6 my-3 2xl:mt-10 p-8 py-5 2xl:p-8 2xl:py-6 w-fit text-white text-sm lg:text-sm 2xl:text-base font-bold rounded-lg">
+            <button
+              onClick={() => router.push("/find-hospital")}
+              className="bg-bgPrimaryGradientRed2 flex items-center transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl justify-center md:my-6 my-3 2xl:mt-10 p-8 py-5 2xl:p-8 2xl:py-6 w-fit text-white text-sm lg:text-sm 2xl:text-base font-bold rounded-lg"
+            >
               See More{" "}
               <img
                 src="/assets/icons/icon-arrow-right-big.svg"
