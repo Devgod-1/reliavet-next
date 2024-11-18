@@ -112,30 +112,41 @@ const Navbar = () => {
           <ul className="flex h-full justify-center flex-col gap-8 items-center uppercase px-4 text-white font-bold py-5 pt-10">
             <li
               className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
-              onClick={() => router.push("/")}
+              onClick={() => {
+                Menu_click();
+                router.push("/");
+              }}
             >
               Home
             </li>
             <li
               className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
-              onClick={() => router.push("/find-vet")}
+              onClick={() => {
+                Menu_click();
+                router.push("/find-vet");
+              }}
             >
               Find Vet
             </li>
             <li
               className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
-              onClick={() => router.push("/find-hospital")}
+              onClick={() => {
+                Menu_click();
+                router.push("/find-hospital");
+              }}
             >
               Find HOSPITAL
             </li>
             <Link
               href={"/about-us"}
+              onClick={Menu_click}
               className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
             >
               about uS
             </Link>
             <Link
               href={"/blog"}
+              onClick={Menu_click}
               className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
             >
               Blog
