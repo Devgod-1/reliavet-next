@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 
-export default function page() {
+export default function Page() {
   useEffect(() => {
     // Scroll to the top of the page when the component is mounted
     window.scrollTo(0, 0);
