@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 * {
   font-family: "Poppins", sans-serif;
 }
@@ -10,11 +9,38 @@
 :root {
   --primary-color: #243a8e;
   --red-color-primary: #de1e33;
-  --bg-primary-gradient: linear-gradient(91.73deg, #243a8e 42.1%, #0065ff 91.59%);
-  --bg-primary-gradient-2: linear-gradient(266.36deg, #243a8e 3.07%, #3f8eff 96.93%);
-  --bg-primary-gradient-red: linear-gradient(90.59deg, #de1e33 6.21%, #243a8e 93.79%);
+  --bg-primary-gradient: linear-gradient(
+    91.73deg,
+    #243a8e 42.1%,
+    #0065ff 91.59%
+  );
+  --bg-primary-gradient-2: linear-gradient(
+    266.36deg,
+    #243a8e 3.07%,
+    #3f8eff 96.93%
+  );
+  --bg-primary-gradient-red: linear-gradient(
+    90.59deg,
+    #de1e33 6.21%,
+    #243a8e 93.79%
+  );
 }
 
+.gradient-text-primary {
+  background: linear-gradient(90deg, #243a8e, #de1e33);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* For webkit-based browsers */
+  background-clip: text;
+  color: transparent;
+}
+
+.tab-list-gradient:hover {
+  background: linear-gradient(90deg, #243a8e, #de1e33);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* For webkit-based browsers */
+  background-clip: text;
+  color: transparent;
+}
 
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */

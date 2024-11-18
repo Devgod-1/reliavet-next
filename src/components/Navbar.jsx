@@ -1,4 +1,5 @@
 "use client";
+import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,7 +14,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-primary w-full md:py-5 py-4 sticky top-0 z-10 overflow-hidden transition-transform">
+    <div className="bg-primary w-full md:py-5 py-4 sticky top-0 z-[21] overflow-hidden transition-transform">
       <div className="max-md:hidden w-full container mx-auto flex items-center justify-between text-white h-full my-auto">
         <Image
           src="/assets/logos/main_logo.png"
@@ -30,13 +31,22 @@ const Navbar = () => {
           >
             Home
           </li>
-          <Link href={'/find-vet'} className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
+          <Link
+            href={"/find-vet"}
+            className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
+          >
             Find Vet
           </Link>
-          <Link href={'/find-hospital'} className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
+          <Link
+            href={"/find-hospital"}
+            className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
+          >
             Find HOSPITAL
           </Link>
-          <Link href={'/about-us'} className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
+          <Link
+            href={"/about-us"}
+            className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
+          >
             about uS
           </Link>
         </ul>
@@ -63,15 +73,21 @@ const Navbar = () => {
             className="text-sm px-6 font-medium text-white hover:text-red-primary"
             onClick={Menu_click}
           >
-            Menu
+            <Menu />
           </button>
         </div>
 
         <div
-          className={`${menu ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-            } transition-all duration-500 ease-in-out overflow-hidden`}
+          className={`${
+            menu ? "clip-open" : "clip-close"
+          } transition-all duration-500 ease-in-out overflow-hidden fixed w-full h-[100vh] bg-primary`}
+          style={{
+            clipPath: menu
+              ? "circle(150% at 90% -10%)"
+              : "circle(0% at 90% -20%)",
+          }}
         >
-          <ul className="flex flex-col gap-5 items-center uppercase px-4 text-white py-5 pt-10">
+          <ul className="flex h-full justify-center mt-[-2rem] flex-col gap-8 items-center uppercase px-4 text-white py-5 pt-10">
             <li
               className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
               onClick={() => router.push("/")}
@@ -84,14 +100,17 @@ const Navbar = () => {
             <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
               Find HOSPITAL
             </li>
-            <Link href={'/about-us'} className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
+            <Link
+              href={"/about-us"}
+              className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
+            >
               about uS
             </Link>
             <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
               <button className="text-xs 2xl:text-sm py-1 px-6 font-medium cursor-pointer">
                 Log In
               </button>
-              <button className="text-xs 2xl:text-sm py-1 px-6 rounded-lg font-medium cursor-pointer">
+              <button className="text-xs 2xl:text-sm bg-red-primary p-3 px-6 rounded-lg font-medium">
                 Sign Up
               </button>
             </li>

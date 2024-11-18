@@ -5,13 +5,13 @@ import Promo from "./contents/Promo";
 import RecentArticles from "./contents/RecentArticles";
 
 export default function page() {
-    return (
-        <div>
-            <Hero />
-            <PopularArticles />
-            <RecentArticles />
-            <AllArticles />
-            <Promo />
-        </div>
-    );
+  return (
+    <div className="overflow-hidden">
+      <Hero />
+      <PopularArticles />
+      <RecentArticles />
+      <AllArticles />
+      <Promo />
+    </div>
+  );
 }

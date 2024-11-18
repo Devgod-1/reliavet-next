@@ -1,7 +1,14 @@
 import Image from "next/image";
 import React from "react";
 
-const CardReview = ({ avatar, name, rating, description, className }) => {
+const CardReview = ({
+  avatar,
+  name,
+  rating,
+  description,
+  className,
+  ...props
+}) => {
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 !== 0;
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
@@ -9,6 +16,7 @@ const CardReview = ({ avatar, name, rating, description, className }) => {
   return (
     <div
       className={`w-full border-[1.25px] border-[#243A8E26] rounded-xl p-6 2xl:p-10 ${className}`}
+      {...props}
     >
       <div className="flex items-start justify-between">
         <Image

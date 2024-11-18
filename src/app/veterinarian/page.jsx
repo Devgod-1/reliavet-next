@@ -10,8 +10,19 @@ const Veterinarian = () => {
     <div>
       <Hero />
       <Telemedicine />
-      <Reliavet />
-      <SignInUp reg='Easy Registration' note="Add your Details" video="Start Connecting With Clients" />
+      <Reliavet
+        whyText="ReliaVet is more than a platform—it’s a partner in your mission to provide outstanding veterinary care. We equip veterinarians with cutting-edge tools, support, and resources to meet the evolving needs of your practice and clients."
+        features={[
+          "Comprehensive Telemedicine Integration",
+          "Education and Professional Growth",
+          "Dedicated Support",
+        ]}
+      />
+      <SignInUp
+        reg="Easy Registration"
+        note="Add your Details"
+        video="Start Connecting With Clients"
+      />
       <Blog />
     </div>
   );
