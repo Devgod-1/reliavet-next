@@ -7,7 +7,7 @@ const ScheduledOffer = ({ className }) => {
     >
       <div className="flex max-lg:flex-col gap-3 mt-6">
         <div className="w-full flex flex-col gap-4 lg:p-8  rounded-[40px]">
-          <span className="text-[#DE1E33] bg-[#DE1E33]/10 p-3 w-fit rounded-full px-5 font-medium text-xs md:text-sm lg:text-base 2xl:text-lg lg:whitespace-nowrap">
+          {/* <span className="text-[#DE1E33] bg-[#DE1E33]/10 p-3 w-fit rounded-full px-5 font-medium text-xs md:text-sm lg:text-base 2xl:text-lg lg:whitespace-nowrap">
             <span className="text-[10px] md:text-xs lg:text-sm 2xl:text-base">
               $
             </span>
@@ -15,7 +15,7 @@ const ScheduledOffer = ({ className }) => {
               55
             </span>{" "}
             for a 20-minute appointment
-          </span>
+          </span> */}
           <h4 className="2xl:text-[55px] text-[24px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-bold text-left mb-5">
             Scheduled Telemedicine Services
           </h4>

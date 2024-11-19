@@ -17,7 +17,7 @@ const Navbar = () => {
     <div className="bg-primary w-full md:py-5 py-4 sticky top-0 z-[22] overflow-hidden transition-transform ">
       <div className="max-md:hidden w-full container mx-auto flex items-center justify-between text-white h-full my-auto">
         <Image
-          src="/assets/logos/main_logo.png"
+          src="/assets/logos/main_logo.svg"
           alt=""
           className="w-full max-w-[90px] 2xl:max-w-[110px] cursor-pointer"
           onClick={() => router.push("/")}
@@ -35,13 +35,13 @@ const Navbar = () => {
             href={"/find-vet"}
             className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
           >
-            Find Vet
+            Find A Provider
           </Link>
           <Link
             href={"/find-hospital"}
             className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
           >
-            Find HOSPITAL
+            Find a HOSPITAL
           </Link>
           <Link
             href={"/about-us"}
@@ -84,7 +84,7 @@ const Navbar = () => {
       <div className="md:hidden h-full">
         <div className="flex items-center justify-between">
           <Image
-            src="/assets/logos/main_logo.png"
+            src="/assets/logos/main_logo.svg"
             alt=""
             className="w-full= cursor-pointer px-6"
             onClick={() => router.push("/")}
@@ -126,7 +126,7 @@ const Navbar = () => {
                 router.push("/find-vet");
               }}
             >
-              Find Vet
+              Find A Provider
             </li>
             <li
               className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
@@ -135,7 +135,7 @@ const Navbar = () => {
                 router.push("/find-hospital");
               }}
             >
-              Find HOSPITAL
+              Find a HOSPITAL
             </li>
             <Link
               href={"/about-us"}

@@ -20,7 +20,7 @@ export default function Filters() {
           }`}
           onClick={() => setActiveTab("technicians")}
         >
-          Search veterinarians/Technicians
+          Search Hospitals
         </div>
       </div>
       <div>

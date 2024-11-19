@@ -102,7 +102,7 @@ const TelemedicineFeatureSection = () => {
     <div className="flex flex-row max-md:flex-col gap-10 items-center justify-around mt-5 py-8 relative">
       <FeatureCard
         imageSrc="/assets/images/next.png"
-        description="Only $75 to have your pets needs immediately assessed by a veterinarian!"
+        description="have your pets needs immediately assessed by a veterinarian!"
         isOpen={openCard === "next"}
         onClick={() => handleCardClick("next")}
       />
@@ -114,7 +114,7 @@ const TelemedicineFeatureSection = () => {
       />
       <FeatureCard
         imageSrc="/assets/images/call.png"
-        description="Have questions answered and receive advice about your pets for only $35"
+        description="Have questions answered and receive advice about your pets"
         isOpen={openCard === "call"}
         onClick={() => handleCardClick("call")}
       />
