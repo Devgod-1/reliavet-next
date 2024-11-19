@@ -59,7 +59,7 @@ const Blog = () => {
 
   return (
     <section
-      className="container mx-auto py-8 sm:py-16 md:py-24 lg:py-32 max-sm:px-7"
+      className="relative z-[20] container mx-auto py-8 sm:py-16 md:py-24 lg:py-32 max-sm:px-7"
       ref={sectionRef}
     >
       <div>

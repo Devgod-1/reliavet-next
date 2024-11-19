@@ -55,9 +55,19 @@ const ContactUs = () => {
                   height={24}
                   className="max-w-[16px] lg:max-w-[18px] 2xl:max-w-[24px] mr-3 2xl:mr-3"
                 />{" "}
-                Contact@reliavet.com
+                contact@reliavet.com
               </div>
               <div className="flex items-center text-sm lg:text-lg 2xl:text-xl">
+                <Image
+                  src="/assets/icons/icon-email-red.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="max-w-[16px] lg:max-w-[18px] 2xl:max-w-[24px] mr-3 2xl:mr-3"
+                />{" "}
+                support@reliavet.com
+              </div>
+              {/* <div className="flex items-center text-sm lg:text-lg 2xl:text-xl">
                 <Image
                   src="/assets/icons/icon-phone-red.svg"
                   alt=""
@@ -66,7 +76,7 @@ const ContactUs = () => {
                   className="max-w-[30px] lg:max-w-[32px] 2xl:max-w-[40px] mr-1 2xl:mr-1 -ml-2"
                 />{" "}
                 +34 123 456 789
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

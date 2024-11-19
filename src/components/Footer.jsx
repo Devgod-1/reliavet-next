@@ -82,7 +82,7 @@ const Footer = () => {
                 href={"/find-vet"}
                 className="text-[11px] lg:text-[13px] 2xl:text-[15px] font-medium"
               >
-                Find Vet
+                Find A Provider
               </Link>
             </div>
           </div>
@@ -91,13 +91,14 @@ const Footer = () => {
             <h4 className="text-[24px] 2xl:text-[28px] font-bold">Contact</h4>
             <div className="text-[11px] lg:text-[13px] 2xl:text-[15px] mt-2 flex flex-col space-y-1">
               <p>
-                reliavet@contact.com
+                contact@reliavet.com
                 <br />
-                +012-345-6789
-                <br />
+                support@reliavet.com
+                {/* +012-345-6789 */}
+                {/* <br />
                 9889 Lorem Ipsum street,
                 <br />
-                Pellentesque, CA, USA
+                Pellentesque, CA, USA */}
               </p>
             </div>
           </div>
@@ -108,30 +109,39 @@ const Footer = () => {
             </h4>
             <div className="flex flex-col justify-between space-y-1 h-full">
               <div className="flex items-center mt-2 gap-3">
-                <button className="bg-primary w-[32px] h-[32px] 2xl:w-[42px] 2xl:h-[42px] rounded-full flex items-center justify-center">
+                <Link
+                  href={"https://www.facebook.com/Reliavet"}
+                  className="bg-primary w-[32px] h-[32px] 2xl:w-[42px] 2xl:h-[42px] rounded-full flex items-center justify-center"
+                >
                   <Image
                     src="/assets/logos/facebook.svg"
                     alt=""
                     width={14}
                     height={10}
                   />
-                </button>
-                <button className="bg-primary w-[32px] h-[32px] 2xl:w-[42px] 2xl:h-[42px] rounded-full flex items-center justify-center">
+                </Link>
+                <Link
+                  href={"https://www.instagram.com/reliavet/"}
+                  className="bg-primary w-[32px] h-[32px] 2xl:w-[42px] 2xl:h-[42px] rounded-full flex items-center justify-center"
+                >
                   <Image
                     src="/assets/logos/twitter.svg"
                     alt=""
                     width={16}
                     height={16}
                   />
-                </button>
-                <button className="bg-primary w-[32px] h-[32px] 2xl:w-[42px] 2xl:h-[42px] rounded-full flex items-center justify-center">
+                </Link>
+                <Link
+                  href={"https://x.com/relia_vet"}
+                  className="bg-primary w-[32px] h-[32px] 2xl:w-[42px] 2xl:h-[42px] rounded-full flex items-center justify-center"
+                >
                   <Image
                     src="/assets/logos/instagram.svg"
                     alt=""
                     width={16}
                     height={16}
                   />
-                </button>
+                </Link>
               </div>
 
               <button className="font-medium text-sm lg:text-lg 2xl:text-xl flex items-center bg-white p-6 py-2 rounded-lg shadow-[2px_3px_12px_#243A8E2E] mt-auto max-[500px]:!mt-6">

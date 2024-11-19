@@ -115,8 +115,9 @@ const TelemedicineFeatureSection = () => {
       />
       <FeatureCard
         imageSrc="/assets/images/secure.png"
-        title="Secure Communication"
-        description="Have questions answered and receive advice about your pets for only $35"
+        // title="Secure Communication"
+        title="Secure Connection"
+        description="Connect with clients knowing your information is safe"
       />
     </div>
   );

@@ -1,6 +1,10 @@
+"use client";
+import { usePathname } from "next/navigation";
 import Filters from "./Filters";
 
 export default function Hero() {
+  const pathname = usePathname();
+
   return (
     <section
       style={{
@@ -27,7 +31,11 @@ export default function Hero() {
       </ul> */}
 
       <h1 className="font-bold leading-[1.1] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[50px] 2xl:text-[68px] mt-[-20vh] lg:mt-[-20vh] text-center">
-        Find the Best <br /> Veterinarian Near You
+        Find the Best <br />{" "}
+        {pathname.includes("/find-vet/search-technicians")
+          ? "Technician"
+          : "Veterinarian"}{" "}
+        Near You
       </h1>
       <p className="text-[#636363] text-xs lg:text-base text-center">
         Search by location, specialty, and availability to find the perfect care

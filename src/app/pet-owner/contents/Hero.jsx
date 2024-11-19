@@ -96,7 +96,7 @@ const Hero = () => {
             ref={descriptionRef}
           >
             Find the Best Care for Your Pet with Trusted Veterinarians
-          </span>
+        </span>
 
           <button
             ref={buttonRef}

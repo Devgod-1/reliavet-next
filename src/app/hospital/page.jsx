@@ -72,7 +72,7 @@ const Hospital = () => {
           src="/assets/images/bg-promo-2.png"
           className="absolute top-[-21rem] 2xl:top-[-24rem] pointer-events-none hidden lg:block"
         />
-        <section
+      <section
           // className="container mx-auto py-8 sm:py-16 md:py-24 lg:py-32 max-sm:px-7"
           className="container mx-auto py-8 sm:py-16 md:py-24 lg:py-32 max-sm:px-7 relative z-[20]"
           ref={sectionRef}
