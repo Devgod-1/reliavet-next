@@ -57,28 +57,16 @@ const Navbar = () => {
           </Link>
         </ul>
         <div>
-          <button
+          <a href={process.env.APP_URL + '/login'}
             className="text-xs 2xl:text-sm px-6 font-medium"
-            onClick={() =>
-              window.open(
-                "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
-                "_blank"
-              )
-            }
           >
             Log In
-          </button>
-          <button
+          </a>
+          <a href={process.env.APP_URL + '/login'}
             className="text-xs 2xl:text-sm bg-red-primary p-3 px-6 rounded-lg font-medium"
-            onClick={() =>
-              window.open(
-                "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
-                "_blank"
-              )
-            }
           >
             Sign Up
-          </button>
+          </a>
         </div>
       </div>
       <div className="md:hidden h-full">
@@ -152,28 +140,16 @@ const Navbar = () => {
               Blog
             </Link>
             <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
-              <button
+              <a href={process.env.APP_URL + '/login'}
                 className="text-xs 2xl:text-sm py-1 px-6 font-medium cursor-pointer"
-                onClick={() =>
-                  window.open(
-                    "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
-                    "_blank"
-                  )
-                }
               >
                 Log In
-              </button>
-              <button
+              </a>
+              <a href={process.env.APP_URL + '/login'}
                 className="text-xs 2xl:text-sm bg-red-primary p-3 px-6 rounded-lg font-medium"
-                onClick={() =>
-                  window.open(
-                    "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
-                    "_blank"
-                  )
-                }
               >
                 Sign Up
-              </button>
+              </a>
             </li>
           </ul>
         </div>
