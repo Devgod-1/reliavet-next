@@ -1,15 +1,51 @@
 "use client";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import Image from "next/image";
-import { useRef, useState } from "react";
 import "swiper/css";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Pets() {
   const swiperRefReview = useRef();
-  const [activeIndexReview, setActiveIndexReview] = useState(0);
   const [swiperInstanceReview, setSwiperInstanceReview] = useState(null);
+  const imagesRef = useRef([]);
+
+  useEffect(() => {
+    gsap.fromTo(
+      imagesRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        stagger: 0.3,
+        scrollTrigger: {
+          trigger: swiperRefReview.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      ".button-prev, .button-next",
+      { opacity: 0, x: -50 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: swiperRefReview.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
 
   return (
     <div
@@ -43,50 +79,22 @@ export default function Pets() {
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => setSwiperInstanceReview(swiper)}
       >
-        <SwiperSlide>
-          <Image
-            src={"/assets/images/pet1.png"}
-            alt="pet"
-            width={510}
-            height={598}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src={"/assets/images/pet2.png"}
-            alt="pet"
-            width={510}
-            height={598}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src={"/assets/images/pet3.png"}
-            alt="pet"
-            width={510}
-            height={598}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src={"/assets/images/pet3.png"}
-            alt="pet"
-            width={510}
-            height={598}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src={"/assets/images/pet3.png"}
-            alt="pet"
-            width={510}
-            height={598}
-          />
-        </SwiperSlide>
+        {[1, 2, 3, 3, 3].map((pet, index) => (
+          <SwiperSlide key={index}>
+            <Image
+              ref={(el) => (imagesRef.current[index] = el)}
+              src={`/assets/images/pet${pet}.png`}
+              alt="pet"
+              width={510}
+              height={400}
+              className="object-cover h-[400px] rounded-[60px]"
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
       <button
         onClick={() => swiperRefReview.current.swiper.slidePrev()}
-        className="absolute hidden xl:block -left-12 top-[50%]"
+        className="absolute hidden xl:block -left-12 top-[50%] button-prev"
       >
         <Image
           src="/assets/icons/icon-slider-left.svg"
@@ -97,7 +105,7 @@ export default function Pets() {
       </button>
       <button
         onClick={() => swiperRefReview.current.swiper.slideNext()}
-        className="absolute hidden xl:block -right-12 top-[50%]"
+        className="absolute hidden xl:block -right-12 top-[50%] button-next"
       >
         <Image
           src="/assets/icons/icon-slider-right.svg"

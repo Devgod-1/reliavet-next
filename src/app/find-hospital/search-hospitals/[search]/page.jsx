@@ -1,7 +1,9 @@
 "use client";
-import { FindVeterinarianCard } from "@/app/pet-owner/contents/FindVeterinarian";
+import DialogViewHospital from "@/components/dialogs/DialogViewHospital";
+import Hospital from "../../contents/Hospital";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect } from "react";
+// import Hospital from "../contents/Hospital";
 
 export default function Page() {
   useEffect(() => {
@@ -11,19 +13,9 @@ export default function Page() {
 
   return (
     <div className="max-lg:pt-[16rem]">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10 px-[2rem] md:p-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
         {[...Array(12).keys()].map((i) => (
-          <FindVeterinarianCard
-            name={"By Mark B."}
-            key={i}
-            state={"Alaska"}
-            hospital={"Northeast animal clinic"}
-            role={"Technician"}
-            rating={4}
-            profileImage={"/assets/images/vet.png"}
-            className="!bg-[#243A8E]/20"
-            buttonClassName="!text-[#243A8E] hover:!bg-[#243A8E] hover:!text-white !bg-transparent !border-[#243A8E] !py-3"
-          />
+          <Hospital key={i} />
         ))}
       </div>
       <div className="flex items-center justify-center mb-10">

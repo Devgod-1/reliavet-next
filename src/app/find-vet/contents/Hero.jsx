@@ -1,15 +1,20 @@
+"use client";
+import { usePathname } from "next/navigation";
 import Filters from "./Filters";
 
 export default function Hero() {
+  const pathname = usePathname();
+
   return (
-    <div
+    <section
       style={{
         background: "url('/assets/images/kuttar_chap.png')",
-        backgroundSize: "100%",
+        backgroundSize: "cover",
+        backgroundColor: "#ECEDF0",
       }}
-      className="flex flex-col items-center gap-y-8 bg-[#ECEDF0] h-[90vh] justify-center py-14 mb-48 px-[2rem] md:p-0 relative"
+      className="flex flex-col items-center gap-y-8 bg-[#ECEDF0] h-[90vh] 2xl:h-[75vh] justify-center py-14 mb-48 px-[2rem] md:p-0 relative"
     >
-      <ul className="absolute top-0 left-[50%] translate-x-[-50%] grid grid-cols-3 max-lg:w-full max-lg:max-w-[400px] sm:flex items-center lg:gap-6 mt-6 uppercase">
+      {/* <ul className="absolute top-0 left-[50%] translate-x-[-50%] grid grid-cols-3 max-lg:w-full max-lg:max-w-[400px] sm:flex items-center lg:gap-6 mt-6 uppercase">
         {[
           { link: "pet-owner", name: "Pet Owner" },
           { link: "veterinarian", name: "Veterinarian" },
@@ -23,18 +28,22 @@ export default function Hero() {
             {tabName.name}
           </li>
         ))}
-      </ul>
+      </ul> */}
 
       <h1 className="font-bold leading-[1.1] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[50px] 2xl:text-[68px] mt-[-20vh] lg:mt-[-20vh] text-center">
-        Find the Best <br /> Veterinarian Near You
+        Find the Best <br />{" "}
+        {pathname.includes("/find-vet/search-technicians")
+          ? "Technician"
+          : "Veterinarian"}{" "}
+        Near You
       </h1>
       <p className="text-[#636363] text-xs lg:text-base text-center">
         Search by location, specialty, and availability to find the perfect care
         for your pet.
       </p>
-      <div className="absolute -bottom-[50vh] lg:-bottom-[15%] w-full px-[2rem] md:p-0">
+      <div className="absolute -bottom-[50vh] lg:-bottom-[10vh] w-full px-[2rem] md:p-0">
         <Filters />
       </div>
-    </div>
+    </section>
   );
 }

@@ -4,10 +4,11 @@ import Image from "next/image";
 import CardBlog from "@/components/cards/CardBlog";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { dataBlogPosts } from "@/utils/constant";
-import gsap from "gsap"; // Import GSAP
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+
 const Blog = () => {
   const swiperRef = useRef();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -23,34 +24,31 @@ const Blog = () => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 80%", // Trigger when section is 80% into view
-        toggleActions: "play none none none", // Play on enter only
+        start: "top 80%",
+        toggleActions: "play none none none",
       },
-      defaults: { duration: 1, ease: "power3.out" },
+      defaults: { duration: 0.5, ease: "power3.out" }, // Reduce duration for faster animation
     });
-    // GSAP animation for scaling
+
+    // Faster GSAP animation for scaling
     tl.fromTo(
       titleRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 1, ease: "back.out(1.7)" }
+      { opacity: 1, duration: 0.5, ease: "back.out(1.7)" }
     );
 
     tl.fromTo(
       descriptionRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 1, delay: 0.2, ease: "back.out(1.7)" }
+      { opacity: 1, duration: 0.5, ease: "back.out(1.7)" }
     );
 
-    // GSAP animation for blog cards (with delay for each card)
-    cardsRef.current.forEach((card, index) => {
+    // Faster GSAP animation for blog cards
+    cardsRef.current.forEach((card) => {
       tl.fromTo(
         card,
         { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.25,
-          ease: "back.out(1.7)",
-        }
+        { opacity: 1, duration: 0.2, ease: "back.out(1.7)" } // Reduced to 0.2s
       );
     });
 
@@ -61,7 +59,7 @@ const Blog = () => {
 
   return (
     <section
-      className="container mx-auto py-8 sm:py-16 md:py-24 lg:py-32 max-sm:px-7"
+      className="relative z-[20] container mx-auto py-8 sm:py-16 md:py-24 lg:py-32 max-sm:px-7"
       ref={sectionRef}
     >
       <div>

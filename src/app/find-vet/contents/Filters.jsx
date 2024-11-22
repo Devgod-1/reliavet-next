@@ -79,7 +79,7 @@ export default function Filters() {
                 />
               </div>
             </div>
-            <div className="space-y-1">
+            {/* <div className="space-y-1">
               <label className="text-xs 2xl:text-sm text-[#636363]">
                 Type:
               </label>
@@ -92,7 +92,7 @@ export default function Filters() {
                   size={20}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="space-y-1">
               <label className="text-xs 2xl:text-sm text-[#636363]">
                 Categories:

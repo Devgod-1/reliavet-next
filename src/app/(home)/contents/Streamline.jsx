@@ -3,10 +3,12 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Streamline = () => {
+  const router = useRouter();
   // Create refs for each animated element
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
@@ -15,22 +17,75 @@ const Streamline = () => {
   const imageRef = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%", // Trigger when section is 80% into view
-        toggleActions: "play none none none", // Play on enter only
-      },
-      defaults: { duration: 1, ease: "power3.out" },
-    });
+    // Animate the title
+    gsap.fromTo(
+      titleRef.current,
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
 
-    // Animate title, description, button, and image sequentially
-    tl.from(titleRef.current, { y: 50, opacity: 0 })
-      .from(descriptionRef.current, { y: 50, opacity: 0 }, "-=0.5")
-      .from(buttonRef.current, { scale: 0 }, "-=0.5")
-      .from(imageRef.current, { x: 50, opacity: 0 }, "-=0.5");
+    // Animate the description
+    gsap.fromTo(
+      descriptionRef.current,
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    // Animate the button
+    gsap.fromTo(
+      buttonRef.current,
+      { scale: 0 },
+      {
+        scale: 1,
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    // Animate the image
+    gsap.fromTo(
+      imageRef.current,
+      { x: 50, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
 
     return () => {
+      // Cleanup ScrollTrigger instances
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
@@ -64,7 +119,13 @@ const Streamline = () => {
             </p>
             <button
               ref={buttonRef} // Button animation
-              className="bg-transparent p-8 py-4 2xl:p-9 2xl:py-5 w-fit text-white max-w-[300px] !mt-6 !mb-8 lg:!mb-0 lg:!mt-12 text-xs lg:text-sm 2xl:text-base border border-white font-bold rounded-lg"
+              onClick={() => {
+                window.open(
+                  "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
+                  "_blank"
+                );
+              }}
+              className="hover:bg-white hover:text-black transition-all bg-transparent p-8 py-4 2xl:p-9 2xl:py-5 w-fit text-white max-w-[300px] !mt-6 !mb-8 lg:!mb-0 lg:!mt-12 text-xs lg:text-sm 2xl:text-base border border-white font-bold rounded-lg"
             >
               Learn More
             </button>

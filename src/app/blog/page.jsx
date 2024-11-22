@@ -6,7 +6,7 @@ import RecentArticles from "./contents/RecentArticles";
 
 export default function page() {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-x-hidden">
       <Hero />
       <PopularArticles />
       <RecentArticles />

@@ -3,10 +3,12 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const JoinVet = () => {
+  const router = useRouter();
   // Create refs for each animated element
   const sectionRef = useRef(null);
   const badgeRef = useRef(null);
@@ -16,26 +18,82 @@ const JoinVet = () => {
   const imgRef = useRef(null);
 
   useEffect(() => {
-    // Create timeline with ScrollTrigger
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%", // Trigger when section is 80% into view
-        toggleActions: "play none none none", // Play on enter only
-      },
-      defaults: { duration: 1, ease: "power3.out" },
-    });
+    // Animate elements with gsap.fromTo() using ScrollTrigger for scroll-based animations
+    gsap.fromTo(
+      badgeRef.current,
+      { x: -50, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
 
-    // Animate badge (fade in from left)
-    tl.from(badgeRef.current, { x: -50, opacity: 0 })
-      // Animate img (fade in from left)
-      .from(imgRef.current, { opacity: 0 }, "-=0.5")
-      // Animate title (fade in from left)
-      .from(titleRef.current, { opacity: 0 }, "-=0.5")
-      // Animate description (fade in with opacity)
-      .from(descriptionRef.current, { opacity: 0 }, "-=0.5")
-      // Animate button (scale up from 0 to 1)
-      .from(buttonRef.current, { scale: 0 }, "-=0.5");
+    gsap.fromTo(
+      imgRef.current,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      titleRef.current,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      descriptionRef.current,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      buttonRef.current,
+      { scale: 0 },
+      {
+        scale: 1,
+        duration: 1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
 
     return () => {
       // Cleanup ScrollTrigger instances
@@ -84,7 +142,13 @@ const JoinVet = () => {
           </p>
           <button
             ref={buttonRef} // Reference for animation
-            className="bg-transparent p-6 py-4 2xl:p-7 2xl:py-5 w-fit text-white max-w-[300px] !mt-12 text-xs lg:text-sm 2xl:text-base border border-white font-bold rounded-lg"
+            onClick={() => {
+              window.open(
+                "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
+                "_blank"
+              );
+            }}
+            className="hover:bg-white hover:text-black hover:shadow-xl hover:scale-[1.01] bg-transparent p-6 py-4 2xl:p-7 2xl:py-5 w-fit text-white max-w-[300px] !mt-12 text-xs lg:text-sm 2xl:text-base border border-white font-bold rounded-lg "
           >
             Join as vet
           </button>

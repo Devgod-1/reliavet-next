@@ -1,12 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import gsap from "gsap";
+import { useRouter } from "next/navigation";
+import DialogViewHospital from "@/components/dialogs/DialogViewHospital";
 
 export const FindHospitalCard = () => {
+  const [openDialog, setOpenDialog] = useState(null);
   return (
     <div className="bg-[#EDF3FF] flex-1 rounded-2xl p-5 py-8 relative ">
+      <DialogViewHospital
+        open={openDialog === "view"}
+        onClose={() => setOpenDialog(null)}
+      />
       <button className="absolute top-5 right-5">
         <img
           src="/assets/icons/icon-arrow-top-right.svg"
@@ -30,7 +38,10 @@ export const FindHospitalCard = () => {
             />
           ))}
         </div>
-        <button className="w-full bg-white font-bold text-xs 2xl:text-sm text-[#243a82] p-5 border border-[#ACACAC] rounded-[9px] !mt-6">
+        <button
+          onClick={() => setOpenDialog("view")}
+          className="w-full hover:!bg-[#243A8E] hover:!text-white bg-white font-bold text-xs 2xl:text-sm text-[#243a82] p-5 border border-[#ACACAC] rounded-[9px] !mt-6"
+        >
           View Vets,Techs
         </button>
       </div>
@@ -39,6 +50,7 @@ export const FindHospitalCard = () => {
 };
 
 const FindHospital = () => {
+  const router = useRouter();
   const swiperRef = useRef();
   const [swiperInstance, setSwiperInstance] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -47,13 +59,126 @@ const FindHospital = () => {
     lng: -73.935242,
   };
 
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const locationRef = useRef(null);
+  const subTitleRef = useRef(null);
+  const formRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  useEffect(() => {
+    // Create the animation when the section scrolls into view
+    const section = sectionRef.current;
+    // Animate the title
+    gsap.fromTo(
+      titleRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      subTitleRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.2,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    // Animate the form
+    gsap.fromTo(
+      formRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.3, // Add a slight delay for a staggered effect
+        scrollTrigger: {
+          trigger: section,
+          start: "top 75%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+    // Animate the form
+    gsap.fromTo(
+      locationRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.5, // Add a slight delay for a staggered effect
+        scrollTrigger: {
+          trigger: section,
+          start: "top 75%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    // Animate the cards
+    gsap.fromTo(
+      section.querySelectorAll(".hospital-card"),
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+        delay: 0.75,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 70%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      buttonRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 1, // Add a slight delay for a staggered effect
+        scrollTrigger: {
+          trigger: section,
+          start: "top 75%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
+
   return (
-    <section className="container px-10 mx-auto">
+    <section ref={sectionRef} className="container px-10 mx-auto">
       <div>
-        <div className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-semibold text-center my-20">
+        <div
+          ref={titleRef}
+          className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-semibold text-center my-20"
+        >
           Find the Pet Hospital of Your choice
         </div>
-        <div className="flex flex-col my-5">
+        <div className="flex flex-col my-5" ref={formRef}>
           <label
             htmlFor="search"
             className="pl-3 mb-2 flex gap-2 text-xs lg:text-sm text-[#636363]"
@@ -74,7 +199,10 @@ const FindHospital = () => {
           />
         </div>
         <div>
-          <h1 className="2xl:text-[36px] text-[24px] lg:text-[32px] font-semibold leading-[1.4] lg:leading-[1.1] mt-10 mb-10">
+          <h1
+            ref={subTitleRef}
+            className="2xl:text-[36px] text-[24px] lg:text-[32px] font-semibold leading-[1.4] lg:leading-[1.1] mt-10 mb-10"
+          >
             Suggested Based on your location
           </h1>
           {/* <LoadScript>
@@ -90,6 +218,7 @@ const FindHospital = () => {
             </GoogleMap>
           </LoadScript> */}
           <iframe
+            ref={locationRef}
             className="rounded-xl"
             width="100%"
             height="400px"
@@ -130,21 +259,24 @@ const FindHospital = () => {
               },
             }}
           >
-            <SwiperSlide>
+            <SwiperSlide className="hospital-card">
               <FindHospitalCard />
             </SwiperSlide>
-            <SwiperSlide>
+            <SwiperSlide className="hospital-card">
               <FindHospitalCard />
             </SwiperSlide>
-            <SwiperSlide>
+            <SwiperSlide className="hospital-card">
               <FindHospitalCard />
             </SwiperSlide>
-            <SwiperSlide>
+            <SwiperSlide className="hospital-card">
               <FindHospitalCard />
             </SwiperSlide>
           </Swiper>
-          <div className="flex items-center justify-center">
-            <button className="bg-bgPrimaryGradientRed2 flex items-center justify-center md:my-6 my-3 2xl:mt-10 p-8 py-5 2xl:p-8 2xl:py-6 w-fit text-white text-sm lg:text-sm 2xl:text-base font-bold rounded-lg">
+          <div className="flex items-center justify-center" ref={buttonRef}>
+            <button
+              onClick={() => router.push("/find-hospital")}
+              className="bg-bgPrimaryGradientRed2 flex items-center transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl justify-center md:my-6 my-3 2xl:mt-10 p-8 py-5 2xl:p-8 2xl:py-6 w-fit text-white text-sm lg:text-sm 2xl:text-base font-bold rounded-lg"
+            >
               See More{" "}
               <img
                 src="/assets/icons/icon-arrow-right-big.svg"
