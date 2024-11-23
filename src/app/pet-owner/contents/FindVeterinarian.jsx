@@ -6,6 +6,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import DialogViewVet from "@/components/dialogs/DialogViewVet";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { getUserPosition } from "../../../utils/getUserPosition";
+import { getUserState } from "../../../utils/getUserState";
+import axios from "axios";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/bundle";
 
 export const FindVeterinarianCard = ({
   profileImage,
@@ -78,8 +85,36 @@ const FindVeterinarian = () => {
   const titleRef = useRef(null);
   const subTitleRef = useRef(null);
   const formRef = useRef(null);
+  const [state, setState] = useState(null);
+  const [states, setStates] = useState([]); // For the list of states from API
+  const [selectedState, setSelectedState] = useState(""); // To hold the selected state
+  const [doctors, setDoctors] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+      const fetchStates = async () => {
+          try {
+              const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/states");
+              const data = await response.json();
+              setStates(data.data); // Set the states list
+          } catch (err) {
+              setError(err.message);
+          }
+      };
+      const fetchUserState = async () => {
+          try {
+              const { latitude, longitude } = await getUserPosition();
+              const userState = await getUserState(latitude, longitude);
+              setState(userState);
+              setSelectedState(userState);
+          } catch (err) {
+              setError(err.message);
+          }
+      };
+
+      fetchStates();
+      fetchUserState();
+
     // Create the animation when the section scrolls into view
     const section = sectionRef.current;
     // Animate the title
@@ -149,9 +184,23 @@ const FindVeterinarian = () => {
     );
   }, []);
 
+    const handleStateChange = async (e) => {
+        const selected = e.target.value;
+        setSelectedState(selected); // Update the selected state when dropdown value changes
+
+        try {
+            const response = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/doctors", {
+                params: { state: selected }
+            });
+            setDoctors(response.data.data); // Update veterinarians data based on the selected state
+        } catch (err) {
+            setError(err.message); // Handle API errors
+        }
+    };
+
   return (
     <section ref={sectionRef} className="container px-10 mx-auto">
-      <div>
+        <div>
         <div
           className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-semibold text-center my-20"
           ref={titleRef}
@@ -172,11 +221,19 @@ const FindVeterinarian = () => {
             />
             Choose Location:
           </label>
-          <input
-            className="rounded-3xl bg-[#ECEEF2] sm:w-[400px] px-6 lg:px-8 py-2 lg:py-3 focus:outline-none border border-[#C4C4C4] text-xs 2xl:text-sm"
-            id="search"
-            defaultValue={"Alaska"}
-          />
+            <select
+                id="state-dropdown"
+                value={selectedState}
+                onChange={handleStateChange}
+                className="rounded-3xl bg-[#ECEEF2] sm:w-[400px] px-6 lg:px-8 py-2 lg:py-3 focus:outline-none border border-[#C4C4C4] text-xs 2xl:text-sm"
+            >
+                <option value="">Select a State</option>
+                {states.map((state) => (
+                    <option key={state.id} value={state.code}>
+                        {state.name}
+                    </option>
+                ))}
+            </select>
         </div>
         <div>
           <h1
@@ -185,10 +242,11 @@ const FindVeterinarian = () => {
           >
             Suggested Based on your location
           </h1>
-          <Swiper
-            className="flex gap-7 mb-10 mt-5"
-            spaceBetween={24}
-            slidesPerGroupAuto
+
+          <Swiper className="flex gap-7 mb-10 mt-5" spaceBetween={24} slidesPerGroupAuto modules={[Navigation, Pagination, Scrollbar, A11y]} navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+          }} scrollbar={{ draggable: true }}
             breakpoints={{
               320: {
                 slidesPerView: 1,
@@ -208,46 +266,23 @@ const FindVeterinarian = () => {
               },
             }}
           >
-            <SwiperSlide className="vet-card">
-              <FindVeterinarianCard
-                name={"By Mark B."}
-                state={"Alaska"}
-                hospital={"Northeast animal clinic"}
-                role={"Technician"}
-                rating={4}
-                profileImage={"/assets/images/vet.png"}
-              />
-            </SwiperSlide>
-            <SwiperSlide className="vet-card">
-              <FindVeterinarianCard
-                name={"By Mark B."}
-                state={"Alaska"}
-                hospital={"Northeast animal clinic"}
-                role={"Technician"}
-                rating={4}
-                profileImage={"/assets/images/vet.png"}
-              />
-            </SwiperSlide>
-            <SwiperSlide className="vet-card">
-              <FindVeterinarianCard
-                name={"By Mark B."}
-                state={"Alaska"}
-                hospital={"Northeast animal clinic"}
-                role={"Technician"}
-                rating={4}
-                profileImage={"/assets/images/vet.png"}
-              />
-            </SwiperSlide>
-            <SwiperSlide className="vet-card">
-              <FindVeterinarianCard
-                name={"By Mark B."}
-                state={"Alaska"}
-                hospital={"Northeast animal clinic"}
-                role={"Technician"}
-                rating={4}
-                profileImage={"/assets/images/vet.png"}
-              />
-            </SwiperSlide>
+              {doctors.length > 0 ? (
+                  doctors.map((doctor) => (
+                      <SwiperSlide key={doctor.id}>
+                          <FindVeterinarianCard
+                              profileImage={doctor.profile_img || "/assets/images/default_doctor.jpeg"}
+                              name={doctor.name}
+                              role={doctor.user_role}
+                              rating={doctor.rate}
+                              state={doctor.states}
+                              hospital={doctor.hospital_name}
+                              buttonLabel="View Profile"
+                          />
+                      </SwiperSlide>
+                  ))
+              ) : (
+                  <div>No veterinarians found</div>
+              )}
           </Swiper>
         </div>
       </div>
