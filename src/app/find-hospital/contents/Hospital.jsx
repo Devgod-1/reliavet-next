@@ -3,7 +3,12 @@ import { useState } from "react";
 
 const { default: Image } = require("next/image");
 
-export default function Hospital() {
+export default function Hospital({
+     name,
+     states,
+     address,
+     profile_image,
+ }) {
   const [openDialog, setOpenDialog] = useState(null);
   return (
     <div className="bg-[#EDF3FF] flex-1 rounded-2xl p-5 py-8 relative ">
@@ -21,21 +26,15 @@ export default function Hospital() {
         />
       </button>
       <div className="flex flex-col items-center justify-center">
-        <div className="bg-[url(/assets/images/hospital.png)] bg-no-repeat  w-full h-[200px] bg-center"></div>
+        <div className="bg-no-repeat  w-full h-[200px] bg-center" style={{
+            backgroundImage: `url(${profile_image})`,
+        }}></div>
         <div className="mt-5 text-center">
-          <b>City Hospital</b>
+          <b>{name}</b>
           <br />
-          <small className="text-[#636363]">New york</small>
-        </div>
-        <div className="flex items-center my-1">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <img
-              key={index}
-              src="/assets/icons/icon-star-red.svg"
-              className={index < 4 ? "" : "opacity-40"}
-              alt="Star"
-            />
-          ))}
+          <small className="text-[#636363]">{states}</small>
+            <br />
+            <small className="text-[#636363]">{address}</small>
         </div>
         <button
           className="w-full bg-white font-bold text-xs 2xl:text-sm text-[#243a82] p-5 border border-[#ACACAC] rounded-[9px] !mt-6 !text-[#243A8E] hover:!bg-[#243A8E] hover:!text-white !bg-transparent !border-[#243A8E] !py-3"

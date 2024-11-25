@@ -199,7 +199,7 @@ const FindHospital = () => {
             const addressString = hospitals.map(hospital => hospital.street_address || "");
             setAddresses(addressString);
         } catch (err) {
-            setError(err.message); // Handle API errors
+            console.log('Find hospital => ', err.message); // Handle API errors
         }
     };
 
