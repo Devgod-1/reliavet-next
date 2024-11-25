@@ -14,6 +14,8 @@ import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/bundle";
+import {useFetchStates} from "@/utils/fetchStates";
+import {useFetchUserState} from "@/utils/fetchUserState";
 
 export const FindHospitalCard = ({
     name,
@@ -74,35 +76,12 @@ const FindHospital = () => {
   const buttonRef = useRef(null);
 
     const [state, setState] = useState(null);
-    const [states, setStates] = useState([]); // For the list of states from API
     const [addresses, setAddresses] = useState(['428 Olivia Road,Andrews, SC 29510']); // For the list of states from API
-    const [selectedState, setSelectedState] = useState(""); // To hold the selected state
     const [hospitals, setHospitals] = useState([]);
-    const [error, setError] = useState(null);
+    const {states} = useFetchStates();
+    const { userState, selectedState, setSelectedState } = useFetchUserState();
 
   useEffect(() => {
-      const fetchStates = async () => {
-          try {
-              const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/states");
-              const data = await response.json();
-              setStates(data.data); // Set the states list
-          } catch (err) {
-              setError(err.message);
-          }
-      };
-      const fetchUserState = async () => {
-          try {
-              const { latitude, longitude } = await getUserPosition();
-              const userState = await getUserState(latitude, longitude);
-              setState(userState);
-              setSelectedState(userState);
-          } catch (err) {
-              setError(err.message);
-          }
-      };
-
-      fetchStates();
-      fetchUserState();
 
     // Create the animation when the section scrolls into view
     const section = sectionRef.current;
@@ -220,7 +199,7 @@ const FindHospital = () => {
             const addressString = hospitals.map(hospital => hospital.street_address || "");
             setAddresses(addressString);
         } catch (err) {
-            setError(err.message); // Handle API errors
+            console.log('Find hospital => ', err.message); // Handle API errors
         }
     };
 

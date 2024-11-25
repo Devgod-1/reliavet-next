@@ -1,22 +1,49 @@
 "use client";
-import DialogViewHospital from "@/components/dialogs/DialogViewHospital";
 import Hospital from "../../contents/Hospital";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect } from "react";
-// import Hospital from "../contents/Hospital";
+import {useEffect, useState} from "react";
+import { useSearchParams } from "next/navigation";
+import axios from "axios";
 
 export default function Page() {
+  const searchParams = useSearchParams();
+
+  const state = searchParams.get("state");
+  const hospitalName = searchParams.get("hospital_name");
+  const [hospitals, setHospitals] = useState([]);
+
   useEffect(() => {
-    // Scroll to the top of the page when the component is mounted
-    window.scrollTo(0, 0);
-  }, []);
+    const fetchHospitals = async () => {
+      try {
+        // Ensure the page scrolls to the top when mounted
+        window.scrollTo(0, 0);
+
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/hospitals`, {
+          params: {
+            state: state,
+            name: hospitalName
+          }
+        });
+
+        setHospitals(response.data.data);
+      } catch (err) {
+        console.error("Error fetching hospitals:", err);
+      }
+    };
+
+    fetchHospitals();
+  }, [state, hospitalName]);
 
   return (
+
     <div className="max-lg:pt-[16rem]">
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-        {[...Array(12).keys()].map((i) => (
-          <Hospital key={i} />
-        ))}
+        {
+          hospitals.map((hospital) => (
+              <Hospital key={hospital.id} name={hospital.name} states={hospital.states} address={hospital.street_address} profile_image={hospital.profile_img || "/assets/images/hospital.png"} />
+          ))
+        }
       </div>
       <div className="flex items-center justify-center mb-10">
         <button className="p-3 border border-[#DEE2E7] rounded-tl-lg rounded-bl-lg  w-[45px] h-[45px] border-r-0 hover:bg-[#DE1E33] group">
