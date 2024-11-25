@@ -6,10 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import DialogViewVet from "@/components/dialogs/DialogViewVet";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { getUserPosition } from "../../../utils/getUserPosition";
-import { getUserState } from "../../../utils/getUserState";
 import axios from "axios";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { useFetchStates } from "@/utils/fetchStates";
+import { useFetchUserState } from "@/utils/fetchUserState";
 
 import "swiper/css";
 import "swiper/css/bundle";
@@ -86,35 +86,12 @@ const FindVeterinarian = () => {
   const subTitleRef = useRef(null);
   const formRef = useRef(null);
   const [state, setState] = useState(null);
-  const [states, setStates] = useState([]); // For the list of states from API
-  const [selectedState, setSelectedState] = useState(""); // To hold the selected state
+  const {states} = useFetchStates(); // For the list of states from API
+  // const [selectedState, setSelectedState] = useState(""); // To hold the selected state
   const [doctors, setDoctors] = useState([]);
-  const [error, setError] = useState(null);
+  const { userState, selectedState, setSelectedState } = useFetchUserState();
 
   useEffect(() => {
-      const fetchStates = async () => {
-          try {
-              const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/states");
-              const data = await response.json();
-              setStates(data.data); // Set the states list
-          } catch (err) {
-              setError(err.message);
-          }
-      };
-      const fetchUserState = async () => {
-          try {
-              const { latitude, longitude } = await getUserPosition();
-              const userState = await getUserState(latitude, longitude);
-              setState(userState);
-              setSelectedState(userState);
-          } catch (err) {
-              setError(err.message);
-          }
-      };
-
-      fetchStates();
-      fetchUserState();
-
     // Create the animation when the section scrolls into view
     const section = sectionRef.current;
     // Animate the title
@@ -194,7 +171,7 @@ const FindVeterinarian = () => {
             });
             setDoctors(response.data.data); // Update veterinarians data based on the selected state
         } catch (err) {
-            setError(err.message); // Handle API errors
+            console.log('Find veterinarian =>', err.message); // Handle API errors
         }
     };
 
