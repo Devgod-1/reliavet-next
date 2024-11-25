@@ -85,8 +85,8 @@ const FindVeterinarian = () => {
   const titleRef = useRef(null);
   const subTitleRef = useRef(null);
   const formRef = useRef(null);
-  const {states} = useFetchStates();
   const [doctors, setDoctors] = useState([]);
+  const {states} = useFetchStates();
   const { userState, selectedState, setSelectedState } = useFetchUserState();
 
   useEffect(() => {
