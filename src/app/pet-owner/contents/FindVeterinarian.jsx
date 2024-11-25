@@ -276,12 +276,12 @@ const FindVeterinarian = () => {
                               rating={doctor.rate}
                               state={doctor.states}
                               hospital={doctor.hospital_name}
-                              buttonLabel="View Profile"
+                              buttonLabel="Book an Appointment"
                           />
                       </SwiperSlide>
                   ))
               ) : (
-                  <div>No veterinarians found</div>
+                  <div>No veterinarians or technicians found</div>
               )}
           </Swiper>
         </div>
