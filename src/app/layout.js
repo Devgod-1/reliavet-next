@@ -9,7 +9,7 @@ import ContactUs from "@/components/ContactUs";
 
 
 export const metadata = {
-  title: "Reliavet Next App",
+  title: "ReliaVet | Schedule Virtual Vet Appointment Online",
   description: "Paul",
 };
 

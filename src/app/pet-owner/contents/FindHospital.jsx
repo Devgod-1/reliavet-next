@@ -6,8 +6,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import gsap from "gsap";
 import { useRouter } from "next/navigation";
 import DialogViewHospital from "@/components/dialogs/DialogViewHospital";
+import {getUserPosition} from "@/utils/getUserPosition";
+import {getUserState} from "@/utils/getUserState";
+import MapWithScript from "@/components/MapWithScript";
+import axios from "axios";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
-export const FindHospitalCard = () => {
+import "swiper/css";
+import "swiper/css/bundle";
+
+export const FindHospitalCard = ({
+    name,
+    states,
+    address,
+    profile_image,
+}) => {
   const [openDialog, setOpenDialog] = useState(null);
   return (
     <div className="bg-[#EDF3FF] flex-1 rounded-2xl p-5 py-8 relative ">
@@ -22,21 +35,15 @@ export const FindHospitalCard = () => {
         />
       </button>
       <div className="flex flex-col items-center justify-center">
-        <div className="bg-[url(/assets/images/hospital.png)] bg-no-repeat bg-contain w-full h-[100px] bg-center"></div>
+        <div className="bg-no-repeat bg-contain w-full h-[100px] bg-center" style={{
+            backgroundImage: `url(${profile_image})`,
+        }}></div>
         <div className="mt-5 text-center">
-          <b>City Hospital</b>
+          <b>{name}</b>
           <br />
-          <small className="text-[#636363]">New york</small>
-        </div>
-        <div className="flex items-center my-1">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <img
-              key={index}
-              src="/assets/icons/icon-star-red.svg"
-              className={index < 4 ? "" : "opacity-40"}
-              alt="Star"
-            />
-          ))}
+          <small className="text-[#636363]">{states}</small>
+            <br />
+            <small className="text-[#636363]">{address}</small>
         </div>
         <button
           onClick={() => setOpenDialog("view")}
@@ -66,7 +73,37 @@ const FindHospital = () => {
   const formRef = useRef(null);
   const buttonRef = useRef(null);
 
+    const [state, setState] = useState(null);
+    const [states, setStates] = useState([]); // For the list of states from API
+    const [addresses, setAddresses] = useState(['428 Olivia Road,Andrews, SC 29510']); // For the list of states from API
+    const [selectedState, setSelectedState] = useState(""); // To hold the selected state
+    const [hospitals, setHospitals] = useState([]);
+    const [error, setError] = useState(null);
+
   useEffect(() => {
+      const fetchStates = async () => {
+          try {
+              const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/states");
+              const data = await response.json();
+              setStates(data.data); // Set the states list
+          } catch (err) {
+              setError(err.message);
+          }
+      };
+      const fetchUserState = async () => {
+          try {
+              const { latitude, longitude } = await getUserPosition();
+              const userState = await getUserState(latitude, longitude);
+              setState(userState);
+              setSelectedState(userState);
+          } catch (err) {
+              setError(err.message);
+          }
+      };
+
+      fetchStates();
+      fetchUserState();
+
     // Create the animation when the section scrolls into view
     const section = sectionRef.current;
     // Animate the title
@@ -169,6 +206,24 @@ const FindHospital = () => {
     );
   }, []);
 
+    const handleStateChange = async (e) => {
+        const selected = e.target.value;
+        setSelectedState(selected); // Update the selected state when dropdown value changes
+
+        try {
+            const response = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/hospitals", {
+                params: { state: selected }
+            });
+            const hospitals = response.data.data;
+            setHospitals(hospitals);
+
+            const addressString = hospitals.map(hospital => hospital.street_address || "");
+            setAddresses(addressString);
+        } catch (err) {
+            setError(err.message); // Handle API errors
+        }
+    };
+
   return (
     <section ref={sectionRef} className="container px-10 mx-auto">
       <div>
@@ -192,11 +247,19 @@ const FindHospital = () => {
             />
             Choose Location:
           </label>
-          <input
-            className="rounded-3xl bg-[#ECEEF2] sm:w-[400px] px-6 lg:px-8 py-2 lg:py-3 focus:outline-none border border-[#C4C4C4] text-xs 2xl:text-sm"
-            id="search"
-            defaultValue={"Alaska"}
-          />
+            <select
+                id="state-dropdown"
+                value={selectedState}
+                onChange={handleStateChange}
+                className="rounded-3xl bg-[#ECEEF2] sm:w-[400px] px-6 lg:px-8 py-2 lg:py-3 focus:outline-none border border-[#C4C4C4] text-xs 2xl:text-sm"
+            >
+                <option value="">Select a State</option>
+                {states.map((state) => (
+                    <option key={state.id} value={state.code}>
+                        {state.name}
+                    </option>
+                ))}
+            </select>
         </div>
         <div>
           <h1
@@ -205,41 +268,23 @@ const FindHospital = () => {
           >
             Suggested Based on your location
           </h1>
-          {/* <LoadScript>
-            <GoogleMap
-              mapContainerStyle={{
-                width: "100%",
-                height: "500px",
-              }}
-              center={center}
-              zoom={12}
-            >
-              <Marker position={center} />
-            </GoogleMap>
-          </LoadScript> */}
-          <iframe
-            ref={locationRef}
-            className="rounded-xl"
-            width="100%"
-            height="400px"
-            frameBorder="0"
-            marginHeight="0"
-            marginWidth="0"
-            title="map"
-            scrolling="yes"
-            src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=%C4%B0zmir+(My%20Business%20Name)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"
-          ></iframe>
+
         </div>
         <div>
           <Swiper
             ref={swiperRef}
             className="flex gap-7 my-10"
             spaceBetween={24}
-            slidesPerGroupAuto
+            slidesPerGroupAuto modules={[Navigation, Pagination, Scrollbar, A11y]}
             onSwiper={(swiper) => setSwiperInstance(swiper)}
             onSlideChange={(swiper) =>
               setActiveIndex(Math.floor(swiper.activeIndex / 4))
             }
+            navigation={{
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            }}
+            scrollbar={{ draggable: true }}
             breakpoints={{
               320: {
                 slidesPerView: 1,
@@ -259,19 +304,17 @@ const FindHospital = () => {
               },
             }}
           >
-            <SwiperSlide className="hospital-card">
-              <FindHospitalCard />
-            </SwiperSlide>
-            <SwiperSlide className="hospital-card">
-              <FindHospitalCard />
-            </SwiperSlide>
-            <SwiperSlide className="hospital-card">
-              <FindHospitalCard />
-            </SwiperSlide>
-            <SwiperSlide className="hospital-card">
-              <FindHospitalCard />
-            </SwiperSlide>
+              {hospitals.length > 0 ? (
+                  hospitals.map((hospital) => (
+                      <SwiperSlide key={hospital.id} className="hospital-card">
+                          <FindHospitalCard name={hospital.name} states={hospital.states} address={hospital.street_address} profile_image={hospital.profile_img || "/assets/images/hospital.png"}/>
+                      </SwiperSlide>
+                  ))
+              ) : (
+                  <div>No hospitals found</div>
+              )}
           </Swiper>
+            <MapWithScript addresses={addresses} />
           <div className="flex items-center justify-center" ref={buttonRef}>
             <button
               onClick={() => router.push("/find-hospital")}
@@ -285,6 +328,7 @@ const FindHospital = () => {
             </button>
           </div>
         </div>
+
       </div>
     </section>
   );
