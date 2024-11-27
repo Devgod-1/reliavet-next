@@ -57,12 +57,12 @@ const Navbar = () => {
           </Link>
         </ul>
         <div>
-          <a href={process.env.APP_URL + '/login'}
+          <a href={process.env.NEXT_PUBLIC_APP_URL + '/login'}
             className="text-xs 2xl:text-sm px-6 font-medium"
           >
             Log In
           </a>
-          <a href={process.env.APP_URL + '/login'}
+          <a href={process.env.NEXT_PUBLIC_APP_URL + '/login'}
             className="text-xs 2xl:text-sm bg-red-primary p-3 px-6 rounded-lg font-medium"
           >
             Sign Up
@@ -140,12 +140,12 @@ const Navbar = () => {
               Blog
             </Link>
             <li className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium">
-              <a href={process.env.APP_URL + '/login'}
+              <a href={process.env.NEXT_PUBLIC_APP_URL + '/login'}
                 className="text-xs 2xl:text-sm py-1 px-6 font-medium cursor-pointer"
               >
                 Log In
               </a>
-              <a href={process.env.APP_URL + '/login'}
+              <a href={process.env.NEXT_PUBLIC_APP_URL + '/login'}
                 className="text-xs 2xl:text-sm bg-red-primary p-3 px-6 rounded-lg font-medium"
               >
                 Sign Up

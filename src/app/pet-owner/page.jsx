@@ -31,7 +31,7 @@ const PetOwner = () => {
         note="Add your pet history"
         video="Schedule video call"
       />
-      <Blog />
+      <Blog type="pet owner" />
     </div>
   );
 };

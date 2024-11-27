@@ -1,11 +1,19 @@
 "use client";
 import { usePathname } from "next/navigation";
 import Filters from "./Filters";
+import {FindVeterinarianCard} from "@/app/pet-owner/contents/FindVeterinarian";
+import { useState } from "react";
+import {SwiperSlide} from "swiper/react";
 
 export default function Hero() {
   const pathname = usePathname();
+  const [doctors, setDoctors] = useState([]);
+  const handleSearchResults = (results) => {
+      setDoctors(results);
+  };
 
   return (
+      <>
     <section
       style={{
         background: "url('/assets/images/kuttar_chap.png')",
@@ -42,8 +50,34 @@ export default function Hero() {
         for your pet.
       </p>
       <div className="absolute -bottom-[50vh] lg:-bottom-[10vh] w-full px-[2rem] md:p-0">
-        <Filters />
+        <Filters onSearchResults={handleSearchResults} />
       </div>
     </section>
+    <div className="container mx-auto">
+        <div className="max-lg:pt-[16rem]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10 px-[2rem] md:p-0">
+                {doctors.length > 0 ? (
+                    doctors.map((doctor, idx) => (
+                        <SwiperSlide key={idx}>
+                            <FindVeterinarianCard
+                                id={doctor.id}
+                                profileImage={doctor.profile_img || "/assets/images/default_doctor.jpeg"}
+                                name={doctor.name}
+                                role={doctor.user_role}
+                                rating={doctor.rating}
+                                state={doctor.states}
+                                hospitalId={doctor.hospital_id}
+                                hospital={doctor.hospital_name}
+                                buttonLabel="Book an Appointment"
+                            />
+                        </SwiperSlide>
+                    ))
+                ) : (
+                    <div></div>
+                )}
+            </div>
+        </div>
+    </div>
+      </>
   );
 }

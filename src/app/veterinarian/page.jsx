@@ -31,7 +31,7 @@ const Veterinarian = () => {
           src="/assets/images/bg-promo-2.png"
           className="absolute top-[-21rem] 2xl:top-[-24rem] pointer-events-none hidden lg:block"
         />
-        <Blog />
+        <Blog type="veterinarian"/>
       </div>
     </div>
   );

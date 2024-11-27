@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -11,10 +11,40 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { X } from "lucide-react";
+import axios from "axios";
 
-export default function DialogViewVet({ open, onClose }) {
+export default function DialogViewVet({ open, onClose, doctorId, hospitalId, hospitalName, rating }) {
   const swiperRefReview = useRef();
   const [swiperInstanceReview, setSwiperInstanceReview] = useState(null);
+  const [doctor, setDoctor] = useState({});
+  const [error, setError] = useState({});
+
+  useEffect(() => {
+    const fetchDoctor = async() => {
+      try {
+        // Ensure the page scrolls to the top when mounted
+        window.scrollTo(0, 0);
+
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/veterinarian/${doctorId}`, {});
+
+        setDoctor(response.data.data);
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    fetchDoctor();
+
+  }, [doctorId]);
+
+  const formatDate = (dateString) => {
+    if (dateString) {
+      const date = new Date(dateString);
+      return new Intl.DateTimeFormat('en-US', {month: 'short', day: 'numeric', year: 'numeric'}).format(date);
+    }
+    else
+      return '';
+  };
 
   return (
     <Dialog open={open} onClose={onClose} className="relative z-10">
@@ -29,6 +59,7 @@ export default function DialogViewVet({ open, onClose }) {
             transition
             className="relative transform overflow-hidden rounded-[62px] bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg lg:max-w-[1000px] data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95 max-lg:rounded-[18px] max-lg:rounded-bl-[0px] max-lg:rounded-br-[0px]   max-h-[90vh] overflow-y-auto no-scrollbar"
           >
+            {doctor ? (
             <div className="bg-white p-10 pt-14 relative">
               {/* first section */}
               <button
@@ -47,7 +78,7 @@ export default function DialogViewVet({ open, onClose }) {
                     <div>
                       <div className="flex items-center space-x-2">
                         <h4 className="font-semibold text-base lg:text-xl  2xl:text-3xl">
-                          Dr. Sarah Johnson
+                          {doctor.user?.name}
                         </h4>
                         <div className="flex items-center my-3">
                           {Array.from({ length: 5 }).map((_, index) => (
@@ -55,7 +86,7 @@ export default function DialogViewVet({ open, onClose }) {
                               key={index}
                               src="/assets/icons/icon-star-red.svg"
                               className={
-                                index < 4
+                                index < rating
                                   ? "w-[14px] h-[14px]"
                                   : "opacity-40 w-[14px] h-[14px]"
                               }
@@ -65,7 +96,7 @@ export default function DialogViewVet({ open, onClose }) {
                         </div>
                       </div>
                       <span className="text-[#282828] text-xs lg:text-sm 2xl:text-base block mt-[-.25rem]">
-                        General Practitioner
+                        {doctor.user?.user_role}
                       </span>
                     </div>
                     {/*  */}
@@ -74,59 +105,26 @@ export default function DialogViewVet({ open, onClose }) {
                         MEMBER SINCE
                       </span>
                       <span className="text-xs lg:text-sm 2xl:text-base block font-medium">
-                        June 18, 2022
+                        {formatDate(doctor.user?.created_at)}
                       </span>
                     </div>
                   </div>
                   {/*  */}
                   <div className="flex max-lg:flex-col-reverse  justify-between items-start mt-4 border-b pb-4">
                     <p className="text-xs lg:text-sm 2xl:text-base block font-medium text-[#636363] max-w-[400px]">
-                      With 10 years of experience in small animal care, Dr.
-                      Johnson specializes in preventive healthcare and surgery
-                      for pets of all sizes
+                      {doctor.user?.summary}
                     </p>
-
-                    <div className="flex items-center gap-2 max-lg:mb-4">
-                      <button className="w-[30px] h-[30px] rounded-full border border-[#ABABAB] flex justify-center items-center group hover:bg-[#243A8E] hover:border-[#243A8E]">
-                        <img
-                          src="/assets/icons/icon-twitter.svg"
-                          alt="twitter"
-                          className="group-hover:invert"
-                        />
-                      </button>
-                      <button className="w-[30px] h-[30px] rounded-full border border-[#ABABAB] flex justify-center items-center group hover:bg-[#243A8E] hover:border-[#243A8E]">
-                        <img
-                          src="/assets/icons/icon-facebook.svg"
-                          alt="twitter"
-                          className="group-hover:invert"
-                        />
-                      </button>
-                      <button className="w-[30px] h-[30px] rounded-full border border-[#ABABAB] flex justify-center items-center group hover:bg-[#243A8E] hover:border-[#243A8E]">
-                        <img
-                          src="/assets/icons/icon-instagram.svg"
-                          alt="twitter"
-                          className="group-hover:invert"
-                        />
-                      </button>
-                      <button className="w-[30px] h-[30px] rounded-full border border-[#ABABAB] flex justify-center items-center group hover:bg-[#243A8E] hover:border-[#243A8E]">
-                        <img
-                          src="/assets/icons/icon-github.svg"
-                          alt="twitter"
-                          className="group-hover:invert"
-                        />
-                      </button>
-                    </div>
                   </div>
                   {/*  */}
                   <div className="py-4 space-y-1 border-b">
                     <div className="flex items-center space-x-2">
                       <img
-                        src="/assets/icons/icon-hat.svg"
-                        alt="twitter"
-                        className="w-[22px] h-[22px]"
+                          src="/assets/icons/icon-location.svg"
+                          alt="twitter"
+                          className="w-[22px] h-[22px]"
                       />
                       <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                        alaska, albama, arizona, arkansas, california, colorado
+                        {doctor.user?.states}
                       </span>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -136,7 +134,7 @@ export default function DialogViewVet({ open, onClose }) {
                         className="w-[22px] h-[22px]"
                       />
                       <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                        Alaska state
+                        {doctor.user?.street_address}
                       </span>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -146,41 +144,19 @@ export default function DialogViewVet({ open, onClose }) {
                         className="w-[22px] h-[22px]"
                       />
                       <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                        northeast animal clinic
+                        {doctor.pet_category}
                       </span>
                     </div>
                   </div>
                   {/*  */}
                   <div className="py-4 border-b">
                     <h4 className="text-[15px] lg:text-[19px] 2xl:text-[29px] font-semibold">
-                      Organization:
+                      Organization
                     </h4>
                     <span className="text-[#282828] text-xs lg:text-sm 2xl:text-base block font-medium mt-1">
-                      General Practitioner
+                      {hospitalName || 'Individual'}
                     </span>
 
-                    <div className="mt-2 space-y-1">
-                      <div className="flex items-center space-x-2">
-                        <img
-                          src="/assets/icons/icon-google.svg"
-                          alt="twitter"
-                          className="w-[28px] h-[28px]"
-                        />
-                        <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                          http://google.com
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <img
-                          src="/assets/icons/icon-linkedin.svg"
-                          alt="twitter"
-                          className="w-[28px] h-[28px]"
-                        />
-                        <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                          http://linkedin.com
-                        </span>
-                      </div>
-                    </div>
                   </div>
                   {/*  */}
                   <div className="py-4">
@@ -189,43 +165,65 @@ export default function DialogViewVet({ open, onClose }) {
                     </h4>
 
                     <div className="mt-2 space-y-1">
-                      <div className="flex items-center space-x-2">
-                        <img
-                          src="/assets/icons/icon-plus-fill-blue.svg"
-                          alt="twitter"
-                          className="w-[22px] h-[22px]"
-                        />
-                        <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                          Instant Teletriage – Get quick answers to your pet’s
-                          health questions.
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <img
-                          src="/assets/icons/icon-plus-fill-blue.svg"
-                          alt="twitter"
-                          className="w-[22px] h-[22px]"
-                        />
-                        <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                          Scheduled Telemedicine – Virtual consultations with
-                          Dr. Sarah Johnson.
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <img
-                          src="/assets/icons/icon-plus-fill-blue.svg"
-                          alt="twitter"
-                          className="w-[22px] h-[22px]"
-                        />
-                        <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                          Scheduled Teleadvice – Book an appointment for advice
-                          on long-term care.
-                        </span>
-                      </div>
+                      {doctor.user?.user_role == 'veterinarian' ? (
+                          <div>
+                            {doctor.user?.is_available_now ? (
+                            <label className="flex items-center space-x-2">
+                              <input
+                                  type="radio"
+                                  name="service_need"
+                                  value="teletriage"
+                                  className="form-radio w-4 h-4 text-blue-600"
+                              />
+                              <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
+                                Instant Teletriage (${doctor.user?.instant_price}) – Get quick answers to your pet’s
+                                health questions.
+                              </span>
+                            </label>
+                            ) : ('')}
+                            <label className="flex items-center space-x-2">
+                              <input
+                                  type="radio"
+                                  name="service_need"
+                                  value="telemedicine"
+                                  className="form-radio w-4 h-4 text-blue-600"
+                                  defaultChecked
+                              />
+                              <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
+                                Scheduled Telemedicine (${doctor.user?.scheduled_price}) – Virtual consultations
+                              </span>
+                            </label>
+                          </div>
+                        ) : ('')}
+                      {doctor.user?.user_role == 'technician' ? (
+                          <div>
+                            <label className="flex items-center space-x-2">
+                              <input
+                                  type="radio"
+                                  name="service"
+                                  value="service_need"
+                                  className="form-radio w-4 h-4 text-blue-600"
+                                  defaultChecked
+                              />
+                              <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
+                                Scheduled Teleadvice (${doctor.user?.scheduled_price}) – Virtual consultations
+                              </span>
+                            </label>
+                          </div>
+                      ) : ('')}
                     </div>
-
                     <div className="flex justify-end w-full mt-6">
-                      <button className="text-xs 2xl:text-sm bg-primary p-3 px-6 rounded-lg font-semibold text-white">
+                      <button className="text-xs 2xl:text-sm bg-primary p-3 px-6 rounded-lg font-semibold text-white"
+                              onClick={() => {
+                                const id = btoa(`${doctor.user?.id}+${hospitalId}`);
+                                const selectedService = document.querySelector('input[name="service_need"]:checked')?.value;
+                                if (!selectedService) {
+                                  alert('Please select a service.');
+                                  return;
+                                }
+                                window.location.href = `${process.env.NEXT_PUBLIC_APP_URL}/book/${id}?action=${selectedService}`;
+                              }}
+                      >
                         Book Appointment
                       </button>
                     </div>
@@ -241,7 +239,7 @@ export default function DialogViewVet({ open, onClose }) {
                 <div className="mt-4 flex items-center gap-6">
                   <div className="flex flex-col w-fit p-5 items-center rounded-xl shadow-[0px_1px_10px_#0002]">
                     <span className="block font-semibold text-lg lg:text-2xl 2xl:text-4xl">
-                      4
+                      {doctor.reviews?.rating || 0}
                     </span>
                     <span className="text-sm lg:text-base 2xl:text-lg font-medium mt-[-.25rem]">
                       Rating
@@ -252,13 +250,40 @@ export default function DialogViewVet({ open, onClose }) {
                     <div>
                       <div className="w-full flex items-end justify-between">
                         <span className="text-xs lg:text-sm 2xl:text-base">
+                          Service
+                        </span>
+                        <span className="font-medium text-sm lg:text-base 2xl:text-lg">
+                          {doctor.reviews?.service_rating}
+                        </span>
+                      </div>
+                      <div className="w-full overflow-hidden bg-[#000000]/10 rounded-full h-[5px] relative">
+                        <div
+                            className="absolute top-0 left-0 h-full rounded-full"
+                            style={{
+                              width: `${(doctor.reviews?.service_rating / 5) * 100 || 0}%`,
+                              background: "linear-gradient(90deg, #D8003E 0%, #243A8E 61.5%)",
+                            }}
+                        ></div>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="w-full flex items-end justify-between">
+                        <span className="text-xs lg:text-sm 2xl:text-base">
                           Response time
                         </span>
                         <span className="font-medium text-sm lg:text-base 2xl:text-lg">
-                          4
+                          {doctor.reviews?.response_rating}
                         </span>
                       </div>
-                      <div className="w-full overflow-hidden bg-[#000000]/10 rounded-full h-[5px] relative after:content-[''] after:absolute after:top-0 after:left-0 after:h-full after:w-[80%] after:bg-[linear-gradient(90deg,#D8003E_0%,#243A8E_61.5%)]"></div>
+                      <div className="w-full overflow-hidden bg-[#000000]/10 rounded-full h-[5px] relative">
+                        <div
+                            className="absolute top-0 left-0 h-full rounded-full"
+                            style={{
+                              width: `${(doctor.reviews?.response_rating / 5) * 100 || 0}%`,
+                              background: "linear-gradient(90deg, #D8003E 0%, #243A8E 61.5%)",
+                            }}
+                        ></div>
+                      </div>
                     </div>
                     <div>
                       <div className="w-full flex items-end justify-between">
@@ -266,22 +291,20 @@ export default function DialogViewVet({ open, onClose }) {
                           Communication
                         </span>
                         <span className="font-medium text-sm lg:text-base 2xl:text-lg">
-                          4
+                          {doctor.reviews?.communicate_rating}
                         </span>
                       </div>
-                      <div className="w-full overflow-hidden bg-[#000000]/10 rounded-full h-[5px] relative after:content-[''] after:absolute after:top-0 after:left-0 after:h-full after:w-[80%] after:bg-[linear-gradient(90deg,#D8003E_0%,#243A8E_61.5%)]"></div>
-                    </div>
-                    <div>
-                      <div className="w-full flex items-end justify-between">
-                        <span className="text-xs lg:text-sm 2xl:text-base">
-                          Service
-                        </span>
-                        <span className="font-medium text-sm lg:text-base 2xl:text-lg">
-                          4
-                        </span>
+                      <div className="w-full overflow-hidden bg-[#000000]/10 rounded-full h-[5px] relative">
+                        <div
+                            className="absolute top-0 left-0 h-full rounded-full"
+                            style={{
+                              width: `${(doctor.reviews?.communicate_rating / 5) * 100 || 0}%`,
+                              background: "linear-gradient(90deg, #D8003E 0%, #243A8E 61.5%)",
+                            }}
+                        ></div>
                       </div>
-                      <div className="w-full overflow-hidden bg-[#000000]/10 rounded-full h-[5px] relative after:content-[''] after:absolute after:top-0 after:left-0 after:h-full after:w-[80%] after:bg-[linear-gradient(90deg,#D8003E_0%,#243A8E_61.5%)]"></div>
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -313,35 +336,38 @@ export default function DialogViewVet({ open, onClose }) {
                   onSlideChange={() => console.log("slide change")}
                   onSwiper={(swiper) => setSwiperInstanceReview(swiper)}
                 >
-                  {[...Array(5)].map((_, idx) => (
-                    <SwiperSlide key={idx}>
+                  {doctor.reviews?.data.length > 0 ? (
+                      doctor.reviews.data.map((review) => (
+                    <SwiperSlide key={review.id}>
                       <div className="bg-[#000000]/10 p-6 rounded-2xl flex max-lg:flex-col lg:items-center gap-4">
-                        <img
-                          src="/assets/avatars/avatar_6.png"
-                          className="w-full max-w-[50px] h-[50px] object-cover rounded-full"
-                        />
                         <div>
+                        <img
+                          src={review.profile_img || "/assets/images/default_doctor.jpeg"}
+                          className="w-full w-[50px] h-[50px] object-cover rounded-full"
+                        />
+
+                        </div>
+                        <div className="grow">
                           <div className="w-full max-lg:flex-col flex lg:items-center justify-between">
-                            <span className="text-sm lg:text-base 2xl:text-lg font-bold">
+                            <div className="text-sm lg:text-base 2xl:text-lg font-bold">
                               <span className="text-lg lg:text-xl 2xl:text-2xl ">
-                                4
+                                { Math.round((review.service_rating + review.response_time_rating + review.communication_rating) / 3 * 10) / 10}
                               </span>
                               /5
-                            </span>
-                            <span className="text-xs lg:text-sm 2xl:text-base font-medium">
-                              Published At 2024 Apr,01 13:17
-                            </span>
+                            </div>
+                            <div className="text-xs lg:text-sm 2xl:text-base font-medium">
+                              <div>{review.name}</div>
+                              <div className="text-xs text-gray-400">Published At {formatDate(review.created_at)}</div>
+                            </div>
                           </div>
                           <p className="max-lg:mt-3 text-xs lg:text-sm 2xl:text-base mt-1">
-                            Dr. John is always insightful and helpful. He
-                            addressed the topics of concern and even helped
-                            schedule an in person visit to follow up on a few
-                            issues. Highly recommend.
+                            {review.review_message}
                           </p>
                         </div>
                       </div>
                     </SwiperSlide>
-                  ))}
+                  ))
+                ) : (<div>No reviews</div>)}
                 </Swiper>
                 <button
                   onClick={() => swiperRefReview.current.swiper.slidePrev()}
@@ -368,6 +394,9 @@ export default function DialogViewVet({ open, onClose }) {
               </div>
               {/* end third section */}
             </div>
+            ) : (
+                <p>Loading details...</p>
+            )}
           </DialogPanel>
         </div>
       </div>

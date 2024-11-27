@@ -104,7 +104,7 @@ const FindVet = () => {
 
         <button
           ref={buttonRef}
-          onClick={() => router.push("/find-vet")}
+          onClick={() => window.location.href = process.env.NEXT_PUBLIC_APP_URL + "/register"}
           className="bg-bgPrimaryGradient py-5 lg:py-6 md:py-8 2xl:py-10 w-full transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl text-white sm:max-w-[350px] text-xs lg:text-sm 2xl:text-2xl font-bold rounded-lg "
         >
           Get Started
