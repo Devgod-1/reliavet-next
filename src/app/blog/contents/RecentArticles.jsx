@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CardBlog from "@/components/cards/CardBlog";
 import { dataBlogPosts } from "@/utils/constant";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import axios from "axios";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,10 +17,23 @@ const RecentArticles = ({ className = "" }) => {
   const headingRef = useRef(null);
   const paragraphRef = useRef(null);
   const slideRefs = useRef([]);
-
-  const totalSlides = Math.ceil(dataBlogPosts.length / 4); // Adjust based on default slides per view
+  const [recentBlogs, setRecentBlogs] = useState([]);
+  const [totalSlides, setTotalSlides] = useState(0);
 
   useEffect(() => {
+    const fetchRecentBlogs = async () => {
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/posts?per_page=5&page=1&orderby=date&order=desc`, {});
+
+            setRecentBlogs(response.data);
+            setTotalSlides(Math.ceil(response.data.length / 4));
+        } catch (err) {
+            console.error("Error fetching recent blogs:", err);
+        }
+    };
+
+    fetchRecentBlogs();
+
     // Animate the heading and paragraph
     gsap.fromTo(
       headingRef.current,
@@ -72,6 +86,20 @@ const RecentArticles = ({ className = "" }) => {
     });
   }, []);
 
+  const formatDate = (dateString) => {
+      if (dateString) {
+          const date = new Date(dateString);
+          const result = date.toLocaleDateString('en-US', {
+              month: 'short',
+              day: '2-digit',
+              year: 'numeric',
+          });
+          return result;
+      }
+      else
+          return '';
+  };
+
   return (
     <div className={`bg-[#DFEDFF] shadow-2xl ${className}`}>
       <section className="container mx-auto py-8 sm:py-16 md:py-24 lg:py-32 max-sm:px-7">
@@ -120,19 +148,25 @@ const RecentArticles = ({ className = "" }) => {
             },
           }}
         >
-          {dataBlogPosts.map((post, index) => (
-            <SwiperSlide key={index}>
-              <div ref={(el) => (slideRefs.current[index] = el)}>
-                <CardBlog
-                  imageSrc={post.imageSrc}
-                  title={post.title}
-                  description={post.description}
-                  date={post.date}
-                  actionClassName={(index + 1) % 2 === 0 ? "!mt-16" : ""}
-                />
-              </div>
-            </SwiperSlide>
-          ))}
+            {recentBlogs.length > 0 ? (
+                recentBlogs.map((blog, idx) => (
+                    <SwiperSlide key={idx}>
+                        <div ref={(el) => (slideRefs.current[idx] = el)}>
+                            <CardBlog
+                                id={blog.id}
+                                imageSrc={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
+                                title={blog.title.rendered}
+                                description={blog.content.rendered.split('.')[0].trim()}
+                                date={formatDate(blog.date)}
+                                actionClassName={(idx + 1) % 2 === 0 ? "!mt-16" : ""}
+                            />
+                        </div>
+                    </SwiperSlide>
+                ))
+            ) : (
+                <div></div>
+            )}
+
         </Swiper>
 
         <div className="flex items-center gap-2 mx-auto w-fit mt-12">

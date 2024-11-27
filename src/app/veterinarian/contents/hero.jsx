@@ -103,12 +103,7 @@ const Hero = () => {
           </span>
 
           <button
-            onClick={() => {
-              window.open(
-                "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
-                "_blank"
-              );
-            }}
+            onClick={() => window.location.href = process.env.NEXT_PUBLIC_APP_URL + "/register"}
             ref={buttonRef}
             className="transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl bg-bgPrimaryGradient mt-6 2xl:mt-10 p-4 py-5 lg:py-6 2xl:p-8 2xl:py-10 w-full text-white max-w-[200px] lg:max-w-[300px] 2xl:max-w-[350px] !text-sm lg:!text-xl 2xl:!text-2xl font-bold rounded-lg"
           >

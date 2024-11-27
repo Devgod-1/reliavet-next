@@ -18,6 +18,7 @@ import {useFetchStates} from "@/utils/fetchStates";
 import {useFetchUserState} from "@/utils/fetchUserState";
 
 export const FindHospitalCard = ({
+    id,
     name,
     states,
     address,
@@ -29,6 +30,7 @@ export const FindHospitalCard = ({
       <DialogViewHospital
         open={openDialog === "view"}
         onClose={() => setOpenDialog(null)}
+        hospitalId={id}
       />
       <button className="absolute top-5 right-5">
         <img
@@ -284,9 +286,9 @@ const FindHospital = () => {
             }}
           >
               {hospitals.length > 0 ? (
-                  hospitals.map((hospital) => (
-                      <SwiperSlide key={hospital.id} className="hospital-card">
-                          <FindHospitalCard name={hospital.name} states={hospital.states} address={hospital.street_address} profile_image={hospital.profile_img || "/assets/images/hospital.png"}/>
+                  hospitals.map((hospital, idx) => (
+                      <SwiperSlide key={idx} className="hospital-card">
+                          <FindHospitalCard id={hospital.id} name={hospital.name} states={hospital.states} address={hospital.street_address} profile_image={hospital.profile_img || "/assets/images/hospital.png"}/>
                       </SwiperSlide>
                   ))
               ) : (

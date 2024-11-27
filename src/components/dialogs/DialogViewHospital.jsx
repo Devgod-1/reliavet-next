@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -12,10 +12,50 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { FindVeterinarianCard } from "@/app/pet-owner/contents/FindVeterinarian";
+import axios from "axios";
 
-export default function DialogViewHospital({ open, onClose }) {
+export default function DialogViewHospital({ open, onClose, hospitalId }) {
   const swiperRefReview = useRef();
   const [swiperInstanceReview, setSwiperInstanceReview] = useState(null);
+  const [hospital, setHospital] = useState([]);
+  const [doctors, setDoctors] = useState([]);
+
+  useEffect(() => {
+    const fetchHospital = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/hospital/${hospitalId}`, {});
+
+        setHospital(response.data.data);
+      } catch (err) {
+        console.error("Error fetching hospitals:", err);
+      }
+    };
+
+    const fetchDoctors = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/doctors`, {
+          params: {hospital_id: hospitalId}
+        });
+
+        setDoctors(response.data.data);
+      } catch (err) {
+        console.error("Error fetching doctors:", err);
+      }
+    };
+
+
+    fetchHospital();
+    fetchDoctors();
+  }, [hospitalId]);
+
+  const formatDate = (dateString) => {
+    if (dateString) {
+      const date = new Date(dateString);
+      return new Intl.DateTimeFormat('en-US', {month: 'short', day: 'numeric', year: 'numeric'}).format(date);
+    }
+    else
+      return '';
+  };
 
   return (
     <Dialog open={open} onClose={onClose} className="relative z-10">
@@ -38,6 +78,8 @@ export default function DialogViewHospital({ open, onClose }) {
               >
                 <X className="w-[20px] h-[20px] text-[#243A8E]" />
               </button>
+              {hospital ? (
+                  <>
               <div className="flex max-lg:flex-col items-start">
                 <img
                   src="/assets/images/hospital.png"
@@ -48,22 +90,8 @@ export default function DialogViewHospital({ open, onClose }) {
                     <div>
                       <div className="flex items-center space-x-2">
                         <h4 className="font-semibold text-base lg:text-xl  2xl:text-3xl">
-                          City hospital
+                          {hospital.name}
                         </h4>
-                        <div className="flex items-center my-3">
-                          {Array.from({ length: 5 }).map((_, index) => (
-                            <img
-                              key={index}
-                              src="/assets/icons/icon-star-red.svg"
-                              className={
-                                index < 4
-                                  ? "w-[14px] h-[14px]"
-                                  : "opacity-40 w-[14px] h-[14px]"
-                              }
-                              alt="Star"
-                            />
-                          ))}
-                        </div>
                       </div>
                     </div>
                     {/*  */}
@@ -72,62 +100,27 @@ export default function DialogViewHospital({ open, onClose }) {
                         MEMBER SINCE
                       </span>
                       <span className="text-xs lg:text-sm 2xl:text-base block font-medium">
-                        June 18, 2022
+                        {formatDate(hospital.created_at)}
                       </span>
                     </div>
                   </div>
                   {/*  */}
                   <div className="flex max-lg:flex-col-reverse  justify-between items-start mt-4 border-b pb-4">
                     <p className="text-xs lg:text-sm 2xl:text-base block font-medium text-[#636363] max-w-[400px]">
-                      We are a dedicated veterinary hospital committed to
-                      providing high-quality care for your pets. Our experienced
-                      team offers a full range of services, from routine
-                      checkups to advanced treatments, ensuring your pets
-                      receive the best possible care in a compassionate
-                      environment.
+                      {hospital.summary}
                     </p>
 
-                    <div className="flex items-center gap-2 max-lg:mb-4">
-                      <button className="w-[30px] h-[30px] rounded-full border border-[#ABABAB] flex justify-center items-center group hover:bg-[#243A8E] hover:border-[#243A8E]">
-                        <img
-                          src="/assets/icons/icon-twitter.svg"
-                          alt="twitter"
-                          className="group-hover:invert"
-                        />
-                      </button>
-                      <button className="w-[30px] h-[30px] rounded-full border border-[#ABABAB] flex justify-center items-center group hover:bg-[#243A8E] hover:border-[#243A8E]">
-                        <img
-                          src="/assets/icons/icon-facebook.svg"
-                          alt="twitter"
-                          className="group-hover:invert"
-                        />
-                      </button>
-                      <button className="w-[30px] h-[30px] rounded-full border border-[#ABABAB] flex justify-center items-center group hover:bg-[#243A8E] hover:border-[#243A8E]">
-                        <img
-                          src="/assets/icons/icon-instagram.svg"
-                          alt="twitter"
-                          className="group-hover:invert"
-                        />
-                      </button>
-                      <button className="w-[30px] h-[30px] rounded-full border border-[#ABABAB] flex justify-center items-center group hover:bg-[#243A8E] hover:border-[#243A8E]">
-                        <img
-                          src="/assets/icons/icon-github.svg"
-                          alt="twitter"
-                          className="group-hover:invert"
-                        />
-                      </button>
-                    </div>
                   </div>
                   {/*  */}
                   <div className="py-4 space-y-1 border-b">
                     <div className="flex items-center space-x-2">
                       <img
-                        src="/assets/icons/icon-hat.svg"
-                        alt="twitter"
-                        className="w-[22px] h-[22px]"
+                          src="/assets/icons/icon-location.svg"
+                          alt="twitter"
+                          className="w-[22px] h-[22px]"
                       />
                       <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                        alaska, albama, arizona, arkansas, california, colorado
+                        {hospital.states}
                       </span>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -137,54 +130,23 @@ export default function DialogViewHospital({ open, onClose }) {
                         className="w-[22px] h-[22px]"
                       />
                       <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                        Alaska state
+                        {hospital.street_address}
                       </span>
                     </div>
                   </div>
-                  {/*  */}
-                  <div className="py-4 border-b">
-                    <h4 className="text-[15px] lg:text-[19px] 2xl:text-[29px] font-semibold">
-                      Organization:
-                    </h4>
-                    <span className="text-[#282828] text-xs lg:text-sm 2xl:text-base block font-medium mt-1">
-                      General Practitioner
-                    </span>
 
-                    <div className="mt-2 space-y-1">
-                      <div className="flex items-center space-x-2">
-                        <img
-                          src="/assets/icons/icon-google.svg"
-                          alt="twitter"
-                          className="w-[28px] h-[28px]"
-                        />
-                        <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                          http://google.com
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <img
-                          src="/assets/icons/icon-linkedin.svg"
-                          alt="twitter"
-                          className="w-[28px] h-[28px]"
-                        />
-                        <span className="capitalize text-xs lg:text-sm 2xl:text-base font-medium text-[#636363]">
-                          http://linkedin.com
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  {/*  */}
                 </div>
               </div>
               {/* end first section */}
               {/* second section */}
               {/* end second section */}
               {/* third section */}
-              <div className="relative lg:mx-8 mt-8 after:absolute after:content-[''] after:top-0 after:h-full after:right-0 after:bg-[linear-gradient(to_right,#fff0_0%,#fff_100%)] after:w-[300px] after:z-20 max-lg:after:hidden">
+              <div className="relative lg:mx-8 mt-8 after:content-[''] after:top-0 after:h-full after:right-0 after:bg-[linear-gradient(to_right,#fff0_0%,#fff_100%)] after:w-[300px] after:z-20 max-lg:after:hidden">
                 <Swiper
                   ref={swiperRefReview}
                   spaceBetween={50}
                   slidesPerView={3}
+                  slidesPerGroupAuto
                   breakpoints={{
                     320: {
                       slidesPerView: 1,
@@ -206,20 +168,25 @@ export default function DialogViewHospital({ open, onClose }) {
                   onSlideChange={() => console.log("slide change")}
                   onSwiper={(swiper) => setSwiperInstanceReview(swiper)}
                 >
-                  {[...Array(5)].map((_, idx) => (
-                    <SwiperSlide key={idx}>
-                      <FindVeterinarianCard
-                        name={"By Mark B."}
-                        state={"Alaska"}
-                        hospital={"Northeast animal clinic"}
-                        role={"Technician"}
-                        rating={4}
-                        profileImage={"/assets/images/vet.png"}
-                        className="bg-[#243A8E]/20"
-                        buttonClassName="!text-[#243A8E] hover:!bg-[#243A8E] hover:!text-white !bg-transparent !border-[#243A8E] !py-3"
-                      />
-                    </SwiperSlide>
-                  ))}
+                  {doctors.length > 0 ? (
+                      doctors.map((doctor, idx) => (
+                          <SwiperSlide key={idx}>
+                            <FindVeterinarianCard
+                                id={doctor.id}
+                                profileImage={doctor.profile_img || "/assets/images/default_doctor.jpeg"}
+                                name={doctor.name}
+                                role={doctor.user_role}
+                                rating={doctor.rate}
+                                state={doctor.states}
+                                hospitalId={doctor.hospital_id}
+                                hospital={doctor.hospital_name}
+                                buttonLabel="Book an Appointment"
+                            />
+                          </SwiperSlide>
+                      ))
+                  ) : (
+                      <div>No veterinarians or technicians found</div>
+                  )}
                 </Swiper>
                 <button
                   onClick={() => swiperRefReview.current.swiper.slidePrev()}
@@ -245,6 +212,8 @@ export default function DialogViewHospital({ open, onClose }) {
                 </button>
               </div>
               {/* end third section */}
+                  </>
+              ) : ('')}
             </div>
           </DialogPanel>
         </div>

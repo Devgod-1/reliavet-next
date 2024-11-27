@@ -4,10 +4,11 @@ import { useState } from "react";
 const { default: Image } = require("next/image");
 
 export default function Hospital({
-     name,
-     states,
-     address,
-     profile_image,
+    id,
+    name,
+    states,
+    address,
+    profile_image,
  }) {
   const [openDialog, setOpenDialog] = useState(null);
   return (
@@ -15,6 +16,7 @@ export default function Hospital({
       <DialogViewHospital
         open={openDialog === "view"}
         onClose={() => setOpenDialog(null)}
+        hospitalId={id}
       />
       <button
         className="absolute top-5 right-4 bg-[#EDF3FF] p-5 rounded-bl-xl"

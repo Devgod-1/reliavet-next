@@ -143,10 +143,7 @@ const JoinVet = () => {
           <button
             ref={buttonRef} // Reference for animation
             onClick={() => {
-              window.open(
-                "https://app.reliavet.com/login?_gl=1*ldlweb*_ga*NTM5NzU3MjQ1LjE3MzE5NDQyNjQ.*_ga_ERZYKJPJPK*MTczMTk0NDI2My4xLjAuMTczMTk0NDI3MC4wLjAuMA..",
-                "_blank"
-              );
+                window.open(process.env.NEXT_PUBLIC_APP_URL, '_blank');
             }}
             className="hover:bg-white hover:text-black hover:shadow-xl hover:scale-[1.01] bg-transparent p-6 py-4 2xl:p-7 2xl:py-5 w-fit text-white max-w-[300px] !mt-12 text-xs lg:text-sm 2xl:text-base border border-white font-bold rounded-lg "
           >

@@ -98,7 +98,7 @@ export default function Reliavet() {
         </p>
         <button
           ref={buttonRef}
-          onClick={() => router.push("/find-vet")}
+          onClick={() => window.location.href = process.env.NEXT_PUBLIC_APP_URL + "/register"}
           className="hover:bg-white hover:text-black transition-all w-full max-w-[230px] font-bold border rounded-lg py-6 my-10 text-lg lg:text-xl 2xl:text-2xl"
         >
           Get Started

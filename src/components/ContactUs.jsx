@@ -3,7 +3,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import oauth from '@/utils/oauth';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,6 +19,14 @@ const ContactUs = () => {
   const formRef = useRef(null);
   const subscribeTitleRef = useRef(null);
   const newsletterRef = useRef(null);
+
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [resultSubscribeMessage, setResultSubscribeMessage] = useState('');
+  const [resultContactMessage, setResultContactMessage] = useState('');
 
   useEffect(() => {
     // GSAP animations without using timeline
@@ -129,6 +138,85 @@ const ContactUs = () => {
     };
   }, []);
 
+  const handleSubscribeSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+
+      const requestUrl = `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/gf/v2/forms/${process.env.NEXT_PUBLIC_WP_SUBSCRIBE_FORM_ID}/submissions`;
+      const requestData = {
+          url: requestUrl,
+          method: 'POST',
+          body: {
+              input_1: email
+          },
+      };
+
+      const headers = {
+          ...oauth.toHeader(oauth.authorize(requestData)),
+          'Content-Type': 'application/json',
+      };
+
+      const response = await fetch(requestUrl, {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({
+              input_1: email,
+          }),
+      });
+
+      const data = await response.json();
+      setLoading(false);
+
+      if (data.is_valid) {
+          setResultSubscribeMessage('Subscription successful!');
+      } else {
+          setResultSubscribeMessage('There was an error submitting the form.');
+      }
+  };
+
+  const handleContactSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        const requestUrl = `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/gf/v2/forms/${process.env.NEXT_PUBLIC_WP_CONTACT_FORM_ID}/submissions`;
+        const requestData = {
+            url: requestUrl,
+            method: 'POST',
+            body: {
+                input_1: name,
+                input_2: phone,
+                input_3: email,
+                input_4: message
+            },
+        };
+
+        const headers = {
+            ...oauth.toHeader(oauth.authorize(requestData)),
+            'Content-Type': 'application/json',
+        };
+
+        const response = await fetch(requestUrl, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({
+                input_1: name,
+                input_2: phone,
+                input_3: email,
+                input_4: message
+            }),
+        });
+
+        const data = await response.json();
+        setLoading(false);
+
+        if (data.is_valid) {
+            setResultContactMessage(data.confirmation_message);
+        } else {
+            setResultContactMessage('There was an error submitting the form.');
+        }
+    };
+
+
   return (
     <section className="w-full" ref={sectionRef}>
       <div
@@ -196,29 +284,35 @@ const ContactUs = () => {
             </h4>
 
             <div className="space-y-8 mt-8">
-              <input
+              <input required
                 placeholder="Name"
                 className="outline-none focus:outline-none borde-none !text-sm 2xl:text-base bg-transparent  placeholder:text-white w-full border-b border-b-white pb-2"
+                onChange={(e) => setName(e.target.value)}
               />
-              <input
+              <input required
                 placeholder="Email address"
                 className="outline-none focus:outline-none borde-none !text-sm 2xl:text-base bg-transparent  placeholder:text-white w-full border-b border-b-white pb-2"
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <input
+              <input required
                 placeholder="Phone number"
                 className="outline-none focus:outline-none borde-none !text-sm 2xl:text-base bg-transparent  placeholder:text-white w-full border-b border-b-white pb-2"
+                onChange={(e) => setPhone(e.target.value)}
               />
-              <input
+              <input required
                 placeholder="Message"
                 className="outline-none focus:outline-none borde-none !text-sm 2xl:text-base bg-transparent  placeholder:text-white w-full border-b border-b-white pb-2"
+                onChange={(e) => setMessage(e.target.value)}
               />
             </div>
 
-            <button className="transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl text-[20px] lg:text-[28px] xl:text-[32px] 2xl:text-[36px] font-bold bg-black w-full py-4 rounded-xl mt-10">
-              Submit
+            <button className="transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl text-[20px] lg:text-[28px] xl:text-[32px] 2xl:text-[36px] font-bold bg-black w-full py-4 rounded-xl mt-10"
+                    onClick={handleContactSubmit}>
+                {loading ? 'Submitting...' : 'Submit'}
             </button>
           </div>
         </div>
+          {resultContactMessage && <div class="text-center text-red-600"><p dangerouslySetInnerHTML={{ __html: resultContactMessage }}></p></div>}
       </div>
       <div className="bg-[#243A8E33]">
         <div className="py-6 2xl:py-10 container mx-auto flex max-md:flex-col max-md:px-5 items-center justify-between">
@@ -233,12 +327,14 @@ const ContactUs = () => {
             className="w-full bg-white max-w-[500px] 2xl:max-w-[600px] flex items-center rounded-2xl overflow-hidden"
             ref={newsletterRef}
           >
-            <input className="w-full  h-[50px] lg:h-[80px] 2xl:h-[90px]" />
-            <button className="bg-red-primary rounded-2xl shadow-[-4px_0px_20px_#D9D9D9aa] w-fit text-xs lg:text-lg 2xl:text-xl font-bold text-white h-[60px]  lg:h-[80px] 2xl:h-[90px] px-6 lg:px-10">
-              Subscribe
+            <input className="w-full px-4 h-[50px] lg:h-[80px] 2xl:h-[90px]" required onChange={(e) => setEmail(e.target.value)} />
+            <button disabled={loading} className="bg-red-primary rounded-2xl shadow-[-4px_0px_20px_#D9D9D9aa] w-fit text-xs lg:text-lg 2xl:text-xl font-bold text-white h-[60px]  lg:h-[80px] 2xl:h-[90px] px-6 lg:px-10"
+                onClick={handleSubscribeSubmit}>
+                {loading ? 'Submitting...' : 'Subscribe'}
             </button>
           </div>
         </div>
+        {resultSubscribeMessage && <p class="text-center text-red-600">{resultSubscribeMessage}</p>}
       </div>
     </section>
   );

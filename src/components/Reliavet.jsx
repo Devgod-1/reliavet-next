@@ -173,26 +173,7 @@ const Reliavet = ({ features = [], whyText = "", isBook = true }) => {
             </div>
           </div>
         </div>
-        {isBook && (
-          <>
-            <div
-              ref={ctaRef}
-              className="text-center font-bold text-[22px] lg:text-[26px] 2xl:text-[30px] pt-20"
-            >
-              Then book an appointment today with ReliaVet to speak to one of{" "}
-              <br className="hidden lg:block" />
-              our licensed veterinarians who will be happy to help!
-            </div>
-            <div className="flex items-center justify-center">
-              <button
-                onClick={() => router.push("/find-vet")}
-                className="transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl bg-bgPrimaryGradient mt-6 2xl:mt-10 p-4 py-6 2xl:p-8 2xl:py-10 w-full text-white max-w-[300px] 2xl:max-w-[350px] text-sm lg:text-xl 2xl:text-2xl font-bold rounded-lg"
-              >
-                Book an appointment
-              </button>
-            </div>
-          </>
-        )}
+        
       </div>
     </section>
   );

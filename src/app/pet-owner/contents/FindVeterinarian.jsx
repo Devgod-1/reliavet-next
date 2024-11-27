@@ -15,11 +15,13 @@ import "swiper/css";
 import "swiper/css/bundle";
 
 export const FindVeterinarianCard = ({
+  id,
   profileImage,
   name,
   role,
   rating,
   state,
+  hospitalId,
   hospital,
   onButtonClick,
   buttonLabel = "Book Now",
@@ -36,7 +38,7 @@ export const FindVeterinarianCard = ({
     <div
       className={`bg-[#FFEDED] p-5 py-8 flex flex-col items-center rounded-[15px] relative ${className}`}
     >
-      <DialogViewVet open={openDialog === "view"} onClose={closeDialog} />
+      <DialogViewVet open={openDialog === "view"} onClose={closeDialog} doctorId={id} hospitalId={hospitalId} hospitalName={hospital} rating={rating}/>
 
       <button className="absolute top-8 right-8">
         <img
@@ -48,7 +50,7 @@ export const FindVeterinarianCard = ({
         <img
           src={profileImage}
           alt="Profile"
-          className={`w-full max-w-[95px] 2xl:max-w-[105px] object-cover rounded-full border-[8px] border-[#8E244B]/20 ${imageClassName}`}
+          className={`w-full h-[95px] w-[95px] 2xl:w-[105px] 2xl:h-[105px] object-cover rounded-full border-[8px] border-[#8E244B]/20 ${imageClassName}`}
         />
       </div>
       <h6 className="text-sm 2xl:text-base font-semibold">{name}</h6>
@@ -68,7 +70,7 @@ export const FindVeterinarianCard = ({
       </span>
       <span className="text-xs 2xl:text-sm font-medium block mt-1">
         Hospital:&nbsp;
-        <span className="text-[#636363]">{hospital}</span>
+        <span className="text-[#636363]">{hospital || 'Individual'}</span>
       </span>
       <button
         className={`w-full bg-white font-bold text-xs 2xl:text-sm text-[#DE1E33] hover:bg-[#DE1E33] hover:text-white p-5 border border-[#ACACAC] rounded-[9px] !mt-6 ${buttonClassName}`}
@@ -242,14 +244,16 @@ const FindVeterinarian = () => {
             }}
           >
               {doctors.length > 0 ? (
-                  doctors.map((doctor) => (
-                      <SwiperSlide key={doctor.id}>
+                  doctors.map((doctor, idx) => (
+                      <SwiperSlide key={idx}>
                           <FindVeterinarianCard
+                              id={doctor.id}
                               profileImage={doctor.profile_img || "/assets/images/default_doctor.jpeg"}
                               name={doctor.name}
                               role={doctor.user_role}
                               rating={doctor.rate}
                               state={doctor.states}
+                              hospitalId={doctor.hospital_id}
                               hospital={doctor.hospital_name}
                               buttonLabel="Book an Appointment"
                           />
