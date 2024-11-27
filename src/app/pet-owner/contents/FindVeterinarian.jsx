@@ -1,16 +1,27 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import DialogViewVet from "@/components/dialogs/DialogViewVet";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import axios from "axios";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { useFetchStates } from "@/utils/fetchStates";
+import { useFetchUserState } from "@/utils/fetchUserState";
+
+import "swiper/css";
+import "swiper/css/bundle";
 
 export const FindVeterinarianCard = ({
+  id,
   profileImage,
   name,
   role,
   rating,
   state,
+  hospitalId,
   hospital,
   onButtonClick,
   buttonLabel = "Book Now",
@@ -27,7 +38,7 @@ export const FindVeterinarianCard = ({
     <div
       className={`bg-[#FFEDED] p-5 py-8 flex flex-col items-center rounded-[15px] relative ${className}`}
     >
-      <DialogViewVet open={openDialog === "view"} onClose={closeDialog} />
+      <DialogViewVet open={openDialog === "view"} onClose={closeDialog} doctorId={id} hospitalId={hospitalId} hospitalName={hospital} rating={rating}/>
 
       <button className="absolute top-8 right-8">
         <img
@@ -39,7 +50,7 @@ export const FindVeterinarianCard = ({
         <img
           src={profileImage}
           alt="Profile"
-          className={`w-full max-w-[95px] 2xl:max-w-[105px] object-cover rounded-full border-[8px] border-[#8E244B]/20 ${imageClassName}`}
+          className={`w-full h-[95px] w-[95px] 2xl:w-[105px] 2xl:h-[105px] object-cover rounded-full border-[8px] border-[#8E244B]/20 ${imageClassName}`}
         />
       </div>
       <h6 className="text-sm 2xl:text-base font-semibold">{name}</h6>
@@ -59,7 +70,7 @@ export const FindVeterinarianCard = ({
       </span>
       <span className="text-xs 2xl:text-sm font-medium block mt-1">
         Hospital:&nbsp;
-        <span className="text-[#636363]">{hospital}</span>
+        <span className="text-[#636363]">{hospital || 'Individual'}</span>
       </span>
       <button
         className={`w-full bg-white font-bold text-xs 2xl:text-sm text-[#DE1E33] hover:bg-[#DE1E33] hover:text-white p-5 border border-[#ACACAC] rounded-[9px] !mt-6 ${buttonClassName}`}
@@ -72,16 +83,108 @@ export const FindVeterinarianCard = ({
 };
 
 const FindVeterinarian = () => {
-  const swiperRef = useRef();
-  const [swiperInstance, setSwiperInstance] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const subTitleRef = useRef(null);
+  const formRef = useRef(null);
+  const [doctors, setDoctors] = useState([]);
+  const {states} = useFetchStates();
+  const { userState, selectedState, setSelectedState } = useFetchUserState();
+
+  useEffect(() => {
+    // Create the animation when the section scrolls into view
+    const section = sectionRef.current;
+    // Animate the title
+    gsap.fromTo(
+      titleRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      subTitleRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.2,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    // Animate the form
+    gsap.fromTo(
+      formRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.3, // Add a slight delay for a staggered effect
+        scrollTrigger: {
+          trigger: section,
+          start: "top 75%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    // Animate the cards
+    gsap.fromTo(
+      section.querySelectorAll(".vet-card"),
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 70%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
+
+    const handleStateChange = async (e) => {
+        const selected = e.target.value;
+        setSelectedState(selected); // Update the selected state when dropdown value changes
+
+        try {
+            const response = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/doctors", {
+                params: { state: selected }
+            });
+            setDoctors(response.data.data); // Update veterinarians data based on the selected state
+        } catch (err) {
+            console.log('Find veterinarian =>', err.message); // Handle API errors
+        }
+    };
+
   return (
-    <section className="container px-10 mx-auto">
-      <div>
-        <div className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-semibold text-center my-20">
+    <section ref={sectionRef} className="container px-10 mx-auto">
+        <div>
+        <div
+          className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-semibold text-center my-20"
+          ref={titleRef}
+        >
           Find a Trusted Veterinarian Near You
         </div>
-        <div className="flex flex-col my-5">
+        <div className="flex flex-col my-5" ref={formRef}>
           <label
             htmlFor="search"
             className="pl-3 mb-2 flex gap-2 text-xs lg:text-sm text-[#636363]"
@@ -95,25 +198,32 @@ const FindVeterinarian = () => {
             />
             Choose Location:
           </label>
-          <input
-            className="rounded-3xl bg-[#ECEEF2] sm:w-[400px] px-6 lg:px-8 py-2 lg:py-3 focus:outline-none border border-[#C4C4C4] text-xs 2xl:text-sm"
-            id="search"
-            defaultValue={"Alaska"}
-          />
+            <select
+                id="state-dropdown"
+                value={selectedState}
+                onChange={handleStateChange}
+                className="rounded-3xl bg-[#ECEEF2] sm:w-[400px] px-6 lg:px-8 py-2 lg:py-3 focus:outline-none border border-[#C4C4C4] text-xs 2xl:text-sm"
+            >
+                <option value="">Select a State</option>
+                {states.map((state) => (
+                    <option key={state.id} value={state.code}>
+                        {state.name}
+                    </option>
+                ))}
+            </select>
         </div>
         <div>
-          <h1 className="2xl:text-[36px] text-[24px] lg:text-[32px] font-semibold leading-[1.4] lg:leading-[1.1] mt-10">
+          <h1
+            className="2xl:text-[36px] text-[24px] lg:text-[32px] font-semibold leading-[1.4] lg:leading-[1.1] mt-10"
+            ref={subTitleRef}
+          >
             Suggested Based on your location
           </h1>
-          <Swiper
-            ref={swiperRef}
-            className="flex gap-7 mb-10 mt-5"
-            spaceBetween={24}
-            slidesPerGroupAuto
-            onSwiper={(swiper) => setSwiperInstance(swiper)}
-            onSlideChange={(swiper) =>
-              setActiveIndex(Math.floor(swiper.activeIndex / 4))
-            }
+
+          <Swiper className="flex gap-7 mb-10 mt-5" spaceBetween={24} slidesPerGroupAuto modules={[Navigation, Pagination, Scrollbar, A11y]} navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+          }} scrollbar={{ draggable: true }}
             breakpoints={{
               320: {
                 slidesPerView: 1,
@@ -133,46 +243,25 @@ const FindVeterinarian = () => {
               },
             }}
           >
-            <SwiperSlide>
-              <FindVeterinarianCard
-                name={"By Mark B."}
-                state={"Alaska"}
-                hospital={"Northeast animal clinic"}
-                role={"Technician"}
-                rating={4}
-                profileImage={"/assets/images/vet.png"}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <FindVeterinarianCard
-                name={"By Mark B."}
-                state={"Alaska"}
-                hospital={"Northeast animal clinic"}
-                role={"Technician"}
-                rating={4}
-                profileImage={"/assets/images/vet.png"}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <FindVeterinarianCard
-                name={"By Mark B."}
-                state={"Alaska"}
-                hospital={"Northeast animal clinic"}
-                role={"Technician"}
-                rating={4}
-                profileImage={"/assets/images/vet.png"}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <FindVeterinarianCard
-                name={"By Mark B."}
-                state={"Alaska"}
-                hospital={"Northeast animal clinic"}
-                role={"Technician"}
-                rating={4}
-                profileImage={"/assets/images/vet.png"}
-              />
-            </SwiperSlide>
+              {doctors.length > 0 ? (
+                  doctors.map((doctor, idx) => (
+                      <SwiperSlide key={idx}>
+                          <FindVeterinarianCard
+                              id={doctor.id}
+                              profileImage={doctor.profile_img || "/assets/images/default_doctor.jpeg"}
+                              name={doctor.name}
+                              role={doctor.user_role}
+                              rating={doctor.rate}
+                              state={doctor.states}
+                              hospitalId={doctor.hospital_id}
+                              hospital={doctor.hospital_name}
+                              buttonLabel="Book an Appointment"
+                          />
+                      </SwiperSlide>
+                  ))
+              ) : (
+                  <div>No veterinarians or technicians found</div>
+              )}
           </Swiper>
         </div>
       </div>

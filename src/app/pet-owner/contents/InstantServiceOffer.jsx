@@ -8,11 +8,11 @@ const InstantServiceOffer = ({ className }) => {
       <h4 className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-bold text-center mb-5">
         Instant Teletriage Services
       </h4>
-      <span className="text-[#DE1E33] bg-[#DE1E33]/10 p-3 rounded-full px-5 font-medium text-sm lg:text-base 2xl:text-lg">
+      {/* <span className="text-[#DE1E33] bg-[#DE1E33]/10 p-3 rounded-full px-5 font-medium text-sm lg:text-base 2xl:text-lg">
         <span className="text-xs lg:text-sm 2xl:text-base">$</span>
         <span className="text-lg lg:text-xl 2xl:text-2xl">75</span> for a
         20-minute appointment
-      </span>
+      </span> */}
 
       <div className="flex max-lg:flex-col gap-6 mt-6">
         <div className="full flex flex-col gap-4 items-center bg-[#FFFFFF]/25 p-8  rounded-[40px]">

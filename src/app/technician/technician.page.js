@@ -24,7 +24,9 @@ const TechnicianPage = () => {
               professional connections.
             </span>
 
-            <button className="bg-bgPrimaryGradient mt-6 2xl:mt-10 p-6 py-8 2xl:p-8 2xl:py-10 w-full text-white max-w-[300px] 2xl:max-w-[350px] text-xl 2xl:text-2xl font-bold rounded-lg">
+            <button className="bg-bgPrimaryGradient mt-6 2xl:mt-10 p-6 py-8 2xl:p-8 2xl:py-10 w-full text-white max-w-[300px] 2xl:max-w-[350px] text-xl 2xl:text-2xl font-bold rounded-lg"
+                    onClick={() => window.location.href = process.env.NEXT_PUBLIC_APP_URL + "/register"}
+            >
               Get Started
             </button>
           </div>

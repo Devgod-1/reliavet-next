@@ -12,7 +12,7 @@ const Home = () => {
       <FindVet />
       <JoinVet />
       <Streamline />
-      <Blog />
+      <Blog type="all" />
       <Stories />
     </div>
   );

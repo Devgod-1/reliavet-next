@@ -3,11 +3,13 @@ import Image from "next/image";
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 const FindVet = () => {
+  const router = useRouter();
   // Refs for elements to animate
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
@@ -102,7 +104,8 @@ const FindVet = () => {
 
         <button
           ref={buttonRef}
-          className="bg-bgPrimaryGradient py-5 lg:py-6 md:py-8 2xl:py-10 w-full text-white sm:max-w-[350px] text-xs lg:text-sm 2xl:text-2xl font-bold rounded-lg hover:bg-bgPrimaryGradient2 hover:shadow-lg"
+          onClick={() => window.location.href = process.env.NEXT_PUBLIC_APP_URL + "/register"}
+          className="bg-bgPrimaryGradient py-5 lg:py-6 md:py-8 2xl:py-10 w-full transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl text-white sm:max-w-[350px] text-xs lg:text-sm 2xl:text-2xl font-bold rounded-lg "
         >
           Get Started
         </button>

@@ -3,12 +3,13 @@ import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import CardBlog from "@/components/cards/CardBlog";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { dataBlogPosts } from "@/utils/constant";
-import gsap from "gsap"; // Import GSAP
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import axios from "axios";
 
 gsap.registerPlugin(ScrollTrigger);
-const Blog = () => {
+
+const Blog = ({type}) => {
   const swiperRef = useRef();
   const [activeIndex, setActiveIndex] = useState(0);
   const [swiperInstance, setSwiperInstance] = useState(null);
@@ -16,41 +17,63 @@ const Blog = () => {
   const descriptionRef = useRef(null);
   const sectionRef = useRef(null);
   const cardsRef = useRef([]);
+  const [blogs, setBlogs] = useState([]);
+  const [totalSlides, setTotalSlides] = useState(0);
 
-  const totalSlides = Math.ceil(dataBlogPosts.length / 4); // Adjust based on default slides per view
 
   useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        let response;
+
+        const url = `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/posts?per_page=100&page=1&orderby=date&order=desc`;
+        if (type == 'veterinarian')
+          response = await axios.get(`${url}&categories=${process.env.NEXT_PUBLIC_VETERINARIAN_CATEGORY}`, {});
+        else if (type == 'technician')
+          response = await axios.get(`${url}&categories=${process.env.NEXT_PUBLIC_TECHNICIAN_CATEGORY}`, {});
+        else if (type == 'pet owner')
+          response = await axios.get(`${url}&categories=${process.env.NEXT_PUBLIC_PET_OWNER_CATEGORY}`, {});
+        else if (type == 'hospital')
+          response = await axios.get(`${url}&categories=${process.env.NEXT_PUBLIC_HOSPITAL_CATEGORY}`, {});
+        else
+          response = await axios.get(url, {});
+
+        setBlogs(response.data);
+        setTotalSlides(Math.ceil(response.data.length / 4));
+      } catch (err) {
+        console.error("Error fetching blogs:", err);
+      }
+    };
+
+    fetchBlogs();
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 80%", // Trigger when section is 80% into view
-        toggleActions: "play none none none", // Play on enter only
+        start: "top 80%",
+        toggleActions: "play none none none",
       },
-      defaults: { duration: 1, ease: "power3.out" },
+      defaults: { duration: 0.5, ease: "power3.out" }, // Reduce duration for faster animation
     });
-    // GSAP animation for scaling
+
+    // Faster GSAP animation for scaling
     tl.fromTo(
       titleRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 1, ease: "back.out(1.7)" }
+      { opacity: 1, duration: 0.5, ease: "back.out(1.7)" }
     );
 
     tl.fromTo(
       descriptionRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 1, delay: 0.2, ease: "back.out(1.7)" }
+      { opacity: 1, duration: 0.5, ease: "back.out(1.7)" }
     );
 
-    // GSAP animation for blog cards (with delay for each card)
-    cardsRef.current.forEach((card, index) => {
+    // Faster GSAP animation for blog cards
+    cardsRef.current.forEach((card) => {
       tl.fromTo(
         card,
         { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.25,
-          ease: "back.out(1.7)",
-        }
+        { opacity: 1, duration: 0.2, ease: "back.out(1.7)" } // Reduced to 0.2s
       );
     });
 
@@ -59,9 +82,24 @@ const Blog = () => {
     };
   }, []);
 
+
+  const formatDate = (dateString) => {
+    if (dateString) {
+      const date = new Date(dateString);
+      const result = date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric',
+      });
+      return result;
+    }
+    else
+      return '';
+  };
+
   return (
     <section
-      className="container mx-auto py-8 sm:py-16 md:py-24 lg:py-32 max-sm:px-7"
+      className="relative z-[20] container mx-auto py-8 sm:py-16 md:py-24 lg:py-32 max-sm:px-7"
       ref={sectionRef}
     >
       <div>
@@ -109,19 +147,24 @@ const Blog = () => {
           },
         }}
       >
-        {dataBlogPosts.map((post, index) => (
-          <SwiperSlide key={index}>
-            <div ref={(el) => (cardsRef.current[index] = el)}>
-              <CardBlog
-                imageSrc={post.imageSrc}
-                title={post.title}
-                description={post.description}
-                date={post.date}
-                actionClassName={(index + 1) % 2 === 0 ? "!mt-16" : ""}
-              />
-            </div>
-          </SwiperSlide>
-        ))}
+        {blogs.length > 0 ? (
+            blogs.map((blog, idx) => (
+                <SwiperSlide key={idx}>
+                  <div ref={(el) => (cardsRef.current[idx] = el)}>
+                    <CardBlog
+                        id={blog.id}
+                        imageSrc={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
+                        title={blog.title.rendered}
+                        description={blog.content.rendered.split('.')[0].trim()}
+                        date={formatDate(blog.date)}
+                        actionClassName={(idx + 1) % 2 === 0 ? "!mt-16" : ""}
+                    />
+                  </div>
+                </SwiperSlide>
+            ))
+        ) : (
+            <div></div>
+        )}
       </Swiper>
 
       <div className="flex items-center gap-2 mx-auto w-fit mt-12">

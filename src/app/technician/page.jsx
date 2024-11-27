@@ -4,6 +4,7 @@ import Blog from "@/components/Blog";
 import SignInUp from "@/components/Signin_up";
 import Reliavet from "@/components/Reliavet";
 import Empowering from "./contents/Empowering";
+import Learn from "../hospital/contents/Learn";
 
 const Technician = () => {
   return (
@@ -17,13 +18,21 @@ const Technician = () => {
           "Community and Support",
           "Career Growth Opportunities",
         ]}
+        isBook={false}
       />
       <SignInUp
         reg="Easy Registration"
         note="Add your Details"
         video="Start Connecting With Clients"
       />
-      <Blog />
+      <Learn />
+      <div className="relative">
+        <img
+          src="/assets/images/bg-promo-2.png"
+          className="absolute top-[-21rem] 2xl:top-[-24rem] pointer-events-none hidden lg:block"
+        />
+        <Blog type="technician" />
+      </div>
     </div>
   );
 };

@@ -4,10 +4,11 @@ import Blog from "@/components/Blog";
 import Telemedicine from "./contents/Telemedicine";
 import Reliavet from "@/components/Reliavet";
 import SignInUp from "../../components/Signin_up";
+import Learn from "../hospital/contents/Learn";
 
 const Veterinarian = () => {
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <Hero />
       <Telemedicine />
       <Reliavet
@@ -17,13 +18,21 @@ const Veterinarian = () => {
           "Education and Professional Growth",
           "Dedicated Support",
         ]}
+        isBook={false}
       />
       <SignInUp
         reg="Easy Registration"
         note="Add your Details"
         video="Start Connecting With Clients"
       />
-      <Blog />
+      <Learn />
+      <div className="relative">
+        <img
+          src="/assets/images/bg-promo-2.png"
+          className="absolute top-[-21rem] 2xl:top-[-24rem] pointer-events-none hidden lg:block"
+        />
+        <Blog type="veterinarian"/>
+      </div>
     </div>
   );
 };
