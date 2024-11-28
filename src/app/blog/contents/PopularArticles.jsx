@@ -108,19 +108,19 @@ export default function PopularArticles() {
     });
   }, []);
 
-    const formatDate = (dateString) => {
-        if (dateString) {
-            const date = new Date(dateString);
-            const result = date.toLocaleDateString('en-US', {
-                month: 'short',
-                day: '2-digit',
-                year: 'numeric',
-            });
-            return result;
-        }
-        else
-            return '';
-    };
+  const formatDate = (dateString) => {
+      if (dateString) {
+          const date = new Date(dateString);
+          const result = date.toLocaleDateString('en-US', {
+              month: 'short',
+              day: '2-digit',
+              year: 'numeric',
+          });
+          return result;
+      }
+      else
+          return '';
+  };
 
   return (
     <section className="container mx-auto px-4 pb-12 mt-[-4rem]">
@@ -144,7 +144,7 @@ export default function PopularArticles() {
       <div className="grid md:grid-cols-2 gap-6">
           {popularBlogs.length > 0 ? (
               popularBlogs.map((blog, idx) => (
-                  <Article title={blog.title.rendered} blog_image={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
+                  <Article key={idx} title={blog.title.rendered} blog_image={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
                            name={blog.yoast_head_json.author} blog_date={formatDate(blog.date)} />
               ))
           ) : (
