@@ -48,12 +48,3 @@ export default function Page() {
     </div>
   );
 }
-
-// Wrap PageContent with Suspense for client-side rendering
-export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading hospitals...</div>}>
-      <PageContent />
-    </Suspense>
-  );
-}
