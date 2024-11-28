@@ -1,11 +1,13 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import CardBlog from "@/components/cards/CardBlog";
 import { dataBlogPosts } from "@/utils/constant";
 import Image from "next/image";
 import Article from "./Article";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import axios from "axios";
+import {SwiperSlide} from "swiper/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,8 +44,32 @@ export default function AllArticles() {
   const articleRefs = useRef([]);
   const loadMoreBtnRef = useRef(null);
   const cardsRef = useRef([]);
+  const [allBlogs, setAllBlogs] = useState([]);
+  const [popularBlogs, setPopularBlogs] = useState([]);
 
   useEffect(() => {
+    const fetchAllBlogs = async () => {
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/posts?per_page=4&page=1&orderby=date&order=asc`, {});
+            setAllBlogs(response.data);
+        } catch (err) {
+            console.error("Error fetching all blogs:", err);
+        }
+    };
+    const fetchPopularBlogs = async () => {
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/posts?per_page=2&page=1&orderby=date`, {});
+
+            setPopularBlogs(response.data);
+        } catch (err) {
+            console.error("Error fetching popular blogs:", err);
+        }
+    };
+
+    fetchAllBlogs();
+    fetchPopularBlogs();
+
+
     // Animate the heading and paragraph
     gsap.fromTo(
       headingRef.current,
@@ -131,6 +157,20 @@ export default function AllArticles() {
     );
   }, []);
 
+  const formatDate = (dateString) => {
+      if (dateString) {
+          const date = new Date(dateString);
+          const result = date.toLocaleDateString('en-US', {
+              month: 'short',
+              day: '2-digit',
+              year: 'numeric',
+          });
+          return result;
+      }
+      else
+          return '';
+  };
+
   return (
     <div className="container max-lg:p-5 mx-auto">
       <div className="my-20">
@@ -151,29 +191,34 @@ export default function AllArticles() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {articles.map((article) => (
-          <div
-            ref={(el) => (articleRefs.current[article.id] = el)}
-            key={article.id}
-          >
-            <Article article={article} />
-          </div>
-        ))}
+          {popularBlogs.length > 0 ? (
+              popularBlogs.map((blog, idx) => (
+                  <Article key={idx} id={blog.id} title={blog.title.rendered} blog_image={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
+                           name={blog.yoast_head_json.author} blog_date={formatDate(blog.date)} />
+              ))
+          ) : (
+              <div></div>
+          )}
       </div>
 
       <div className="my-5" />
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-        {dataBlogPosts.slice(0, 4).map((blog, id) => (
-          <div key={id} ref={(el) => (cardsRef.current[id] = el)}>
-            <CardBlog
-              title={blog.title}
-              date={blog.date}
-              description={blog.description}
-              imageSrc={blog.imageSrc}
-              actionClassName={(id + 1) % 2 === 0 ? "!mt-16" : ""}
-            />
-          </div>
-        ))}
+          {allBlogs.length > 0 ? (
+              allBlogs.map((blog, idx) => (
+                  <div key={idx} ref={(el) => (cardsRef.current[idx] = el)}>
+                      <CardBlog
+                          id={blog.id}
+                          title={blog.title.rendered}
+                          date={formatDate(blog.date)}
+                          description={blog.content.rendered.split('.')[0].trim()}
+                          imageSrc={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
+                          actionClassName={(idx + 1) % 2 === 0 ? "!mt-16" : ""}
+                      />
+                  </div>
+              ))
+          ) : (
+              <div></div>
+          )}
       </div>
 
       <div className="flex justify-center">

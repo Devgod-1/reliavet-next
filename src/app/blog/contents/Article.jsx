@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export default function Article({ title, name, blog_image, blog_date }) {
+export default function Article({ id, title, name, blog_image, blog_date }) {
   const router = useRouter();
   return (
     <article
       className="group relative rounded-2xl overflow-hidden cursor-pointer"
-      onClick={() => router.push("/blog/123")}
+      onClick={() => router.push("/blog/" + id)}
     >
       <div className="relative h-[400px] w-full">
         <Image

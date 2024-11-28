@@ -15,33 +15,6 @@ export default function PopularArticles() {
   const paragraphRef = useRef(null);
   const [popularBlogs, setPopularBlogs] = useState([]);
 
-  const articles = [
-    {
-      id: 1,
-      title:
-        "How to Maximize your Pet Hospital's Success with Virtual Vet Appointments",
-      image: "/assets/images/news_pet.png?height=600&width=800",
-      author: {
-        name: "Viola Manisa",
-        avatar: "/assets/avatars/avatar_4.png",
-        isVerified: true,
-      },
-      date: "02 May-2024",
-    },
-    {
-      id: 2,
-      title:
-        "How to Maximize your Pet Hospital's Success with Virtual Vet Appointments",
-      image: "/assets/images/news_pet.png?height=600&width=800",
-      author: {
-        name: "Viola Manisa",
-        avatar: "/assets/avatars/avatar_4.png",
-        isVerified: true,
-      },
-      date: "02 May-2024",
-    },
-  ];
-
   useEffect(() => {
 
     const fetchPopularBlogs = async () => {
@@ -144,7 +117,7 @@ export default function PopularArticles() {
       <div className="grid md:grid-cols-2 gap-6">
           {popularBlogs.length > 0 ? (
               popularBlogs.map((blog, idx) => (
-                  <Article key={idx} title={blog.title.rendered} blog_image={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
+                  <Article key={idx} id={blog.id} title={blog.title.rendered} blog_image={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
                            name={blog.yoast_head_json.author} blog_date={formatDate(blog.date)} />
               ))
           ) : (
