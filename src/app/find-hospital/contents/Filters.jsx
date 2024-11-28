@@ -1,8 +1,8 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
-import {usePathname, useRouter, useSearchParams} from "next/navigation";
-import { useEffect, useState } from "react";
+import {usePathname, useRouter} from "next/navigation";
+import { useState } from "react";
 import {useFetchStates} from "@/utils/fetchStates";
 import {useFetchUserState} from "@/utils/fetchUserState";
 
@@ -12,17 +12,9 @@ export default function Filters() {
   const [activeTab, setActiveTab] = useState("technicians");
   const {states} = useFetchStates();
   const { userState, selectedState, setSelectedState } = useFetchUserState();
-  const searchParams = useSearchParams();
 
-  const paramState = searchParams.get("state");
-  const paramHospitalName = searchParams.get("hospital_name");
-  const [hospitalName, setHospitalName] = useState(paramHospitalName || "");
+  const [hospitalName, setHospitalName] = useState("");
 
-  useEffect(() => {
-    if (selectedState == null || (paramState && paramState !== selectedState)) {
-      setSelectedState(paramState);
-    }
-  }, [paramState, setSelectedState]);
   const handleStateChange = async (e) => {
     const selected = e.target.value;
     setSelectedState(selected);

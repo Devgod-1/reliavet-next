@@ -8,29 +8,38 @@ const DynamicGoogleMap = ({ addresses }) => {
     useEffect(() => {
         if (!addresses || addresses.length === 0) return;
 
-        // Initialize the map
-        const map = new window.google.maps.Map(mapRef.current, {
-            center: { lat: 37.7749, lng: -122.4194 }, // Default center
-            zoom: 3,
-        });
+        const interval = setInterval(() => {
+            if (window.google && window.google.maps) {
+                clearInterval(interval);
 
-        // Geocode and place markers for each address
-        const geocoder = new window.google.maps.Geocoder();
-        addresses.forEach((address) => {
-            geocoder.geocode({ address }, (results, status) => {
-                if (status === "OK") {
-                    const marker = new window.google.maps.Marker({
-                        map,
-                        position: results[0].geometry.location,
+                // Initialize the map
+                const map = new window.google.maps.Map(mapRef.current, {
+                    center: {lat: 37.7749, lng: -122.4194}, // Default center
+                    zoom: 3,
+                });
+
+                // Geocode and place markers for each address
+                const geocoder = new window.google.maps.Geocoder();
+                addresses.forEach((address) => {
+                    geocoder.geocode({address}, (results, status) => {
+                        if (status === "OK") {
+                            const marker = new window.google.maps.Marker({
+                                map,
+                                position: results[0].geometry.location,
+                            });
+
+                            // Adjust map bounds to fit all markers
+                            map.fitBounds(results[0].geometry.viewport);
+                        } else {
+                            console.error(`Geocode failed for ${address}: ${status}`);
+                        }
                     });
+                });
+            }
+        }, 500);
 
-                    // Adjust map bounds to fit all markers
-                    map.fitBounds(results[0].geometry.viewport);
-                } else {
-                    console.error(`Geocode failed for ${address}: ${status}`);
-                }
-            });
-        });
+        return () => clearInterval(interval);
+
     }, [addresses]);
 
     return (

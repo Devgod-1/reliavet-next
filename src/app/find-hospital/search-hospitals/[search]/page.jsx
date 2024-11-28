@@ -1,15 +1,11 @@
 "use client";
 import Hospital from "../../contents/Hospital";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import {useEffect, useState} from "react";
-import { useSearchParams } from "next/navigation";
 import axios from "axios";
 
-export default function Page() {
-  const searchParams = useSearchParams();
-
-  const state = searchParams.get("state");
-  const hospitalName = searchParams.get("hospital_name");
+export default function Page({ searchParams }) {
+  const state = searchParams.state || null;
+  const hospitalName = searchParams.hospital_name || null;
   const [hospitals, setHospitals] = useState([]);
 
   useEffect(() => {
