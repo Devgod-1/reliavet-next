@@ -1,9 +1,11 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Article from "./Article";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import axios from "axios";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +13,7 @@ export default function PopularArticles() {
   const articlesRef = useRef([]);
   const headingRef = useRef(null);
   const paragraphRef = useRef(null);
+  const [popularBlogs, setPopularBlogs] = useState([]);
 
   const articles = [
     {
@@ -40,6 +43,20 @@ export default function PopularArticles() {
   ];
 
   useEffect(() => {
+
+    const fetchPopularBlogs = async () => {
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/posts?per_page=2&page=1&orderby=date`, {});
+
+            setPopularBlogs(response.data);
+        } catch (err) {
+            console.error("Error fetching popular blogs:", err);
+        }
+    };
+
+    fetchPopularBlogs();
+
+
     // Fade in and slide up the heading and paragraph
     gsap.fromTo(
       headingRef.current,
@@ -91,6 +108,20 @@ export default function PopularArticles() {
     });
   }, []);
 
+    const formatDate = (dateString) => {
+        if (dateString) {
+            const date = new Date(dateString);
+            const result = date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: '2-digit',
+                year: 'numeric',
+            });
+            return result;
+        }
+        else
+            return '';
+    };
+
   return (
     <section className="container mx-auto px-4 pb-12 mt-[-4rem]">
       <div className="space-y-4 mb-12">
@@ -111,11 +142,14 @@ export default function PopularArticles() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {articles.map((article, index) => (
-          <div key={article.id} ref={(el) => (articlesRef.current[index] = el)}>
-            <Article article={article} />
-          </div>
-        ))}
+          {popularBlogs.length > 0 ? (
+              popularBlogs.map((blog, idx) => (
+                  <Article title={blog.title.rendered} blog_image={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
+                           name={blog.yoast_head_json.author} blog_date={formatDate(blog.date)} />
+              ))
+          ) : (
+              <div></div>
+          )}
       </div>
     </section>
   );
