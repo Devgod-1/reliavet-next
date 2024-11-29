@@ -79,11 +79,11 @@ export default function Pets() {
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => setSwiperInstanceReview(swiper)}
       >
-        {[1, 2, 3, 3, 3].map((pet, index) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((pet, index) => (
           <SwiperSlide key={index}>
             <Image
               ref={(el) => (imagesRef.current[index] = el)}
-              src={`/assets/images/pet${pet}.png`}
+              src={`/assets/images/pet${pet}.jpg`}
               alt="pet"
               width={510}
               height={400}
