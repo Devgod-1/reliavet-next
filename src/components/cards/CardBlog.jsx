@@ -20,7 +20,7 @@ const CardBlog = ({
     >
       <Image
         src={imageSrc}
-        className="w-full object-cover h-64"
+        className="w-full object-cover !h-64"
         alt={title}
         width={505}
         height={365}
