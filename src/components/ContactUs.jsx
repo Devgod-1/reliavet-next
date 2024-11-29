@@ -327,7 +327,7 @@ const ContactUs = () => {
             className="w-full bg-white max-w-[500px] 2xl:max-w-[600px] flex items-center rounded-2xl overflow-hidden"
             ref={newsletterRef}
           >
-            <input className="w-full px-4 h-[50px] lg:h-[80px] 2xl:h-[90px]" required onChange={(e) => setEmail(e.target.value)} />
+            <input className="w-full px-4 h-[50px] lg:h-[80px] 2xl:h-[90px] outline-none" required onChange={(e) => setEmail(e.target.value)} />
             <button disabled={loading} className="bg-red-primary rounded-2xl shadow-[-4px_0px_20px_#D9D9D9aa] w-fit text-xs lg:text-lg 2xl:text-xl font-bold text-white h-[60px]  lg:h-[80px] 2xl:h-[90px] px-6 lg:px-10"
                 onClick={handleSubscribeSubmit}>
                 {loading ? 'Submitting...' : 'Subscribe'}

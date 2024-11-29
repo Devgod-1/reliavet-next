@@ -198,19 +198,19 @@ const FindVeterinarian = () => {
             />
             Choose Location:
           </label>
-            <select
-                id="state-dropdown"
-                value={selectedState}
-                onChange={handleStateChange}
-                className="rounded-3xl bg-[#ECEEF2] sm:w-[400px] px-6 lg:px-8 py-2 lg:py-3 focus:outline-none border border-[#C4C4C4] text-xs 2xl:text-sm"
-            >
-                <option value="">Select a State</option>
-                {states.map((state) => (
-                    <option key={state.id} value={state.code}>
-                        {state.name}
-                    </option>
-                ))}
-            </select>
+          <select
+              id="state-dropdown"
+              value={selectedState}
+              onChange={handleStateChange}
+              className="rounded-3xl bg-[#ECEEF2] sm:w-[400px] px-6 lg:px-8 py-2 lg:py-3 focus:outline-none border border-[#C4C4C4] text-xs 2xl:text-sm"
+          >
+              <option value="">Select a State</option>
+              {states.map((state) => (
+                  <option key={state.id} value={state.code}>
+                      {state.name}
+                  </option>
+              ))}
+          </select>
         </div>
         <div>
           <h1

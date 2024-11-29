@@ -58,7 +58,7 @@ export default function Blog() {
           width={1000}
           height={580}
           alt="pet"
-          className="w-full"
+          className="w-full object-cover max-h-96"
         />
       </div>
       <div className="flex flex-col lg:flex-row  gap-8">

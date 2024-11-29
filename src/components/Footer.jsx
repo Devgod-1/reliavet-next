@@ -165,13 +165,13 @@ const Footer = () => {
         <div className="w-full lg:max-w-[400px] flex items-center">
           <Link
             href={"/terms-of-use"}
-            className="flex w-full text-[#282828] max-md:text-center max-md:block"
+            className="flex w-full text-[#282828] hover:text-[#000000] max-md:text-center max-md:block"
           >
             Terms of Use
           </Link>
           <Link
             href={"/privacy-policy"}
-            className="flex w-full text-[#282828] max-md:text-center max-md:block"
+            className="flex w-full text-[#282828] hover:text-[#000000] max-md:text-center max-md:block"
           >
             Privacy Policy
           </Link>
