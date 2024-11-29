@@ -114,6 +114,7 @@ export default function Hero() {
                             alt="pet"
                             width={650}
                             height={435}
+                            className="h-96"
                         />
                       </div>
                     <div className="p-6 max-md:pt-0 flex flex-col justify-between">
@@ -127,7 +128,7 @@ export default function Hero() {
                         >
                           {blog.title.rendered}
                         </h2>
-                        <p className="text-xs lg:text-sm 2xl:text-base text-gray-600" dangerouslySetInnerHTML={{ __html: blog?.content?.rendered }}></p>
+                        <p className="h-48 text-ellipsis overflow-hidden text-xs lg:text-sm 2xl:text-base text-gray-600" dangerouslySetInnerHTML={{ __html: blog?.content?.rendered }}></p>
                       </div>
                       <div className="flex justify-between items-end gap-3 mt-6">
                         <div className="relative flex items-center space-x-3">
