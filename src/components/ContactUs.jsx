@@ -41,7 +41,7 @@ const ContactUs = () => {
         ease: "power2.out", // Add ease for smoother transition
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 80%",
+          start: "top 70%",
           toggleActions: "play none none none",
         },
       }
