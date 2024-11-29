@@ -128,7 +128,7 @@ export default function Hero() {
                         >
                           {blog.title.rendered}
                         </h2>
-                        <p className="md:h-48 sm:h-24 text-ellipsis overflow-hidden text-xs lg:text-sm 2xl:text-base text-gray-600" dangerouslySetInnerHTML={{ __html: blog?.content?.rendered }}></p>
+                        <p className="md:h-48 h-24 text-ellipsis overflow-hidden text-xs lg:text-sm 2xl:text-base text-gray-600" dangerouslySetInnerHTML={{ __html: blog?.content?.rendered }}></p>
                       </div>
                       <div className="flex justify-between items-end gap-3 mt-6">
                         <div className="relative flex items-center space-x-3">
