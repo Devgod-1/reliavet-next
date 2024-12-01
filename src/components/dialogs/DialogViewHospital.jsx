@@ -82,8 +82,9 @@ export default function DialogViewHospital({ open, onClose, hospitalId }) {
                   <>
               <div className="flex max-lg:flex-col items-start">
                 <img
-                  src="/assets/images/hospital.png"
-                  className="w-full lg:max-w-[185px] h-[185px] object-cover rounded-xl"
+                  src={profileImage}
+                  alt="Profile"
+                  className="w-full max-w-[95px] 2xl:max-w-[105px] object-cover rounded-full border-[8px] border-[#8E244B]/20"
                 />
                 <div className="w-full lg:px-8 max-lg:mt-6">
                   <div className="flex max-lg:flex-col lg:items-center w-full justify-between  max-lg:space-y-3">

@@ -109,7 +109,7 @@ export default function Learn() {
               ref={headingRef}
               className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-bold mb-6"
             >
-              You learn everyday
+              You learn everyday (Coming soon...)
             </h1>
             <p ref={paragraphRef} className="text-sm lg:text-base 2xl:text-xl">
               Access a wide range of educational materials, from telemedicine
@@ -137,8 +137,7 @@ export default function Learn() {
                     Patient Care Guides
                   </h1>
                   <p className="text-xs lg:text-sm 2xl:text-base leading-[1.9] !mt-2">
-                    Lorem ipsum dolor sit amet consectetur. Sit imperdiet
-                    consequat eget vel metus suspendisse lorem arcu turpis.
+                    Learn how maximize virtual care to better care for your patients.
                   </p>
                 </div>
               </div>

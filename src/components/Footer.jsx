@@ -125,7 +125,7 @@ const Footer = () => {
                   className="bg-primary w-[32px] h-[32px] 2xl:w-[42px] 2xl:h-[42px] rounded-full flex items-center justify-center"
                 >
                   <Image
-                    src="/assets/logos/twitter.svg"
+                    src="/assets/logos/instagram.svg"
                     alt=""
                     width={16}
                     height={16}
@@ -136,32 +136,36 @@ const Footer = () => {
                   className="bg-primary w-[32px] h-[32px] 2xl:w-[42px] 2xl:h-[42px] rounded-full flex items-center justify-center"
                 >
                   <Image
-                    src="/assets/logos/instagram.svg"
+                    src="/assets/logos/x.png"
                     alt=""
                     width={16}
                     height={16}
                   />
                 </Link>
               </div>
-
-              <button className="font-medium text-sm lg:text-lg 2xl:text-xl flex items-center bg-white p-6 py-2 rounded-lg shadow-[2px_3px_12px_#243A8E2E] mt-auto max-[500px]:!mt-6">
-                <Image
-                  src="/assets/icons/icon-cs.svg"
-                  alt=""
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  className="w-full max-w-[38px] lg:max-w-[57px] lg:mr-3"
-                />{" "}
-                Let&apos;s talk
-              </button>
+                <Link
+                  href={"/contact-us"}
+                  className="text-[11px] lg:text-[13px] 2xl:text-[15px] font-medium"
+                > 
+                  <button className="font-medium text-sm lg:text-lg 2xl:text-xl flex items-center bg-white p-6 py-2 rounded-lg shadow-[2px_3px_12px_#243A8E2E] mt-auto max-[500px]:!mt-6">
+                    <Image
+                      src="/assets/icons/icon-cs.svg"
+                      alt=""
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-full max-w-[38px] lg:max-w-[57px] lg:mr-3"
+                    />{" "}
+                    Let&apos;s talk
+                </button>
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
       <div className="container mx-auto py-10 flex  flex-col lg:flex-row max-lg:space-y-6 items-center justify-between mt-20 border-t border-t-[#243A8E66] sm:text-sm 2xl:text-base text-xs">
-        <span className="text-[#282828]">Copyright Dotcreativemarket</span>
+        <span className="text-[#282828]">© ReliaVet. All Rights Reserved.</span>
         <div className="w-full lg:max-w-[400px] flex items-center">
           <Link
             href={"/terms-of-use"}

@@ -101,9 +101,7 @@ export default function Promo() {
               ref={paragraphRef}
               className="w-full max-w-[650px] text-sm 2xl:text-base leading-[1.8]"
             >
-              Lorem ipsum dolor sit amet consectetur. Cras pellentesque sit eget
-              fermentum dictumst neque suscipit neque sit. Luctus sit phasellus
-              enim nulla aliquet.
+              Sign up for our Newsletter below to start receiving our most recent blog posts.
             </p>
           </div>
         </div>
@@ -120,7 +118,7 @@ export default function Promo() {
               The best articles every week
             </h1>
             <p className="text-[#636363] leading-[1.6]">
-              Lorem ipsum dolor sit amet consectetur. Amet odio morbi sed.
+              Sign up for our Newsletter today!
             </p>
           </div>
           <div
