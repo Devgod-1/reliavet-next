@@ -13,7 +13,7 @@ const Home = () => {
       <JoinVet />
       <Streamline />
       <Blog type="all" />
-      <Stories />
+      {/*<Stories />*/}
     </div>
   );
 };
