@@ -178,6 +178,7 @@ export default function DialogViewHospital({ open, onClose, hospitalId, hospital
                                 role={doctor.user_role}
                                 rating={doctor.rate}
                                 state={doctor.states}
+                                isAvailable={doctor.is_available}
                                 hospitalId={doctor.hospital_id}
                                 hospital={doctor.hospital_name}
                                 buttonLabel="Book an Appointment"
