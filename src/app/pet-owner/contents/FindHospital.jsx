@@ -6,9 +6,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import gsap from "gsap";
 import { useRouter } from "next/navigation";
 import DialogViewHospital from "@/components/dialogs/DialogViewHospital";
-import {getUserPosition} from "@/utils/getUserPosition";
-import {getUserState} from "@/utils/getUserState";
-import MapWithScript from "@/components/MapWithScript";
 import axios from "axios";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
@@ -66,10 +63,6 @@ const FindHospital = () => {
   const swiperRef = useRef();
   const [swiperInstance, setSwiperInstance] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const center = {
-    lat: 40.73061,
-    lng: -73.935242,
-  };
 
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
@@ -83,6 +76,7 @@ const FindHospital = () => {
     const [hospitals, setHospitals] = useState([]);
     const {states} = useFetchStates();
     const { userState, selectedState, setSelectedState } = useFetchUserState();
+    const [userLocation, setUserLocation] = useState(null);
 
   useEffect(() => {
 
@@ -186,6 +180,21 @@ const FindHospital = () => {
         },
       }
     );
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                setUserLocation({ latitude, longitude });
+            },
+            (error) => {
+                console.error("Error fetching location:", error);
+                setUserLocation(null);
+            }
+        );
+    } else {
+        console.error("Geolocation is not supported by this browser.");
+    }
   }, []);
 
     const handleStateChange = async (e) => {
@@ -253,6 +262,7 @@ const FindHospital = () => {
 
         </div>
         <div>
+
           <Swiper
             ref={swiperRef}
             className="flex gap-7 my-10"
@@ -296,7 +306,22 @@ const FindHospital = () => {
                   <div>No hospitals found</div>
               )}
           </Swiper>
-            <MapWithScript addresses={addresses} />
+          {userLocation ? (
+              <iframe
+                  ref={locationRef}
+                  className="rounded-xl"
+                  width="100%"
+                  height="400px"
+                  frameBorder="0"
+                  marginHeight="0"
+                  marginWidth="0"
+                  title="map"
+                  scrolling="yes"
+                  src={`https://maps.google.com/maps?q=${userLocation.latitude},${userLocation.longitude}&hl=en&z=14&output=embed`}
+              ></iframe>
+          ) : (
+              <p>Loading map...</p>
+          )}
           <div className="flex items-center justify-center" ref={buttonRef}>
             <button
               onClick={() => router.push("/find-hospital")}
