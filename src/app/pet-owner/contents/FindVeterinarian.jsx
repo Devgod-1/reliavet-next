@@ -166,10 +166,13 @@ const FindVeterinarian = () => {
         setSelectedState(selected); // Update the selected state when dropdown value changes
 
         try {
-            const response = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/doctors", {
-                params: { state: selected }
-            });
-            setDoctors(response.data.data); // Update veterinarians data based on the selected state
+            if (selected) {
+                const response = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/doctors", {
+                    params: {state: selected}
+                });
+                setDoctors(response.data.data); // Update veterinarians data based on the selected state
+            }
+            else setDoctors([]);
         } catch (err) {
             console.log('Find veterinarian =>', err.message); // Handle API errors
         }

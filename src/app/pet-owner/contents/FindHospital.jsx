@@ -202,14 +202,17 @@ const FindHospital = () => {
         setSelectedState(selected); // Update the selected state when dropdown value changes
 
         try {
-            const response = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/hospitals", {
-                params: { state: selected }
-            });
-            const hospitals = response.data.data;
-            setHospitals(hospitals);
+            if (selected) {
+                const response = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/hospitals", {
+                    params: {state: selected}
+                });
+                const hospitals = response.data.data;
+                setHospitals(hospitals);
 
-            const addressString = hospitals.map(hospital => hospital.street_address || "");
-            setAddresses(addressString);
+                const addressString = hospitals.map(hospital => hospital.street_address || "");
+                setAddresses(addressString);
+            }
+            else setHospitals([]);
         } catch (err) {
             console.log('Find hospital => ', err.message); // Handle API errors
         }
