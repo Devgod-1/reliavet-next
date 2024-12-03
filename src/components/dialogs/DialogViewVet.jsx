@@ -13,7 +13,7 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import axios from "axios";
 
-export default function DialogViewVet({ open, onClose, doctorId, hospitalId, hospitalName, rating }) {
+export default function DialogViewVet({ open, onClose, doctorId, doctorImage, hospitalId, hospitalName, rating }) {
   const swiperRefReview = useRef();
   const [swiperInstanceReview, setSwiperInstanceReview] = useState(null);
   const [doctor, setDoctor] = useState({});
@@ -69,11 +69,13 @@ export default function DialogViewVet({ open, onClose, doctorId, hospitalId, hos
                 <X className="w-[20px] h-[20px] text-[#243A8E]" />
               </button>
               <div className="flex max-lg:flex-col items-start">
-                <img
-                  src="/assets/avatars/avatar_5.png"
-                  alt="Profile"
-                  className="w-full lg:max-w-[185px] h-[185px] object-cover rounded-xl"
-                />
+                <div className="relative after:content-[''] after:absolute after:bottom-[20px] after:right-[21px] after:w-[20px] after:h-[20px] after:bg-[#55CA74] after:rounded-full">
+                  <img
+                    src={doctorImage || "/assets/avatars/avatar_5.png"}
+                    alt="Profile"
+                    className="lg:max-w-[185px] h-[185px] object-cover rounded-full border-[8px] border-[#8E244B]/20"
+                  />
+                </div>
                 <div className="w-full lg:px-8 max-lg:mt-6">
                   <div className="flex max-lg:flex-col lg:items-center w-full justify-between  max-lg:space-y-3">
                     <div>

@@ -38,7 +38,7 @@ export const FindVeterinarianCard = ({
     <div
       className={`bg-[#FFEDED] p-5 py-8 flex flex-col items-center rounded-[15px] relative ${className}`}
     >
-      <DialogViewVet open={openDialog === "view"} onClose={closeDialog} doctorId={id} hospitalId={hospitalId} hospitalName={hospital} rating={rating}/>
+      <DialogViewVet open={openDialog === "view"} onClose={closeDialog} doctorId={id} doctorImage={profileImage} hospitalId={hospitalId} hospitalName={hospital} rating={rating}/>
 
       <button className="absolute top-8 right-8">
         <img
@@ -46,7 +46,7 @@ export const FindVeterinarianCard = ({
           className="max-w-[12px] 2xl:max-w-[14px]"
         />
       </button>
-      <div className="relative after:content-[''] after:absolute after:bottom-[14px] after:right-[14px] after:w-[15px] after:h-[15px] after:bg-[#55CA74] after:rounded-full">
+      <div className="relative after:content-[''] after:absolute after:bottom-[8px] after:right-[12px] after:w-[17px] after:h-[17px] after:bg-[#55CA74] after:rounded-full">
         <img
           src={profileImage}
           alt="Profile"
