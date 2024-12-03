@@ -2,12 +2,16 @@
 import { usePathname } from "next/navigation";
 import Filters from "./Filters";
 import {FindVeterinarianCard} from "@/app/pet-owner/contents/FindVeterinarian";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {SwiperSlide} from "swiper/react";
 
 export default function Hero() {
   const pathname = usePathname();
   const [doctors, setDoctors] = useState([]);
+
+  useEffect(() => {
+      window.scrollTo(0, 0);
+  }, []);
   const handleSearchResults = (results) => {
       setDoctors(results);
   };
