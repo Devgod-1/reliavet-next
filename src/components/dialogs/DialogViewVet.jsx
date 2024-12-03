@@ -203,8 +203,8 @@ export default function DialogViewVet({ open, onClose, doctorId, doctorImage, ho
                             <label className="flex items-center space-x-2">
                               <input
                                   type="radio"
-                                  name="service"
-                                  value="service_need"
+                                  name="service_need"
+                                  value="telemedicine"
                                   className="form-radio w-4 h-4 text-blue-600"
                                   defaultChecked
                               />
@@ -220,6 +220,7 @@ export default function DialogViewVet({ open, onClose, doctorId, doctorImage, ho
                               onClick={() => {
                                 const id = btoa(`${doctor.user?.id}+${hospitalId}`);
                                 const selectedService = document.querySelector('input[name="service_need"]:checked')?.value;
+                                console.log('selectedService', selectedService);
                                 if (!selectedService) {
                                   alert('Please select a service.');
                                   return;
