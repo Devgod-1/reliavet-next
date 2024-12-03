@@ -14,7 +14,7 @@ import { X } from "lucide-react";
 import { FindVeterinarianCard } from "@/app/pet-owner/contents/FindVeterinarian";
 import axios from "axios";
 
-export default function DialogViewHospital({ open, onClose, hospitalId }) {
+export default function DialogViewHospital({ open, onClose, hospitalId, hospitalImage }) {
   const swiperRefReview = useRef();
   const [swiperInstanceReview, setSwiperInstanceReview] = useState(null);
   const [hospital, setHospital] = useState([]);
@@ -42,7 +42,6 @@ export default function DialogViewHospital({ open, onClose, hospitalId }) {
         console.error("Error fetching doctors:", err);
       }
     };
-
 
     fetchHospital();
     fetchDoctors();
@@ -82,9 +81,9 @@ export default function DialogViewHospital({ open, onClose, hospitalId }) {
                   <>
               <div className="flex max-lg:flex-col items-start">
                 <img
-                  src={profileImage}
+                  src={hospitalImage || "/assets/images/hospital.png"}
                   alt="Profile"
-                  className="w-full max-w-[95px] 2xl:max-w-[105px] object-cover rounded-full border-[8px] border-[#8E244B]/20"
+                  className="w-full lg:max-w-[185px] h-[185px] object-cover rounded-xl"
                 />
                 <div className="w-full lg:px-8 max-lg:mt-6">
                   <div className="flex max-lg:flex-col lg:items-center w-full justify-between  max-lg:space-y-3">

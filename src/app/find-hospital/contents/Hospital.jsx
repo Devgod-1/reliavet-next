@@ -17,6 +17,7 @@ export default function Hospital({
         open={openDialog === "view"}
         onClose={() => setOpenDialog(null)}
         hospitalId={id}
+        hospitalImage={profile_image}
       />
       <button
         className="absolute top-5 right-4 bg-[#EDF3FF] p-5 rounded-bl-xl"

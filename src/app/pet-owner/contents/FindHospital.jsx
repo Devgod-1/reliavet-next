@@ -31,6 +31,7 @@ export const FindHospitalCard = ({
         open={openDialog === "view"}
         onClose={() => setOpenDialog(null)}
         hospitalId={id}
+        hospitalImage={profile_image}
       />
       <button className="absolute top-5 right-5">
         <img
