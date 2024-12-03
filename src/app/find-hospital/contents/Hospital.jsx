@@ -29,9 +29,9 @@ export default function Hospital({
         />
       </button>
       <div className="flex flex-col items-center justify-center">
-        <div className="bg-no-repeat  w-full h-[200px] bg-center" style={{
-            backgroundImage: `url(${profile_image})`,
-        }}></div>
+        <div className="text-center border-[8px] rounded-lg">
+            <img src={profile_image} className="h-[95px] w-[95px] 2xl:w-[110px] 2xl:h-[110px] rounded-lg border-[#afbdd9]" />
+        </div>
         <div className="mt-5 text-center">
           <b>{name}</b>
           <br />
