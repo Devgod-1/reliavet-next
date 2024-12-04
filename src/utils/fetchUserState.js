@@ -3,7 +3,6 @@ import { getUserPosition } from "@/utils/getUserPosition"; // Adjust the path to
 import { getUserState } from "@/utils/getUserState"; // Adjust the path to your utility functions
 
 export const useFetchUserState = () => {
-    const [userState, setUserState] = useState(null);
     const [selectedState, setSelectedState] = useState(null);
 
     useEffect(() => {
@@ -11,7 +10,6 @@ export const useFetchUserState = () => {
             try {
                 const { latitude, longitude } = await getUserPosition();
                 const state = await getUserState(latitude, longitude);
-                setUserState(state);
                 setSelectedState(state);
             } catch (err) {
                 console.log('fetchUserState => ', err.message);
@@ -20,5 +18,5 @@ export const useFetchUserState = () => {
         fetchUserState();
     }, []);
 
-    return { userState, selectedState, setSelectedState };
+    return { selectedState, setSelectedState };
 };

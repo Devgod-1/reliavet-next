@@ -32,7 +32,7 @@ export default function Hospital({
         <div className="text-center border-[8px] rounded-lg">
             <img src={profile_image} className="h-[95px] w-[95px] 2xl:w-[110px] 2xl:h-[110px] rounded-lg border-[#afbdd9]" />
         </div>
-        <div className="mt-5 text-center">
+        <div className="mt-5 text-center min-h-[75px]">
           <b>{name}</b>
           <br />
           <small className="text-[#636363]">{states}</small>

@@ -11,7 +11,7 @@ export default function Filters() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("technicians");
   const {states} = useFetchStates();
-  const { userState, selectedState, setSelectedState } = useFetchUserState();
+  const { selectedState, setSelectedState } = useFetchUserState();
 
   const [hospitalName, setHospitalName] = useState("");
 

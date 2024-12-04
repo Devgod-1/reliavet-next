@@ -40,7 +40,7 @@ export const FindHospitalCard = ({
         <div className="text-center border-[8px] rounded-lg">
             <img src={profile_image} className="h-[95px] w-[95px] 2xl:w-[110px] 2xl:h-[110px] rounded-lg border-[#afbdd9]" />
         </div>
-        <div className="mt-5 text-center">
+        <div className="mt-5 text-center min-h-[75px]">
           <b>{name}</b>
           <br />
           <small className="text-[#636363]">{states}</small>
@@ -71,12 +71,11 @@ const FindHospital = () => {
   const formRef = useRef(null);
   const buttonRef = useRef(null);
 
-    const [state, setState] = useState(null);
-    const [addresses, setAddresses] = useState(['428 Olivia Road,Andrews, SC 29510']); // For the list of states from API
-    const [hospitals, setHospitals] = useState([]);
-    const {states} = useFetchStates();
-    const { userState, selectedState, setSelectedState } = useFetchUserState();
-    const [userLocation, setUserLocation] = useState(null);
+  const [addresses, setAddresses] = useState(['428 Olivia Road,Andrews, SC 29510']); // For the list of states from API
+  const [hospitals, setHospitals] = useState([]);
+  const {states} = useFetchStates();
+  const { selectedState, setSelectedState } = useFetchUserState();
+  const [userLocation, setUserLocation] = useState(null);
 
   useEffect(() => {
 
@@ -195,27 +194,34 @@ const FindHospital = () => {
     } else {
         console.error("Geolocation is not supported by this browser.");
     }
-  }, []);
 
-    const handleStateChange = async (e) => {
-        const selected = e.target.value;
-        setSelectedState(selected); // Update the selected state when dropdown value changes
+    const fetchHospitals = async () => {
+        if (selectedState) {
 
-        try {
-            if (selected) {
+            try {
                 const response = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/hospitals", {
-                    params: {state: selected}
+                    params: {state: selectedState},
                 });
                 const hospitals = response.data.data;
                 setHospitals(hospitals);
 
-                const addressString = hospitals.map(hospital => hospital.street_address || "");
+                const addressString = hospitals.map((hospital) => hospital.street_address || "");
                 setAddresses(addressString);
+            } catch (err) {
+                console.log('Find hospital => ', err.message); // Handle API errors
             }
-            else setHospitals([]);
-        } catch (err) {
-            console.log('Find hospital => ', err.message); // Handle API errors
         }
+        else setHospitals([]);
+
+    };
+
+    fetchHospitals();
+
+  }, [selectedState]);
+
+    const handleStateChange = async (e) => {
+        const selected = e.target.value;
+        setSelectedState(selected);
     };
 
   return (

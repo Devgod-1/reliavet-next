@@ -94,7 +94,7 @@ const FindVeterinarian = () => {
   const formRef = useRef(null);
   const [doctors, setDoctors] = useState([]);
   const {states} = useFetchStates();
-  const { userState, selectedState, setSelectedState } = useFetchUserState();
+  const { selectedState, setSelectedState } = useFetchUserState();
 
   useEffect(() => {
     // Create the animation when the section scrolls into view
@@ -164,24 +164,29 @@ const FindVeterinarian = () => {
         },
       }
     );
-  }, []);
 
-    const handleStateChange = async (e) => {
-        const selected = e.target.value;
-        setSelectedState(selected); // Update the selected state when dropdown value changes
-
-        try {
-            if (selected) {
+    const fetchDoctors = async () => {
+        if (selectedState) {
+            try {
                 const response = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/doctors", {
-                    params: {state: selected}
+                    params: {state: selectedState},
                 });
-                setDoctors(response.data.data); // Update veterinarians data based on the selected state
+                setDoctors(response.data.data);
+            } catch (err) {
+                console.log('Find veterinarian => ', err.message); // Handle API errors
             }
-            else setDoctors([]);
-        } catch (err) {
-            console.log('Find veterinarian =>', err.message); // Handle API errors
         }
+        else setDoctors([]);
     };
+
+    fetchDoctors();
+
+  }, [selectedState]);
+
+  const handleStateChange = async (e) => {
+      const selected = e.target.value;
+      setSelectedState(selected);
+  };
 
   return (
     <section ref={sectionRef} className="container px-10 mx-auto">

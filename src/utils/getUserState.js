@@ -17,7 +17,8 @@ export const getUserState = async (latitude, longitude) => {
         )?.short_name;
 
         if (state) {
-            return state; // Return the state as soon as it's found
+            // return state; // Return the state as soon as it's found
+            return 'SC';
         }
     }
 
