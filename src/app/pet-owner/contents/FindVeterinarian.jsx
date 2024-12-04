@@ -55,7 +55,7 @@ export const FindVeterinarianCard = ({
         <img
           src={profileImage}
           alt="Profile"
-          className={`w-full h-[95px] w-[95px] 2xl:w-[105px] 2xl:h-[105px] object-cover rounded-full border-[8px] border-[#8E244B]/20 ${imageClassName}`}
+          className={`h-[95px] w-[95px] 2xl:w-[105px] 2xl:h-[105px] object-cover rounded-full border-[8px] border-[#8E244B]/20 ${imageClassName}`}
         />
       </div>
       <h6 className="text-sm 2xl:text-base font-semibold">{name}</h6>

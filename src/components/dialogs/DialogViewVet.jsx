@@ -224,7 +224,7 @@ export default function DialogViewVet({ open, onClose, doctorId, doctorImage, do
                               onClick={() => {
                                 const id = btoa(`${doctor.user?.id}+${hospitalId}`);
                                 const selectedService = document.querySelector('input[name="service_need"]:checked')?.value;
-                                console.log('selectedService', selectedService);
+
                                 if (!selectedService) {
                                   alert('Please select a service.');
                                   return;
@@ -351,7 +351,7 @@ export default function DialogViewVet({ open, onClose, doctorId, doctorImage, do
                         <div>
                         <img
                           src={review.profile_img || "/assets/images/default_doctor.jpeg"}
-                          className="w-full w-[50px] h-[50px] object-cover rounded-full"
+                          className="w-[50px] h-[50px] object-cover rounded-full"
                         />
 
                         </div>
