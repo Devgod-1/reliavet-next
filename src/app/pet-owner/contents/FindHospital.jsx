@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import gsap from "gsap";
 import { useRouter } from "next/navigation";
 import DialogViewHospital from "@/components/dialogs/DialogViewHospital";
 import axios from "axios";
@@ -60,16 +59,8 @@ export const FindHospitalCard = ({
 
 const FindHospital = () => {
   const router = useRouter();
-  const swiperRef = useRef();
   const [swiperInstance, setSwiperInstance] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const locationRef = useRef(null);
-  const subTitleRef = useRef(null);
-  const formRef = useRef(null);
-  const buttonRef = useRef(null);
 
   const [addresses, setAddresses] = useState(['428 Olivia Road,Andrews, SC 29510']); // For the list of states from API
   const [hospitals, setHospitals] = useState([]);
@@ -78,108 +69,6 @@ const FindHospital = () => {
   const [userLocation, setUserLocation] = useState(null);
 
   useEffect(() => {
-
-    // Create the animation when the section scrolls into view
-    const section = sectionRef.current;
-    // Animate the title
-    gsap.fromTo(
-      titleRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: section,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      subTitleRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.2,
-        scrollTrigger: {
-          trigger: section,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    // Animate the form
-    gsap.fromTo(
-      formRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.3, // Add a slight delay for a staggered effect
-        scrollTrigger: {
-          trigger: section,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-    // Animate the form
-    gsap.fromTo(
-      locationRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.5, // Add a slight delay for a staggered effect
-        scrollTrigger: {
-          trigger: section,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    // Animate the cards
-    gsap.fromTo(
-      section.querySelectorAll(".hospital-card"),
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        stagger: 0.2,
-        delay: 0.75,
-        scrollTrigger: {
-          trigger: section,
-          start: "top 70%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      buttonRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 1, // Add a slight delay for a staggered effect
-        scrollTrigger: {
-          trigger: section,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -225,15 +114,14 @@ const FindHospital = () => {
     };
 
   return (
-    <section ref={sectionRef} className="container px-10 mx-auto">
+    <section className="container px-10 mx-auto">
       <div>
         <div
-          ref={titleRef}
           className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-semibold text-center my-20"
         >
           Find the Pet Hospital of Your choice
         </div>
-        <div className="flex flex-col my-5" ref={formRef}>
+        <div className="flex flex-col my-5">
           <label
             htmlFor="search"
             className="pl-3 mb-2 flex gap-2 text-xs lg:text-sm text-[#636363]"
@@ -263,7 +151,6 @@ const FindHospital = () => {
         </div>
         <div>
           <h1
-            ref={subTitleRef}
             className="2xl:text-[36px] text-[24px] lg:text-[32px] font-semibold leading-[1.4] lg:leading-[1.1] mt-10 mb-10"
           >
             Suggested Based on your location
@@ -273,7 +160,6 @@ const FindHospital = () => {
         <div>
 
           <Swiper
-            ref={swiperRef}
             className="flex gap-7 my-10"
             spaceBetween={24}
             slidesPerGroupAuto modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -317,7 +203,6 @@ const FindHospital = () => {
           </Swiper>
           {userLocation ? (
               <iframe
-                  ref={locationRef}
                   className="rounded-xl"
                   width="100%"
                   height="400px"
@@ -331,7 +216,7 @@ const FindHospital = () => {
           ) : (
               <p>Loading map...</p>
           )}
-          <div className="flex items-center justify-center" ref={buttonRef}>
+          <div className="flex items-center justify-center">
             <button
               onClick={() => router.push("/find-hospital")}
               className="bg-bgPrimaryGradientRed2 flex items-center transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-xl justify-center md:my-6 my-3 2xl:mt-10 p-8 py-5 2xl:p-8 2xl:py-6 w-fit text-white text-sm lg:text-sm 2xl:text-base font-bold rounded-lg"

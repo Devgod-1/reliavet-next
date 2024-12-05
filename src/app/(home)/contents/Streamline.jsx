@@ -3,87 +3,12 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Streamline = () => {
-  const router = useRouter();
-  // Create refs for each animated element
-  const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const buttonRef = useRef(null);
-  const imageRef = useRef(null);
 
   useEffect(() => {
-    // Animate the title
-    gsap.fromTo(
-      titleRef.current,
-      { y: 50, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    // Animate the description
-    gsap.fromTo(
-      descriptionRef.current,
-      { y: 50, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    // Animate the button
-    gsap.fromTo(
-      buttonRef.current,
-      { scale: 0 },
-      {
-        scale: 1,
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    // Animate the image
-    gsap.fromTo(
-      imageRef.current,
-      { x: 50, opacity: 0 },
-      {
-        x: 0,
-        opacity: 1,
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
     return () => {
       // Cleanup ScrollTrigger instances
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -91,7 +16,7 @@ const Streamline = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="mt-28 relative max-md:p-5">
+    <section className="mt-28 relative max-md:p-5">
       <Image
         src="/assets/images/paw.svg"
         alt="Paw Background"
@@ -103,14 +28,12 @@ const Streamline = () => {
         <div className="w-full flex md:flex-row flex-col-reverse rounded-[2rem] lg:rounded-[5rem] overflow-hidden bg-black text-white">
           <div className="w-full md:p-20 px-10 py-5">
             <h2
-              ref={titleRef} // Title animation
               className="text-[28px] lg:text-[32px] 2xl:text-[36px] font-semibold leading-[1.4] lg:leading-[1.1] text-white !mt-4"
             >
               Streamline Operations <br className="hidden lg:block" />
               and Enhance Patient Care
             </h2>
             <p
-              ref={descriptionRef} // Description animation
               className="text-xs lg:text-sm 2xl:text-base !leading-[2] block text-white !mt-4 lg:!mt-8"
             >
               Manage appointments, staff, and telemedicine services seamlessly.
@@ -118,7 +41,6 @@ const Streamline = () => {
               designed for veterinary hospitals.
             </p>
             <button
-              ref={buttonRef} // Button animation
               onClick={() => {
                   window.open(process.env.NEXT_PUBLIC_APP_URL, '_blank');
               }}
@@ -129,7 +51,6 @@ const Streamline = () => {
           </div>
 
           <Image
-            ref={imageRef} // Image animation
             src="/assets/images/image_streamline_1.png"
             alt="Streamline Operations"
             className="w-full md:max-w-[50%] object-cover"

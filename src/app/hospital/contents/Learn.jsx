@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,94 +8,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Learn() {
-  const sectionRef = useRef(null);
-  const headingRef = useRef(null);
-  const paragraphRef = useRef(null);
-  const cardRefs = useRef([]);
-  const imageRef = useRef(null);
 
   useEffect(() => {
-    gsap.fromTo(
-      sectionRef.current,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 1.5,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      headingRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      paragraphRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.3,
-        scrollTrigger: {
-          trigger: paragraphRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    cardRefs.current.forEach((card, index) => {
-      gsap.fromTo(
-        card,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          delay: index * 0.2,
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-    });
-
-    gsap.fromTo(
-      imageRef.current,
-      { scale: 0.95, opacity: 0 },
-      {
-        scale: 1,
-        opacity: 1,
-        duration: 1.5,
-        scrollTrigger: {
-          trigger: imageRef.current,
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
   }, []);
 
   return (
-    <div ref={sectionRef}>
+    <div >
       <div className="flex flex-col md:flex-row text-white max-lg:mb-20 relative xl:h-[66rem]">
         <div
           className="p-10 lg:p-20 w-full flex flex-col gap-y-10"
@@ -106,12 +24,11 @@ export default function Learn() {
         >
           <div>
             <h1
-              ref={headingRef}
               className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-bold mb-6"
             >
               You learn everyday (Coming soon...)
             </h1>
-            <p ref={paragraphRef} className="text-sm lg:text-base 2xl:text-xl">
+            <p className="text-sm lg:text-base 2xl:text-xl">
               Access a wide range of educational materials, from telemedicine
               guides to clinical resources, designed to help you grow your
               practice and stay informed about the latest advancements in
@@ -123,7 +40,6 @@ export default function Learn() {
             {[...Array(4)].map((_, index) => (
               <div
                 key={index}
-                ref={(el) => (cardRefs.current[index] = el)}
                 className="flex flex-col gap-y-3"
               >
                 <Image
@@ -146,7 +62,6 @@ export default function Learn() {
         </div>
         <div className="w-full xl:h-[66rem]">
           <img
-            ref={imageRef}
             src="/assets/images/hospital_learn_pet.png"
             alt="pet"
             className="w-full object-cover xl:h-[66rem]"

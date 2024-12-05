@@ -9,49 +9,17 @@ import { useRouter } from "next/navigation";
 gsap.registerPlugin(ScrollTrigger);
 
 const TelemedicineHeader = () => {
-  const headerRef = useRef(null);
-  const subtextRef = useRef(null);
 
   useEffect(() => {
-    gsap.fromTo(
-      headerRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: headerRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
 
-    gsap.fromTo(
-      subtextRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: {
-          trigger: subtextRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
   }, []);
 
   return (
-    <div ref={headerRef} className="z-[2] flex flex-col items-center w-full">
+    <div className="z-[2] flex flex-col items-center w-full">
       <h2 className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-bold text-center">
         Expand Your Practice with Telemedicine
       </h2>
       <div
-        ref={subtextRef}
         className="font-semibold text-sm lg:text-base 2xl:text-lg max-w-[800px] text-center mt-4"
       >
         ReliaVet allows you to seamlessly integrate telemedicine into your
@@ -68,25 +36,10 @@ const FeatureCard = ({ imageSrc, title, description }) => {
   const cardRef = useRef(null);
 
   useEffect(() => {
-    gsap.fromTo(
-      cardRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: cardRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
   }, []);
 
   return (
     <div
-      ref={cardRef}
       className="md:w-1/3 flex flex-col gap-4 items-center justify-center"
     >
       <Image src={imageSrc} alt="" width={60} height={60} />
@@ -128,24 +81,10 @@ const Telemedicine = () => {
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    gsap.fromTo(
-      sectionRef.current,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 1.5,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
   }, []);
 
   return (
     <section
-      ref={sectionRef}
       className="
       relative overflow-hidden
       before:content-[''] before:absolute before:right-[90%] before:w-[600px] before:bottom-[0%]

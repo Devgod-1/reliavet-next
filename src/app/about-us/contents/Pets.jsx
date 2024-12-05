@@ -11,40 +11,9 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Pets() {
   const swiperRefReview = useRef();
   const [swiperInstanceReview, setSwiperInstanceReview] = useState(null);
-  const imagesRef = useRef([]);
 
   useEffect(() => {
-    gsap.fromTo(
-      imagesRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.5,
-        stagger: 0.3,
-        scrollTrigger: {
-          trigger: swiperRefReview.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
 
-    gsap.fromTo(
-      ".button-prev, .button-next",
-      { opacity: 0, x: -50 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: {
-          trigger: swiperRefReview.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
   }, []);
 
   return (
@@ -55,7 +24,6 @@ export default function Pets() {
       after:bg-primary after:rounded-full after:blur-[250px] after:z-[-1] after:bottom-[0%] after:translate-y-[-10%] after:opacity-60"
     >
       <Swiper
-        ref={swiperRefReview}
         spaceBetween={50}
         slidesPerView={3}
         breakpoints={{
@@ -82,7 +50,6 @@ export default function Pets() {
         {[1, 2, 3, 4, 5, 6, 7, 8].map((pet, index) => (
           <SwiperSlide key={index}>
             <Image
-              ref={(el) => (imagesRef.current[index] = el)}
               src={`/assets/images/pet${pet}.jpg`}
               alt="pet"
               width={510}

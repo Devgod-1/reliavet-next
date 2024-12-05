@@ -1,53 +1,10 @@
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
 import { useRouter } from "next/navigation";
 
 export default function Hero() {
   const router = useRouter();
-  // Refs for animated elements
-  const headingRef = useRef(null);
-  const tabRefs = useRef([]);
-  const subtitleRef = useRef(null);
-  const buttonRef = useRef(null);
-  const imageRef = useRef(null);
 
   useEffect(() => {
-    // Timeline for staggered animations using gsap.fromTo
-
-    // Animate heading
-    gsap.fromTo(
-      headingRef.current,
-      { opacity: 0, y: -50 },
-      { opacity: 1, y: 0 }
-    );
-    // Animate each tab with stagger
-    gsap.fromTo(
-      tabRefs.current,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, stagger: 0.15 },
-      "<0.3"
-    );
-    // Animate subtitle
-    gsap.fromTo(
-      subtitleRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0 },
-      "<0.3"
-    );
-    // Animate button
-    gsap.fromTo(
-      buttonRef.current,
-      { opacity: 0, scale: 0.9 },
-      { opacity: 1, scale: 1 },
-      "<0.3"
-    );
-    // Animate image
-    gsap.fromTo(
-      imageRef.current,
-      { opacity: 0, x: 30 },
-      { opacity: 1, x: 0 },
-      "<0.3"
-    );
   }, []);
 
   return (
@@ -63,7 +20,6 @@ export default function Hero() {
           <div className="flex flex-col max-lg:h-full max-lg:justify-center items-center p-10 pb-0">
             <div className="flex flex-col items-center mt-[-2rem]">
               <h1
-                ref={headingRef}
                 className="font-bold leading-[1.4] lg:leading-[1.1] text-[30px] sm:text-[35px] md:text-[40px] lg:text-[45px] xl:text-[54px] 2xl:text-[68px] text-center capitalize"
               >
                 Transform Hospital <br className="hidden lg:block" /> Operations
@@ -78,7 +34,6 @@ export default function Hero() {
                   { link: "hospital", name: "Hospital" },
                 ].map((tabName, index) => (
                   <li
-                    ref={(el) => (tabRefs.current[index] = el)}
                     key={tabName.name}
                     onClick={() => router.push(`/${tabName.link}`)}
                     className={`${
@@ -93,7 +48,6 @@ export default function Hero() {
             </div>
 
             <span
-              ref={subtitleRef}
               className="text-base 2xl:text-lg text-[#636363] text-center mt-6"
             >
               Join leading veterinary hospitals using ReliaVet to improve
@@ -102,7 +56,6 @@ export default function Hero() {
             </span>
 
             <button
-              ref={buttonRef}
               onClick={() => {
                 window.open(process.env.NEXT_PUBLIC_APP_URL, '_blank');
               }}
@@ -114,7 +67,6 @@ export default function Hero() {
 
           <div className="flex items-center gap-12 relative mt-[2rem]">
             <img
-              ref={imageRef}
               src="/assets/images/hero_hospital.png"
               className="w-full max-w-[500px] 2xl:max-w-[550px] relative z-[2]"
             />

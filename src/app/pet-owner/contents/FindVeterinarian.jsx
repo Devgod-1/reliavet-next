@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import DialogViewVet from "@/components/dialogs/DialogViewVet";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -88,83 +86,11 @@ export const FindVeterinarianCard = ({
 };
 
 const FindVeterinarian = () => {
-  const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const subTitleRef = useRef(null);
-  const formRef = useRef(null);
   const [doctors, setDoctors] = useState([]);
   const {states} = useFetchStates();
   const { selectedState, setSelectedState } = useFetchUserState();
 
   useEffect(() => {
-    // Create the animation when the section scrolls into view
-    const section = sectionRef.current;
-    // Animate the title
-    gsap.fromTo(
-      titleRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: section,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      subTitleRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.2,
-        scrollTrigger: {
-          trigger: section,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    // Animate the form
-    gsap.fromTo(
-      formRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.3, // Add a slight delay for a staggered effect
-        scrollTrigger: {
-          trigger: section,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    // Animate the cards
-    gsap.fromTo(
-      section.querySelectorAll(".vet-card"),
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: section,
-          start: "top 70%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
     const fetchDoctors = async () => {
         if (selectedState) {
             try {
@@ -189,15 +115,14 @@ const FindVeterinarian = () => {
   };
 
   return (
-    <section ref={sectionRef} className="container px-10 mx-auto">
+    <section className="container px-10 mx-auto">
         <div>
         <div
           className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-semibold text-center my-20"
-          ref={titleRef}
         >
           Find a Trusted Veterinarian Near You
         </div>
-        <div className="flex flex-col my-5" ref={formRef}>
+        <div className="flex flex-col my-5">
           <label
             htmlFor="search"
             className="pl-3 mb-2 flex gap-2 text-xs lg:text-sm text-[#636363]"
@@ -228,7 +153,6 @@ const FindVeterinarian = () => {
         <div>
           <h1
             className="2xl:text-[36px] text-[24px] lg:text-[32px] font-semibold leading-[1.4] lg:leading-[1.1] mt-10"
-            ref={subTitleRef}
           >
             Suggested Based on your location
           </h1>

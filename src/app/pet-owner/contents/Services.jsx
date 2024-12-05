@@ -4,9 +4,7 @@ import InstantServiceOffer from "./InstantServiceOffer";
 import ScheduledOffer from "./ShecduledOffer";
 import TeleadviceOffer from "./TeleadviceOffer";
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRouter } from "next/navigation";
 
 const TelemedicineHeader = () => {
   return (
@@ -123,33 +121,8 @@ const TelemedicineFeatureSection = () => {
 };
 
 const Services = () => {
-  const router = useRouter();
-  // Refs for elements to animate
-  const sectionRef = useRef(null);
-  const cardFormRef = useRef(null);
-  const servicesRef = useRef(null);
 
   useEffect(() => {
-    // Set up GSAP Timeline with ScrollTrigger
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%", // Trigger when section is 80% into view
-        toggleActions: "play none none none", // Play on enter only
-      },
-      defaults: { duration: 1, ease: "power3.out" },
-    });
-
-    // Title animation: Slide in from left to right
-    tl.fromTo(cardFormRef.current, { y: -50, opacity: 0 }, { y: 0, opacity: 1 })
-      // Description animation: Fade in
-      .fromTo(
-        servicesRef.current,
-        { opacity: 0 },
-        { opacity: 1 },
-        "-=0.5" // overlap with previous animation
-      );
-
     return () => {
       // Cleanup ScrollTrigger instances on unmount
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -157,14 +130,13 @@ const Services = () => {
   }, []);
 
   return (
-    <section className="container px-10 mx-auto" ref={sectionRef}>
+    <section className="container px-10 mx-auto">
       <div
         className="w-full bg-bgPrimaryGradient2 max-sm:px-10 px-5 py-5 text-white rounded-b-[3rem] rounded-tl-[3rem] overflow-hidden shadow-[0px_4px_20px_6px_#00000015,0px_4px_20px_6px_#00000015]"
         style={{
           background: "url('/assets/images/bg-at-reliavet.png')",
           backgroundSize: "cover",
         }}
-        ref={cardFormRef}
       >
         <div className="flex flex-col lg:flex-row lg:p-10 py-8 sm:py-12 md:py-16 lg:py-24 relative ">
           <Image
@@ -190,7 +162,6 @@ const Services = () => {
       </div>
       <div
         className="w-full rounded-3xl py-20  md:p-8 lg:p-10 lg:py-32"
-        ref={servicesRef}
       >
         <div>
           <h1 className="2xl:text-[55px] text-[32px] md:text-[36px] lg:text-[38px] xl:text-[42px] leading-[1.4] lg:leading-[1.1] font-bold text-center lg:mb-10">
