@@ -1,18 +1,11 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import Article from "@/app/blog/contents/Article";
 
 export default function Hero() {
   const router = useRouter();
-  // Refs for animation targets
-  const headerRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const tabsRef = useRef([]);
-  const cardRef = useRef(null);
   const [featuredBlogs, setFeaturedBlogs] = useState([]);
 
   useEffect(() => {
@@ -29,27 +22,6 @@ export default function Hero() {
 
     fetchFeaturedBlogs();
 
-
-    // Animate header
-    gsap.fromTo(
-      headerRef.current,
-      { y: 50, opacity: 0 },
-      { y: 0, opacity: 1, ease: "power4.out" }
-    );
-
-    // Animate description
-    gsap.fromTo(
-      descriptionRef.current,
-      { y: 50, opacity: 0 },
-      { y: 0, opacity: 1, ease: "power4.out", delay: 0.25 }
-    );
-
-    // Animate tabs with stagger effect
-    gsap.fromTo(
-      cardRef.current,
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, stagger: 0.2, ease: "power4.out", delay: 0.5 }
-    );
   }, []);
 
   const formatDate = (dateString) => {
@@ -76,13 +48,11 @@ export default function Hero() {
       }}
     >
       <h1
-        ref={headerRef}
         className="font-bold leading-[1.1] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[50px] 2xl:text-[68px] mt-[-35vh] lg:mt-[-20vh]"
       >
         Our Newsroom
       </h1>
       <div
-        ref={descriptionRef}
         className="w-full flex items-center bg-white relative shadow-xl max-w-[800px] p-2 rounded-lg pl-4"
       >
         <img
@@ -101,7 +71,6 @@ export default function Hero() {
       </div>
 
       <div
-        ref={cardRef}
         className="overflow-hidden rounded-xl shadow-[0px_12px_40px_#0002] bg-white lg:w-4/6 w-[90%] absolute -bottom-[15%]"
       >
         <div className="grid md:grid-cols-2">

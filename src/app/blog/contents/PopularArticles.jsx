@@ -1,18 +1,13 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import Article from "./Article";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import axios from "axios";
-import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function PopularArticles() {
-  const articlesRef = useRef([]);
-  const headingRef = useRef(null);
-  const paragraphRef = useRef(null);
   const [popularBlogs, setPopularBlogs] = useState([]);
 
   useEffect(() => {
@@ -29,56 +24,6 @@ export default function PopularArticles() {
 
     fetchPopularBlogs();
 
-
-    // Fade in and slide up the heading and paragraph
-    gsap.fromTo(
-      headingRef.current,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      paragraphRef.current,
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.2,
-        scrollTrigger: {
-          trigger: paragraphRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    // Animate the articles as they come into view
-    articlesRef.current.forEach((articleElement) => {
-      gsap.fromTo(
-        articleElement,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          scrollTrigger: {
-            trigger: articleElement,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-    });
   }, []);
 
   const formatDate = (dateString) => {
@@ -99,13 +44,11 @@ export default function PopularArticles() {
     <section className="container mx-auto px-4 pb-12 mt-[-4rem]">
       <div className="space-y-4 mb-12">
         <h2
-          ref={headingRef}
           className="font-semibold leading-[48px] text-[28px] md:text-[35px] lg:text-[40px] xl:text-[48px] 2xl:text-[55px]"
         >
           Popular Articles
         </h2>
         <p
-          ref={paragraphRef}
           className="text-xs lg:text-sm 2xl:text-base !leading-[1.8] mt-5 text-[#636363]"
         >
           We share common trends, strategies ideas, opinions, short & long

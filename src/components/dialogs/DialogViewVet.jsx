@@ -320,7 +320,6 @@ export default function DialogViewVet({ open, onClose, doctorId, doctorImage, do
               {/* third section */}
               <div className="relative lg:mx-8 mt-8">
                 <Swiper
-                  ref={swiperRefReview}
                   spaceBetween={50}
                   slidesPerView={3}
                   breakpoints={{

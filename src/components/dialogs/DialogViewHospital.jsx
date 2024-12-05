@@ -143,7 +143,6 @@ export default function DialogViewHospital({ open, onClose, hospitalId, hospital
               {/* third section */}
               <div className="relative lg:mx-8 mt-8 after:content-[''] after:top-0 after:h-full after:right-0 after:bg-[linear-gradient(to_right,#fff0_0%,#fff_100%)] after:w-[300px] after:z-20 max-lg:after:hidden">
                 <Swiper
-                  ref={swiperRefReview}
                   spaceBetween={50}
                   slidesPerView={3}
                   slidesPerGroupAuto

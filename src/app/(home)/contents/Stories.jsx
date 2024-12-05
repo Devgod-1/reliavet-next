@@ -14,71 +14,19 @@ const Stories = () => {
   const swiperRefReview = useRef();
   const [activeIndexReview, setActiveIndexReview] = useState(0);
   const [swiperInstanceReview, setSwiperInstanceReview] = useState(null);
-  const titleRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const sectionRef = useRef(null);
-  const cardsRef = useRef([]);
-  const buttonPrevRef = useRef(null);
-  const buttonNextRef = useRef(null);
   const totalSlidesReview = Math.ceil(dataReviews.length / 3);
 
   useEffect(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-        toggleActions: "play none none none",
-      },
-      defaults: { duration: 0.5, ease: "power2.out" }, // Reduced duration for faster animations
-    });
-
-    // GSAP animation for title and description
-    tl.fromTo(
-      titleRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.5, ease: "power2.out" }
-    );
-
-    tl.fromTo(
-      descriptionRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.5, ease: "power2.out" }
-    );
-
-    // GSAP animation for buttons
-    tl.fromTo(
-      buttonPrevRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.4, ease: "power2.out" }
-    );
-
-    tl.fromTo(
-      buttonNextRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.4, ease: "power2.out" }
-    );
-
-    // GSAP animation for cards
-    cardsRef.current.forEach((card, index) => {
-      tl.fromTo(
-        card,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.3, ease: "power2.out" },
-        `-=${0.15 * index}` // Reduced delay for each card
-      );
-    });
-
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
   return (
-    <section className="container mx-auto pb-32 max-sm:px-7" ref={sectionRef}>
+    <section className="container mx-auto pb-32 max-sm:px-7">
       <div className="w-full flex items-center justify-between mt-4">
         <h2
           className="font-semibold leading-[1.4] lg:leading-[1.1] text-[27px] md:text-[35px] lg:text-[40px] xl:text-[48px] 2xl:text-[55px]"
-          ref={titleRef}
         >
           Users success stories
         </h2>
@@ -87,7 +35,6 @@ const Stories = () => {
             className={`px-3 p-1 font-semibold text-base 2xl:text-lg flex items-center border-[1.5px] border-[#282828] rounded-md ${
               activeIndexReview === 0 ? "opacity-50" : ""
             }`}
-            ref={buttonPrevRef}
             onClick={() => swiperRefReview.current.swiper.slidePrev()}
           >
             <Image
@@ -104,7 +51,6 @@ const Stories = () => {
             className={`px-3 p-1 font-semibold text-base 2xl:text-lg flex items-center border-[1.5px] border-[#282828] rounded-md ${
               activeIndexReview === totalSlidesReview - 1 ? "opacity-50" : ""
             }`}
-            ref={buttonNextRef}
             onClick={() => swiperRefReview.current.swiper.slideNext()}
           >
             Next
@@ -121,7 +67,6 @@ const Stories = () => {
       </div>
 
       <Swiper
-        ref={swiperRefReview}
         className="mt-8"
         spaceBetween={24}
         slidesPerGroupAuto
@@ -156,7 +101,6 @@ const Stories = () => {
               rating={review.rating}
               description={review.description}
               className="min-h-[280px] 2xl:min-h-[350px]"
-              ref={(el) => (cardsRef.current[index] = el)}
             />
           </SwiperSlide>
         ))}
