@@ -174,7 +174,7 @@ export default function DialogViewVet({ open, onClose, doctorId, doctorImage, do
                     <div className="mt-2 space-y-1">
                       {doctor.user?.user_role == 'veterinarian' ? (
                           <div>
-                            {doctor.user?.is_available_now ? (
+                            {doctorIsAvailable ? (
                             <label className="flex items-center space-x-2">
                               <input
                                   type="radio"
