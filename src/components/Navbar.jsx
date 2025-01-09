@@ -16,21 +16,22 @@ const Navbar = () => {
   return (
     <div className="bg-primary w-full md:py-5 py-4 sticky top-0 z-[22] overflow-hidden transition-transform ">
       <div className="max-md:hidden w-full container mx-auto flex items-center justify-between text-white h-full my-auto">
-        <Image
-          src="/assets/logos/main_logo.svg"
-          alt=""
-          className="w-full max-w-[90px] 2xl:max-w-[110px] cursor-pointer"
-          onClick={() => router.push("/")}
-          width={110}
-          height={60}
-        />
+        <Link href={"/"}>
+          <Image
+            src="/assets/logos/main_logo.svg"
+            alt=""
+            className="w-full max-w-[90px] 2xl:max-w-[110px] cursor-pointer"
+            width={110}
+            height={60}
+          />
+        </Link>
         <ul className="flex items-center uppercase px-4">
-          <li
-            className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
-            onClick={() => router.push("/")}
+          <Link
+              href={"/"}
+              className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
           >
             Home
-          </li>
+          </Link>
           <Link
             href={"/find-vet"}
             className="text-xs 2xl:text-sm px-6 cursor-pointer font-medium"
@@ -71,14 +72,15 @@ const Navbar = () => {
       </div>
       <div className="md:hidden h-full">
         <div className="flex items-center justify-between">
-          <Image
-            src="/assets/logos/main_logo.svg"
-            alt=""
-            className="w-full= cursor-pointer px-6"
-            onClick={() => router.push("/")}
-            width={110}
-            height={60}
-          />
+          <Link href={"/"}>
+            <Image
+              src="/assets/logos/main_logo.svg"
+              alt=""
+              className="w-full= cursor-pointer px-6"
+              width={110}
+              height={60}
+            />
+          </Link>
           <button
             className="text-sm px-6 font-medium text-white hover:text-red-primary"
             onClick={Menu_click}
