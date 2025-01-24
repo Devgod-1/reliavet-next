@@ -31,7 +31,7 @@ const Blog = ({type}) => {
         else if (type == 'hospital')
           response = await axios.get(`${url}&categories=${process.env.NEXT_PUBLIC_HOSPITAL_CATEGORY}`, {});
         else
-          response = await axios.get(url, {});
+          response = await axios.get(`${url}&categories=${process.env.NEXT_PUBLIC_VETERINARIAN_CATEGORY},${process.env.NEXT_PUBLIC_TECHNICIAN_CATEGORY},${process.env.NEXT_PUBLIC_PET_OWNER_CATEGORY},${process.env.NEXT_PUBLIC_HOSPITAL_CATEGORY}`, {});
 
         setBlogs(response.data);
         setTotalSlides(Math.ceil(response.data.length / 4));
