@@ -60,7 +60,7 @@ export default function PopularArticles() {
       <div className="grid md:grid-cols-2 gap-6">
           {popularBlogs.length > 0 ? (
               popularBlogs.map((blog, idx) => (
-                  <Article key={idx} id={blog.id} title={blog.title.rendered} blog_image={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
+                  <Article key={idx} id={blog.slug} title={blog.title.rendered} blog_image={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
                            name={blog.yoast_head_json.author} blog_date={formatDate(blog.date)} />
               ))
           ) : (

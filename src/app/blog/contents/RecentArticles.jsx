@@ -95,7 +95,7 @@ const RecentArticles = ({ className = "" }) => {
                     <SwiperSlide key={idx}>
                         <div>
                             <CardBlog
-                                id={blog.id}
+                                id={blog.slug}
                                 imageSrc={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
                                 title={blog.title.rendered}
                                 description={blog.content.rendered.split('.')[0].trim()}

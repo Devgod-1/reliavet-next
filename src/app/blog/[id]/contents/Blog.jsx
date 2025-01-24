@@ -13,9 +13,9 @@ export default function Blog() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/posts/${id}`, {});
-
-        setBlog(response.data);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/posts?slug=${id}`, {});
+        // const response = await axios.get(`${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/posts/${id}`, {});
+        setBlog(response.data[0]);
       } catch (err) {
         console.error("Error fetching blog:", err);
       }
@@ -62,7 +62,7 @@ export default function Blog() {
         />
       </div>
       <div className="flex flex-col lg:flex-row  gap-8">
-        <main className="lg:w-2/3 bg-[#F5F5F5] px-10 p-14">
+        <main className="blog-area lg:w-2/3 bg-[#F5F5F5] px-10 p-14">
           <h1 className="text-2xl lg:text-3xl 2xl:text-4xl font-bold mb-8">
             {blog?.title?.rendered}
           </h1>
@@ -79,7 +79,7 @@ export default function Blog() {
             <div className="space-y-4">
               {recentBlogs.length > 0 ? (
                   recentBlogs.map((blog, idx) => (
-                      <Link key={idx} href={"/blog/" + blog.id}
+                      <Link key={idx} href={"/blog/" + blog.slug}
                             className="flex gap-4 w-full"
                       >
                         <img
