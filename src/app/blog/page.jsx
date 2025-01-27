@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import AllArticles from "./contents/AllArticles";
 import Hero from "./contents/Hero";
 import PopularArticles from "./contents/PopularArticles";
@@ -5,12 +7,14 @@ import Promo from "./contents/Promo";
 import RecentArticles from "./contents/RecentArticles";
 
 export default function page() {
+  const [searchQuery, setSearchQuery] = useState("");
+  console.log('searchQuery', searchQuery);
   return (
     <div className="overflow-x-hidden">
-      <Hero />
+      <Hero setSearchQuery={setSearchQuery} />
       <PopularArticles />
       <RecentArticles />
-      <AllArticles />
+      <AllArticles searchQuery={searchQuery} />
       <Promo />
     </div>
   );

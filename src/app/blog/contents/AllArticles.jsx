@@ -10,8 +10,9 @@ import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function AllArticles() {
+export default function AllArticles({ searchQuery }) {
   const [allBlogs, setAllBlogs] = useState([]);
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [popularBlogs, setPopularBlogs] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [totalSlides, setTotalSlides] = useState(0);
@@ -42,6 +43,19 @@ export default function AllArticles() {
 
   }, []);
 
+  useEffect(() => {
+        if (searchQuery) {
+            const filtered = allBlogs.filter((blog) =>
+                blog.title.rendered.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            setFilteredBlogs(filtered);
+            setTotalSlides(Math.ceil(filtered.length / 4));
+        } else {
+            setFilteredBlogs(allBlogs);
+            setTotalSlides(Math.ceil(allBlogs.length / 4));
+        }
+  }, [searchQuery, allBlogs]);
+
   const formatDate = (dateString) => {
       if (dateString) {
           const date = new Date(dateString);
@@ -57,7 +71,7 @@ export default function AllArticles() {
   };
 
   return (
-    <div className="container max-lg:p-5 mx-auto">
+    <div className="container max-lg:p-5 mx-auto" id="all-articles">
       <div className="my-20">
         <h1
           className="font-semibold leading-[48px] text-[28px] md:text-[35px] lg:text-[40px] xl:text-[48px] 2xl:text-[55px]"
@@ -111,8 +125,8 @@ export default function AllArticles() {
                 },
             }}
         >
-            {allBlogs.length > 0 ? (
-                allBlogs.map((blog, idx) => (
+            {filteredBlogs.length > 0 ? (
+                filteredBlogs.map((blog, idx) => (
                     <SwiperSlide key={idx}>
                         <div>
                             <CardBlog

@@ -5,9 +5,10 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 
-export default function Hero() {
+export default function Hero({ setSearchQuery }) {
   const router = useRouter();
   const [featuredBlogs, setFeaturedBlogs] = useState([]);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
 
@@ -39,6 +40,11 @@ export default function Hero() {
       return '';
   };
 
+  const handleSearch = () => {
+    setSearchQuery(query);
+    document.getElementById("all-articles").scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div
       className="flex flex-col items-center gap-y-8 bg-[#ECEDF0] h-[100vh] justify-center relative py-14 mb-60 max-lg:px-[2em]"
@@ -65,8 +71,10 @@ export default function Hero() {
           type="text"
           placeholder="Search Article"
           className="w-full outline-none !text-xs 2xl:!text-sm"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
         />
-        <button className="text-xs 2xl:text-sm bg-red-primary text-white whitespace-nowrap p-3 px-6 rounded-lg font-semibold">
+        <button className="text-xs 2xl:text-sm bg-red-primary text-white whitespace-nowrap p-3 px-6 rounded-lg font-semibold" onClick={handleSearch}>
           Search
         </button>
       </div>
