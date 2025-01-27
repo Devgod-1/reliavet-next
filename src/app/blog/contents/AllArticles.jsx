@@ -1,22 +1,28 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardBlog from "@/components/cards/CardBlog";
 import Article from "./Article";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import axios from "axios";
+import {Swiper, SwiperSlide} from "swiper/react";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function AllArticles() {
   const [allBlogs, setAllBlogs] = useState([]);
   const [popularBlogs, setPopularBlogs] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [totalSlides, setTotalSlides] = useState(0);
+  const [swiperInstance, setSwiperInstance] = useState(null);
 
   useEffect(() => {
     const fetchAllBlogs = async () => {
         try {
-            const response = await axios.get(`${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/posts?per_page=4&page=1&orderby=date&order=asc`, {});
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_WP_URL}/wp-json/wp/v2/posts?per_page=50&page=1&orderby=date&order=asc`, {});
             setAllBlogs(response.data);
+            setTotalSlides(Math.ceil(response.data.length / 4));
         } catch (err) {
             console.error("Error fetching all blogs:", err);
         }
@@ -78,38 +84,72 @@ export default function AllArticles() {
           )}
       </div>
 
-      <div className="my-5" />
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-          {allBlogs.length > 0 ? (
-              allBlogs.map((blog, idx) => (
-                  <div key={idx}>
-                      <CardBlog
-                          id={blog.slug}
-                          title={blog.title.rendered}
-                          date={formatDate(blog.date)}
-                          description={blog.content.rendered.split('.')[0].trim()}
-                          imageSrc={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
-                          actionClassName={(idx + 1) % 2 === 0 ? "!mt-16" : ""}
-                      />
-                  </div>
-              ))
-          ) : (
-              <div></div>
-          )}
-      </div>
-
-      <div className="flex justify-center">
-        <button
-          className="px-5 py-3 rounded-lg border-2 border-[#243A8E] text-[#243A8E] flex gap-x-2 items-center font-bold"
+        <Swiper
+            className="mt-8"
+            spaceBetween={24}
+            slidesPerGroupAuto
+            onSwiper={(swiper) => setSwiperInstance(swiper)}
+            onSlideChange={(swiper) =>
+                setActiveIndex(Math.floor(swiper.activeIndex / 4))
+            }
+            breakpoints={{
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                },
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                },
+                1440: {
+                    slidesPerView: 4,
+                    spaceBetween: 24,
+                },
+            }}
         >
-          <span>Load More</span>
-          <img
-            src="/assets/icons/icon-arrow-right.svg"
-            alt="arrow"
-            className="w-[18px] h-[18px] ml-1"
-          />
-        </button>
-      </div>
+            {allBlogs.length > 0 ? (
+                allBlogs.map((blog, idx) => (
+                    <SwiperSlide key={idx}>
+                        <div>
+                            <CardBlog
+                                id={blog.slug}
+                                imageSrc={blog.yoast_head_json.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
+                                title={blog.title.rendered}
+                                description={blog.content.rendered.split('.')[0].trim()}
+                                date={formatDate(blog.date)}
+                                actionClassName={(idx + 1) % 2 === 0 ? "!mt-16" : ""}
+                            />
+                        </div>
+                    </SwiperSlide>
+                ))
+            ) : (
+                <div></div>
+            )}
+
+        </Swiper>
+
+        <div className="flex items-center gap-2 mx-auto w-fit mt-12">
+            {[...Array(totalSlides)].map((_, index) => (
+                <Image
+                    key={index}
+                    src="/assets/icons/icon-star-rounded.svg"
+                    onClick={() => {
+                        swiperInstance.slideTo(index * 4);
+                        setActiveIndex(index);
+                    }}
+                    alt=""
+                    width={370}
+                    height={500}
+                    className={`max-w-[14px] cursor-pointer ${
+                        index === activeIndex ? "opacity-100" : "opacity-20"
+                    }`}
+                />
+            ))}
+        </div>
     </div>
   );
 }

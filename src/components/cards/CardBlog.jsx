@@ -26,15 +26,13 @@ const CardBlog = ({
         height={365}
       />
 
-      <div className="absolute inset-0 w-full h-full bg-[linear-gradient(180deg,rgba(24,59,86,0.0001)_0%,#282828_100%)] flex flex-col justify-end p-5 2xl:p-8 text-white">
+      <div className="absolute inset-0 w-full h-full bg-[linear-gradient(180deg,rgba(24,59,86,0.0001)_0%,#282828_100%)] p-5 2xl:p-8 text-white">
         <h6 className="text-lg lg:text-[22px] 2xl:text-[26px] font-bold">
           {title}
         </h6>
-        <p className={`text-xs lg:text-sm 2xl:text-base leading-[1.8] mt-1`} dangerouslySetInnerHTML={{ __html: description }}></p>
+        <p className={`text-xs lg:text-sm 2xl:text-base leading-[1.8] mt-1 hidden`} dangerouslySetInnerHTML={{ __html: description }}></p>
 
-        <div
-          className={`w-full flex items-center justify-between mt-10 ${actionClassName}`}
-        >
+        <div className={`w-10/12 flex justify-between absolute mb-3 bottom-0 ${actionClassName}`}>
           <button className="text-sm lg:text-base">Read More</button>
           <span className="text-sm lg:text-base">{date}</span>
         </div>
