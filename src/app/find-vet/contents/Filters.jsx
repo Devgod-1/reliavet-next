@@ -93,7 +93,7 @@ export default function Filters({ onSearchResults }) {
             </div>
             <div className="space-y-1">
               <label className="text-xs 2xl:text-sm text-[#636363]">
-                Vet name:
+                {activeTab === "veterinarians" ? "Vet name: " : "Technician name: "}
               </label>
               <div className="relative">
                 <input id="vet_name" className="w-full p-3 bg-white border rounded appearance-none pr-8 text-xs 2xl:text-sm" onChange={(e) => setDoctorName(e.target.value)} />
@@ -178,7 +178,6 @@ export default function Filters({ onSearchResults }) {
 
                     // Example: Redirect with query string
                     const queryString = new URLSearchParams(searchParams).toString();
-                    console.log(queryString);
                     handleSearch(queryString);
                   }}
           >
