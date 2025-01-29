@@ -6,7 +6,7 @@ import PopularArticles from "./contents/PopularArticles";
 import Promo from "./contents/Promo";
 import RecentArticles from "./contents/RecentArticles";
 
-export default function page() {
+export default function Page() {
   const [searchQuery, setSearchQuery] = useState("");
   console.log('searchQuery', searchQuery);
   return (
