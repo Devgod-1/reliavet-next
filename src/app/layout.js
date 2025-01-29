@@ -10,7 +10,7 @@ import ContactUs from "@/components/ContactUs";
 
 export const metadata = {
   title: "ReliaVet | Schedule Virtual Vet Appointment Online",
-  description: "Paul",
+  description: "Reliable vets for you and your pets!",
 };
 
 export default async function RootLayout({ children }) {
