@@ -6,11 +6,12 @@ import { useState } from "react";
 import {useFetchCategories} from "@/utils/fetchCategories";
 import {useFetchStates} from "@/utils/fetchStates";
 import axios from "axios";
+import {useFetchUserState} from "@/utils/fetchUserState";
 export default function Filters({ onSearchResults }) {
   const [activeTab, setActiveTab] = useState("veterinarians");
   const { states } = useFetchStates();
   const { categories } = useFetchCategories();
-  const [ selectedState, setSelectedState ] = useState('');
+  const { selectedState, setSelectedState } = useFetchUserState();
   const [ selectedRating, setSelectedRating ] = useState('');
   const [ selectedCategory, setSelectedCategory ] = useState('');
   const [ selectedAvailability, setSelectedAvailability ] = useState('');
@@ -69,7 +70,7 @@ export default function Filters({ onSearchResults }) {
                 Select a state:
               </label>
               <div className="relative">
-                <select id="state" className="w-full p-3 bg-white border rounded appearance-none pr-8 text-xs 2xl:text-sm" onChange={(e) => setSelectedState(e.target.value)}>
+                <select id="state" value={selectedState} className="w-full p-3 bg-white border rounded appearance-none pr-8 text-xs 2xl:text-sm" onChange={(e) => setSelectedState(e.target.value)}>
                   <option value=""></option>
                   {states.map((state) => (
                       <option key={state.id} value={state.code}>
@@ -174,7 +175,6 @@ export default function Filters({ onSearchResults }) {
                       categories: selectedCategory,
                       availability: selectedAvailability,
                     };
-                    console.log('Search Parameters:', searchParams);
 
                     // Example: Redirect with query string
                     const queryString = new URLSearchParams(searchParams).toString();
