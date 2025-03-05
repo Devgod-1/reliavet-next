@@ -53,17 +53,12 @@ export default function Blog() {
   return (
     <div className="container mx-auto lg:mt-20">
       <div>
-        <Image
-          src={blog.yoast_head_json?.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"}
-          width={1000}
-          height={580}
-          alt="pet"
-          className="w-full object-cover max-h-96"
-        />
+
       </div>
       <div className="flex flex-col lg:flex-row  gap-8">
         <main className="blog-area lg:w-2/3 bg-[#F5F5F5] px-10 p-14">
-          <h1 className="text-2xl lg:text-3xl 2xl:text-4xl font-bold mb-8">
+          <img class="w-full object-cover" src={blog.yoast_head_json?.og_image && blog.yoast_head_json.og_image.length > 0 ? blog.yoast_head_json.og_image[0].url : "/assets/images/blog_image3.png"} />
+          <h1 className="text-2xl lg:text-3xl 2xl:text-4xl font-bold my-8">
             {blog?.title?.rendered}
           </h1>
           <div className="py-2 border-t border-b border-gray-300 my-5 text-[#676A6D] text-xs lg:text-sm">
